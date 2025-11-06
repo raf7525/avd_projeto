@@ -1,101 +1,34 @@
 # =======================================
-# PROJETO MLOPS COMPLETO - REQUIREMENTS
-# Compatível com Python 3.12
+# REQUIREMENTS ESSENCIAL - PROJETO MLOPS
 # =======================================
 
-# === CORE DATA SCIENCE & ML ===
-numpy>=1.24.0
-pandas>=2.0.0
-scikit-learn>=1.3.0
-scipy>=1.10.0
-matplotlib>=3.7.0
-seaborn>=0.12.0
-plotly>=5.15.0
+# === CORE DATA SCIENCE ===
+numpy
+pandas
+scikit-learn
+matplotlib
+seaborn
 
-# === JUPYTER & NOTEBOOK ===
+# === JUPYTER NOTEBOOK ===
 jupyter
 ipykernel
-jupyterlab>=4.0.0
-notebook>=7.0.0
 
-# === FASTAPI & WEB FRAMEWORK ===
-fastapi>=0.100.0
-uvicorn[standard]>=0.23.0
-pydantic>=2.0.0
-python-multipart
-starlette
+# === FASTAPI (WEB API) ===
+fastapi
+uvicorn[standard]
 
-# === CLOUD STORAGE (S3/MinIO) ===
+# === STORAGE S3/MinIO ===
 boto3
-minio>=7.0.0
-s3fs
+minio
 
-# === DATABASE CONNECTORS ===
-# Snowflake
-snowflake-connector-python>=3.0.0
-snowflake-sqlalchemy>=1.5.0
+# === DATABASE ===
+sqlalchemy
+psycopg2-binary
 
-# PostgreSQL
-psycopg2-binary>=2.9.0
-sqlalchemy>=2.0.0
-
-# === MLFLOW (Experiment Tracking) ===
-mlflow>=2.8.0
-
-# === DATA PROCESSING & ETL ===
-dask[complete]
-pyarrow>=12.0.0
-openpyxl>=3.1.0
-xlrd>=2.0.0
-
-# === API & HTTP CLIENTS ===
-httpx>=0.24.0
-aiohttp>=3.8.0
-requests>=2.28.0
-
-# === AUTHENTICATION & SECURITY ===
-python-jose[cryptography]>=3.3.0
-passlib[bcrypt]>=1.7.0
-python-dotenv>=1.0.0
-
-# === MONITORING & LOGGING ===
-prometheus-client>=0.17.0
-structlog>=23.0.0
-
-# === THINGSBOARD & IOT INTEGRATION ===
-tb-rest-client>=1.3.0
-paho-mqtt>=1.6.0
+# === MLFLOW ===
+mlflow
 
 # === UTILITIES ===
-tqdm>=4.65.0
-click>=8.1.0
-python-dateutil>=2.8.0
-pytz>=2023.3
-pyyaml>=6.0.0
-toml>=0.10.0
-
-# === DEVELOPMENT & TESTING ===
-pytest>=7.0.0
-pytest-asyncio>=0.21.0
-black>=23.0.0
-flake8>=6.0.0
-isort>=5.12.0
-
-# === CONTAINERIZATION SUPPORT ===
-docker>=6.0.0
-
-# === ADDITIONAL ML LIBRARIES ===
-xgboost>=1.7.0
-lightgbm>=4.0.0
-catboost>=1.2.0
-optuna>=3.4.0
-joblib>=1.3.0
-
-# === TIME SERIES & FORECASTING ===
-statsmodels>=0.14.0
-
-# === DATA VALIDATION ===
-pydantic-settings>=2.0.0
-
-# === KAGGLE INTEGRATION ===
-kagglehub>=0.2.0
+requests
+python-dotenv
+tqdm
