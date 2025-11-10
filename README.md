@@ -8,10 +8,17 @@ Visualização: Rosa dos ventos colorida por cluster + painel com médias por gr
 
 # PORTAS
 como requisitado no projeto as portas são essas:
-🚀 FastAPI:         http://localhost:8060
-📊 Jupyter:         http://localhost:1010
-🔬 MLflow:          http://localhost:5000
-📈 Trendz Analytics: http://localhost:8888
-🌐 ThingsBoard:     http://localhost:8080
-🗄️  MinIO Console:    http://localhost:9001 (admin/minioadmin)
-🐘 PostgreSQL:      localhost:5433 (user/password)
+ FastAPI:         http://localhost:8060
+ Jupyter:         http://localhost:1010
+ MLflow:          http://localhost:5000
+ Trendz Analytics: http://localhost:8888
+ ThingsBoard:     http://localhost:8080
+  MinIO Console:    http://localhost:9001 (admin/minioadmin)
+ PostgreSQL:      localhost:5433 (user/password)
+
+# passos fastapi
+ Autenticação: JWT tokens, OAuth2
+ Banco real: Trocar simulação por PostgreSQL
+ ML Pipeline: Integrar modelos de clustering
+ Dashboard: Endpoints para visualizações
+ Deploy: Containerizar e publicar
