@@ -1,8 +1,4 @@
-def endpoint(
-    path_param: int,                    # /user/{path_param}
-    query_param: str = Query("default"), # ?query_param=valor
-    body_data: MyModel                  # JSON no body
-):import pandas as pd
+import pandas as pd
 import numpy as np
 
 
