@@ -9,11 +9,18 @@ from fastapi import APIRouter, HTTPException, Query, BackgroundTasks
 from typing import List, Optional
 from datetime import datetime, timedelta
 import json
+import sys
+import os
+import pandas as pd
 
 from fastapi.models.schemas import (
     WindDataInput, WindDataOutput, WindDataBatch, 
     APIResponse
 )
+
+# Adicionar o caminho para notebooks
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'notebooks'))
+from tratamento import tratando_linhas_nulas
 
 router = APIRouter()
 
@@ -249,6 +256,26 @@ async def get_wind_stats():
             data=stats
         )
         
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/clean-data")
+async def clean_wind_data(data: List[WindDataInput]):
+    """
+    🧹 **Limpar dados de vento**
+    
+    Remove registros de dados de vento com informações faltantes ou inválidas.
+    """
+    try:
+        # Converter para DataFrame
+        df = pd.DataFrame([item.dict() for item in data])
+        
+        # Aplicar sua função
+        df_limpo = tratando_linhas_nulas(df)
+        
+        # Retornar resultado
+        return {"original_count": len(df), "cleaned_count": len(df_limpo)}
+    
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
