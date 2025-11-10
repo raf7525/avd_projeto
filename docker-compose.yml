@@ -1,0 +1,148 @@
+version: '3.8'
+
+services:
+  # Aplicação principal Python
+  app:
+    build: .
+    container_name: avd_app
+    ports:
+      - "8060:8060"  # FastAPI
+      - "1010:1010"  # Jupyter Notebook
+    volumes:
+      - .:/app
+      - avd_data:/app/data
+    environment:
+      - PYTHONPATH=/app
+      - JUPYTER_ENABLE_LAB=yes
+    depends_on:
+      - postgres
+      - minio
+    command: >
+      bash -c "
+        echo 'Iniciando serviços...'
+        echo 'Acesse:'
+        echo '  - FastAPI: http://localhost:8060'
+        echo '  - Jupyter: http://localhost:1010'
+        echo '  - MLflow: http://localhost:5000'
+        echo '  - Trendz Analytics: http://localhost:8888'
+        echo '  - ThingsBoard: http://localhost:8080'
+        tail -f /dev/null
+      "
+
+  # MLflow Tracking Server
+  mlflow:
+    build: .
+    container_name: avd_mlflow
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow_data:/mlruns
+    environment:
+      - MLFLOW_BACKEND_STORE_URI=postgresql://user:password@postgres:5432/mlflow
+      - MLFLOW_DEFAULT_ARTIFACT_ROOT=s3://mlflow-artifacts
+      - AWS_ACCESS_KEY_ID=minioadmin
+      - AWS_SECRET_ACCESS_KEY=minioadmin
+      - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
+    depends_on:
+      - postgres
+      - minio
+    command: >
+      mlflow server 
+      --backend-store-uri postgresql://user:password@postgres:5432/mlflow
+      --default-artifact-root s3://mlflow-artifacts
+      --host 0.0.0.0
+      --port 5000
+
+  # PostgreSQL para MLflow e dados gerais
+  postgres:
+    image: postgres:15
+    container_name: avd_postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mlflow
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+    ports:
+      - "5433:5432"
+
+  # MinIO (S3-compatible) para armazenamento de artifacts
+  minio:
+    image: minio/minio:latest
+    container_name: avd_minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+
+  # ThingsBoard CE (IoT Platform)
+  thingsboard:
+    image: thingsboard/tb-postgres
+    container_name: avd_thingsboard
+    restart: unless-stopped
+    ports:
+      - "8080:9090"  # ThingsBoard Web UI
+      - "1883:1883"  # MQTT
+      - "7070:7070"  # Edge communication
+      - "5683-5688:5683-5688/udp"  # CoAP
+    environment:
+      TB_QUEUE_TYPE: in-memory
+      TB_DB_HOST: postgres
+      TB_DB_PORT: 5432
+      TB_DB_NAME: thingsboard
+      TB_DB_USERNAME: user
+      TB_DB_PASSWORD: password
+    volumes:
+      - tb_data:/data
+      - tb_logs:/var/log/thingsboard
+    depends_on:
+      - postgres
+
+  # Trendz Analytics
+  trendz:
+    image: thingsboard/trendz:1.10.1
+    container_name: avd_trendz
+    restart: unless-stopped
+    ports:
+      - "8888:8888"  # Trendz Analytics Web UI
+    environment:
+      TRENDZ_DATABASE_HOST: postgres
+      TRENDZ_DATABASE_PORT: 5432
+      TRENDZ_DATABASE_NAME: trendz
+      TRENDZ_DATABASE_USERNAME: user
+      TRENDZ_DATABASE_PASSWORD: password
+      TB_API_URL: http://thingsboard:9090
+      TRENDZ_BASE_URL: http://localhost:8888
+    volumes:
+      - trendz_data:/data
+      - trendz_logs:/var/log/trendz
+    depends_on:
+      - postgres
+      - thingsboard
+
+  # Snowflake Connector (para quando configurarmos)
+  # snowflake_connector:
+  #   build: .
+  #   container_name: avd_snowflake
+  #   environment:
+  #     - SNOWFLAKE_ACCOUNT=your_account
+  #     - SNOWFLAKE_USER=your_user
+  #     - SNOWFLAKE_PASSWORD=your_password
+  #   volumes:
+  #     - .:/app
+
+volumes:
+  postgres_data:
+  minio_data:
+  mlflow_data:
+  avd_data:
+  tb_data:
+  tb_logs:
+  trendz_data:
+  trendz_logs:

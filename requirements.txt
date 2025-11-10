@@ -27,6 +27,19 @@ psycopg2-binary
 
 # === MLFLOW ===
 mlflow
+mlflow[extras]
+
+# === DOCKER UTILITIES ===
+python-dotenv
+
+# === SNOWFLAKE ===
+snowflake-connector-python
+snowflake-sqlalchemy
+
+# === ADDITIONAL TOOLS ===
+requests
+pyyaml
+python-multipart
 
 # === UTILITIES ===
 requests

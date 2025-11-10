@@ -1,0 +1,67 @@
+# .dockerignore
+# Arquivos e pastas que não devem ser copiados para o container
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# VS Code
+.vscode/
+
+# Git
+.git/
+.gitignore
+
+# Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Data files (grandes datasets)
+*.csv
+*.parquet
+*.pickle
+data/
+datasets/
+
+# MLflow
+mlruns/
+mlflow_data/
+
+# Temporary files
+tmp/
+temp/
