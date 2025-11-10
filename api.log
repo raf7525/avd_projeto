@@ -1,0 +1,45 @@
+/home/raf75/quinto-periodo/avd/avd_projeto/api/main.py:101: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+/home/raf75/quinto-periodo/avd/avd_projeto/api/main.py:124: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("shutdown")
+INFO:     Will watch for changes in these directories: ['/home/raf75/quinto-periodo/avd/avd_projeto']
+INFO:     Uvicorn running on http://0.0.0.0:8060 (Press CTRL+C to quit)
+INFO:     Started reloader process [17949] using WatchFiles
+INFO:     Started server process [17979]
+INFO:     Waiting for application startup.
+2025-11-10 17:09:32,975 - main - INFO - 🚀 Inicializando Wind Pattern Analysis API...
+2025-11-10 17:09:32,975 - main - INFO - ✅ MLflow service inicializado
+2025-11-10 17:09:32,976 - main - INFO - 🎉 API inicializada com sucesso!
+INFO:     Application startup complete.
+2025-11-10 17:09:33,240 - watchfiles.main - INFO - 1 change detected
+2025-11-10 17:09:33,590 - watchfiles.main - INFO - 1 change detected
+2025-11-10 17:09:40,166 - main - INFO - GET http://localhost:8060/ - Status: 200 - Time: 0.00s
+Erro ao conectar com banco: connection to server at "localhost" (127.0.0.1), port 5433 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+INFO:     127.0.0.1:58196 - "GET / HTTP/1.1" 200 OK
+2025-11-10 17:09:40,336 - watchfiles.main - INFO - 1 change detected
+2025-11-10 17:09:41,472 - main - INFO - GET http://localhost:8060/ - Status: 200 - Time: 0.00s
+INFO:     127.0.0.1:58202 - "GET / HTTP/1.1" 200 OK
+2025-11-10 17:09:41,519 - main - INFO - GET http://localhost:8060/favicon.ico - Status: 404 - Time: 0.00s
+INFO:     127.0.0.1:58202 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+2025-11-10 17:09:41,839 - watchfiles.main - INFO - 1 change detected
+2025-11-10 17:09:48,275 - main - INFO - GET http://localhost:8060/health/simple - Status: 200 - Time: 0.00s
+INFO:     127.0.0.1:58234 - "GET /health/simple HTTP/1.1" 200 OK
+2025-11-10 17:09:48,449 - watchfiles.main - INFO - 1 change detected
+2025-11-10 17:09:51,145 - main - INFO - GET http://localhost:8060/ - Status: 200 - Time: 0.00s
+INFO:     127.0.0.1:58206 - "GET / HTTP/1.1" 200 OK
+2025-11-10 17:09:51,454 - watchfiles.main - INFO - 1 change detected
+2025-11-10 17:10:39,696 - watchfiles.main - INFO - 1 change detected
+2025-11-10 17:10:40,047 - watchfiles.main - INFO - 2 changes detected
+2025-11-10 17:10:40,397 - watchfiles.main - INFO - 1 change detected
