@@ -22,15 +22,15 @@ import asyncio
 # Adicionar o diretório raiz ao Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from api.models.schemas import (
+from fastapi.models.schemas import (
     WindDataInput, WindDataOutput, WindDataBatch, 
     ClusteringRequest, ClusteringResponse,
     PredictionRequest, PredictionResponse,
     DashboardData, SystemHealth, APIResponse
 )
-from api.routers import health, wind, clustering, prediction, dashboard
-from api.services.database import get_db_connection
-from api.services.mlflow_service import MLflowService
+from fastapi.routers import health, wind, clustering, prediction, dashboard
+from fastapi.services.database import get_db_connection
+from fastapi.services.mlflow_service import MLflowService
 
 # Configuração de logging
 logging.basicConfig(

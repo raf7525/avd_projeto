@@ -21,7 +21,7 @@ import os
 from datetime import datetime
 
 # Routers
-from api.routers import wind_data, analysis, prediction, dashboard, health
+from fastapi.routers import wind_data, analysis, prediction, dashboard, health
 
 # Configurações
 app = FastAPI(

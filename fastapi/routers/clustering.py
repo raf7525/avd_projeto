@@ -6,7 +6,7 @@ Endpoints para análise de clustering de padrões de vento.
 """
 
 from fastapi import APIRouter, HTTPException
-from api.models.schemas import ClusteringRequest, ClusteringResponse, APIResponse
+from fastapi.models.schemas import ClusteringRequest, ClusteringResponse, APIResponse
 
 router = APIRouter()
 

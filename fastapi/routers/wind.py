@@ -10,7 +10,7 @@ from typing import List, Optional
 from datetime import datetime, timedelta
 import json
 
-from api.models.schemas import (
+from fastapi.models.schemas import (
     WindDataInput, WindDataOutput, WindDataBatch, 
     APIResponse
 )

@@ -6,7 +6,7 @@ Endpoints para predições de padrões de vento.
 """
 
 from fastapi import APIRouter, HTTPException
-from api.models.schemas import PredictionRequest, PredictionResponse, APIResponse
+from fastapi.models.schemas import PredictionRequest, PredictionResponse, APIResponse
 
 router = APIRouter()
 
