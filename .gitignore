@@ -1,0 +1,351 @@
+# ==============================================
+# .gitignore - Projeto AVD (Análise de Vento)
+# ==============================================
+
+# === LOGS ESPECÍFICOS DO PROJETO ===
+api.log
+*.log
+logs/
+*.log.*
+
+# === PYTHON ===
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# === FASTAPI / UVICORN ===
+# FastAPI generated files
+*.db
+*.sqlite3
+fastapi.log
+uvicorn.log
+
+# === DOCKER ===
+# Docker volumes and data
+volumes/
+docker-data/
+*.tar
+*.tar.gz
+
+# === MACHINE LEARNING / DATA SCIENCE ===
+# MLflow
+mlruns/
+mlflow_data/
+mlartifacts/
+artifacts/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Data files (large datasets)
+*.csv
+*.parquet
+*.pickle
+*.pkl
+*.h5
+*.hdf5
+*.feather
+data/
+datasets/
+raw_data/
+processed_data/
+*.zip
+
+# Model files
+models/
+*.joblib
+*.model
+*.pt
+*.pth
+*.onnx
+*.pb
+
+# Tensorboard logs
+runs/
+tensorboard_logs/
+
+# === DATABASE ===
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
+# PostgreSQL dumps
+*.sql
+*.dump
+
+# === EDITOR / IDE ===
+# VS Code
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# === OPERATING SYSTEM ===
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# === CLOUD / DEPLOYMENT ===
+# AWS
+.aws/
+
+# Azure
+.azure/
+
+# Google Cloud
+.gcloud/
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# === SECRETS / CREDENTIALS ===
+# Environment variables
+.env.local
+.env.development
+.env.test
+.env.production
+secrets.json
+config.json
+credentials.json
+service_account.json
+*.pem
+*.key
+*.crt
+
+# API Keys
+api_keys.txt
+tokens.txt
+
+# === TEMPORARY FILES ===
+# General temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.backup
+*.old
+*.orig
+
+# === DOCUMENTATION ===
+# Generated documentation
+docs/build/
+docs/_build/
+site/
+
+# === NODE.JS (se usar frontend) ===
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn-integrity
+
+# === OUTROS ===
+# Backup files
+*~
+*.swp
+*.swo
+
+# Compiled source
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Archives
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# === ESPECÍFICO DO PROJETO AVD ===
+# Dados de vento (grandes volumes)
+wind_data/
+sensor_data/
+weather_data/
+
+# Outputs de análise
+analysis_output/
+clustering_results/
+prediction_results/
+
+# Configurações locais específicas
+local_config.py
+local_settings.py
+
+# Arquivos de teste
+test_data/
+sample_data/
+
+# Cache de modelos
+model_cache/
+.model_cache/
+
+# Arquivos de configuração local do Docker
+docker-compose.override.yml
+.env.docker
