@@ -1,10 +1,3 @@
-"""
-Wind Data Router
-===============
-
-Endpoints para gerenciamento de dados de vento.
-"""
-
 from fastapi import APIRouter, HTTPException, Query, BackgroundTasks
 from typing import List, Optional
 from datetime import datetime, timedelta
@@ -18,27 +11,18 @@ from fastapi.models.schemas import (
     APIResponse
 )
 
-# Adicionar o caminho para notebooks
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'notebooks'))
 from tratamento import tratando_linhas_nulas
 
 router = APIRouter()
 
-# Simulação de dados (em produção seria banco de dados)
 wind_data_storage: List[dict] = []
 
 @router.post("/", response_model=APIResponse)
 async def create_wind_data(wind_data: WindDataInput):
-    """
-    📊 **Criar novo registro de dados de vento**
-    
-    Adiciona uma nova medição de vento ao sistema.
-    """
     try:
-        # Simular ID incremental
         new_id = len(wind_data_storage) + 1
         
-        # Converter para dicionário e adicionar campos extras
         data_dict = wind_data.dict()
         data_dict.update({
             "id": new_id,
@@ -46,7 +30,6 @@ async def create_wind_data(wind_data: WindDataInput):
             "direction_cardinal": degrees_to_cardinal(wind_data.direction)
         })
         
-        # Armazenar dados
         wind_data_storage.append(data_dict)
         
         return APIResponse(
@@ -60,11 +43,6 @@ async def create_wind_data(wind_data: WindDataInput):
 
 @router.post("/batch", response_model=APIResponse)
 async def create_wind_data_batch(batch_data: WindDataBatch):
-    """
-    📊 **Criar múltiplos registros de vento em lote**
-    
-    Permite inserção eficiente de muitas medições.
-    """
     try:
         created_records = []
         
@@ -102,16 +80,9 @@ async def get_wind_data(
     min_velocity: Optional[float] = Query(default=None, description="Velocidade mínima"),
     max_velocity: Optional[float] = Query(default=None, description="Velocidade máxima")
 ):
-    """
-    📋 **Listar dados de vento com filtros**
-    
-    Recupera dados de vento com opções de filtragem e paginação.
-    """
     try:
-        # Aplicar filtros
         filtered_data = wind_data_storage.copy()
         
-        # Filtro por data
         if start_date or end_date:
             filtered_data = [
                 record for record in filtered_data
@@ -119,7 +90,6 @@ async def get_wind_data(
                    (not end_date or record["timestamp"] <= end_date)
             ]
         
-        # Filtro por velocidade
         if min_velocity is not None:
             filtered_data = [
                 record for record in filtered_data
@@ -132,7 +102,6 @@ async def get_wind_data(
                 if record["velocity"] <= max_velocity
             ]
         
-        # Aplicar paginação
         total_records = len(filtered_data)
         paginated_data = filtered_data[offset:offset + limit]
         
@@ -155,13 +124,7 @@ async def get_wind_data(
 
 @router.get("/{wind_id}", response_model=APIResponse)
 async def get_wind_data_by_id(wind_id: int):
-    """
-    🔍 **Obter dados de vento por ID**
-    
-    Recupera um registro específico de dados de vento.
-    """
     try:
-        # Buscar registro por ID
         record = next((r for r in wind_data_storage if r["id"] == wind_id), None)
         
         if not record:
@@ -180,13 +143,7 @@ async def get_wind_data_by_id(wind_id: int):
 
 @router.delete("/{wind_id}", response_model=APIResponse)
 async def delete_wind_data(wind_id: int):
-    """
-    🗑️ **Deletar dados de vento**
-    
-    Remove um registro específico de dados de vento.
-    """
     try:
-        # Buscar índice do registro
         record_index = None
         for i, record in enumerate(wind_data_storage):
             if record["id"] == wind_id:
@@ -196,7 +153,6 @@ async def delete_wind_data(wind_id: int):
         if record_index is None:
             raise HTTPException(status_code=404, detail="Registro não encontrado")
         
-        # Remover registro
         deleted_record = wind_data_storage.pop(record_index)
         
         return APIResponse(
@@ -212,11 +168,6 @@ async def delete_wind_data(wind_id: int):
 
 @router.get("/stats/summary", response_model=APIResponse)
 async def get_wind_stats():
-    """
-    📊 **Estatísticas resumidas dos dados de vento**
-    
-    Retorna métricas estatísticas dos dados armazenados.
-    """
     try:
         if not wind_data_storage:
             return APIResponse(
@@ -261,36 +212,24 @@ async def get_wind_stats():
 
 @router.post("/clean-data")
 async def clean_wind_data(data: List[WindDataInput]):
-    """
-    🧹 **Limpar dados de vento**
-    
-    Remove registros de dados de vento com informações faltantes ou inválidas.
-    """
     try:
-        # Converter para DataFrame
         df = pd.DataFrame([item.dict() for item in data])
         
-        # Aplicar sua função
         df_limpo = tratando_linhas_nulas(df)
         
-        # Retornar resultado
         return {"original_count": len(df), "cleaned_count": len(df_limpo)}
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# Funções auxiliares
 def degrees_to_cardinal(degrees: float) -> str:
-    """Converter graus para direção cardinal."""
     directions = [
         "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
         "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"
     ]
     
-    # Normalizar graus para 0-360
     degrees = degrees % 360
     
-    # Calcular índice (16 direções, cada uma com 22.5 graus)
     index = int((degrees + 11.25) // 22.5)
     
     return directions[index % 16]
