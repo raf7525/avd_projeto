@@ -1,29 +1,29 @@
 # 🎉 CONFIGURAÇÃO TRENDZ ANALYTICS CONCLUÍDA
 
-## ✅ Status da Configuração
+## ✅ Status da Configuração - Sistema de Predição de Sensação Térmica
 
 ### Arquivos Criados:
-- ✅ `trendz/config.py` - Configuração e integração com Trendz
-- ✅ `trendz/dashboard.py` - Criação de dashboards e análise de dados
+- ✅ `trendz/config.py` - Configuração e integração com Trendz para dados térmicos
+- ✅ `trendz/dashboard.py` - Criação de dashboards e análise de sensação térmica
 - ✅ `setup-trendz.sh` - Script de configuração automática
-- ✅ `docs/trendz-setup-guide.md` - Guia completo de configuração
-- ✅ `data/sample_wind_data.csv` - 721 registros de dados de exemplo
-- ✅ `data/trendz_dashboard_config.json` - Configuração dos dashboards
+- ✅ `docs/trendz-setup-guide.md` - Guia completo de configuração térmica
+- ✅ `data/sample_thermal_data.csv` - 157.800 registros históricos (2000-2017)
+- ✅ `data/trendz_dashboard_config.json` - Configuração dos dashboards térmicos
 
-### Dados de Exemplo Gerados:
-- **721 registros** de 30 dias de dados sintéticos
-- **5 clusters** identificados nos padrões de vento
-- **Métricas calculadas** por cluster
+### Dataset Térmico Gerado:
+- **157.800 registros** históricos de dados meteorológicos (2000-2017)
+- **5 zonas de conforto** térmico identificadas
+- **Algoritmos Heat Index + Wind Chill** para cálculo de sensação térmica
 
-## 📊 Clusters Identificados:
+## 🌡️ Zonas de Conforto Identificadas:
 
-| Cluster | Registros | Velocidade Média | Hora Predominante | Características |
-|---------|-----------|------------------|-------------------|-----------------|
-| **0** | 135 | 6.34 m/s | 11h | Ventos matutinos moderados |
-| **1** | 123 | 2.54 m/s | 19h | Ventos vespertinos fracos |
-| **2** | 114 | 7.54 m/s | 6h | Ventos madrugada intensos |
-| **3** | 153 | 7.04 m/s | 1h | Ventos noturnos intensos |
-| **4** | 196 | 2.84 m/s | 23h | Ventos noturnos fracos |
+| Zona | Faixa Térmica | Características | Percentual |
+|------|---------------|-----------------|------------|
+| **Muito Frio** | < 16°C | Desconforto por frio extremo | ~15% |
+| **Frio** | 16-21°C | Sensação de frio, necessita aquecimento | ~20% |
+| **Confortável** | 21-26°C | Zona ideal de conforto térmico | ~40% |
+| **Quente** | 26-32°C | Sensação de calor, necessita resfriamento | ~20% |
+| **Muito Quente** | > 32°C | Desconforto por calor extremo | ~5% |
 
 ## 🚀 Como Usar:
 
@@ -46,23 +46,23 @@ docker-compose up -d postgres thingsboard trendz
 - **Login**: tenant@thingsboard.org
 - **Senha**: tenant
 
-### 4. Importar Dados
+### 4. Importar Dados Térmicos
 1. Na interface do Trendz, vá em "Data Sources"
-2. Importe o arquivo `data/sample_wind_data.csv`
+2. Importe o arquivo `data/sample_thermal_data.csv`
 3. Configure as colunas conforme `data/trendz_dashboard_config.json`
 
-### 5. Criar Dashboards
+### 5. Criar Dashboards Térmicos
 Use as configurações em `trendz_dashboard_config.json`:
-- **Rosa dos Ventos**: Visualização polar colorida por cluster
-- **Padrões Temporais**: Heatmaps e gráficos de tendência
-- **Estatísticas**: KPIs e métricas de vento
+- **Mapa de Calor**: Heatmap de sensação térmica por tempo
+- **Zonas de Conforto**: Análise de distribuição térmica
+- **Estatísticas**: KPIs e métricas de conforto térmico
 
 ## 🔧 Arquitetura Configurada:
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Dados CSV     │───▶│  ThingsBoard    │───▶│ Trendz Analytics│
-│ sample_wind_data│    │  (localhost:8080)│    │ (localhost:8888)│
+│ sample_thermal_data│    │  (localhost:8080)│    │ (localhost:8888)│
 └─────────────────┘    └─────────────────┘    └─────────────────┘
                                 │                        │
                                 ▼                        ▼
@@ -104,14 +104,15 @@ docker-compose restart trendz
 ## 🎯 Resultado Esperado:
 
 Após a configuração completa, você terá:
-- **Dashboard interativo** de análise de padrões de vento
-- **5 clusters** distintos de comportamento
-- **Rosa dos ventos** colorida por padrão
-- **Métricas estatísticas** em tempo real
+- **Dashboard interativo** de análise de sensação térmica
+- **5 zonas de conforto** distintas classificadas
+- **Mapas de calor** de conforto térmico
+- **Métricas estatísticas** de sensação térmica em tempo real
 - **Análise temporal** por hora/dia da semana
+- **Predição de conforto térmico** com algoritmos Heat Index + Wind Chill
 
 ---
 
-**🎉 Configuração do Trendz Analytics para análise de padrões de vento finalizada com sucesso!**
+**🎉 Configuração do Trendz Analytics para predição de sensação térmica finalizada com sucesso!**
 
-Execute `./setup-trendz.sh` para iniciar os serviços e começar a análise.
+Execute `./setup-trendz.sh` para iniciar os serviços e começar a análise térmica.

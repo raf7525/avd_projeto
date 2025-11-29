@@ -1,9 +1,3 @@
-"""
-Prediction Router
-================
-
-Endpoints para predições de padrões de vento.
-"""
 
 from fastapi import APIRouter, HTTPException
 from fastapi.models.schemas import PredictionRequest, PredictionResponse, APIResponse
@@ -11,12 +5,7 @@ from fastapi.models.schemas import PredictionRequest, PredictionResponse, APIRes
 router = APIRouter()
 
 @router.post("/predict", response_model=APIResponse)
-async def predict_wind(request: PredictionRequest):
-    """
-    🔮 **Predição de padrões de vento**
-    
-    Usa modelos ML para predizer comportamento futuro do vento.
-    """
+async def predict_thermal(request: PredictionRequest):
     return APIResponse(
         success=True,
         message="Predição em desenvolvimento",

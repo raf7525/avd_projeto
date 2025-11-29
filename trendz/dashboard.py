@@ -1,5 +1,5 @@
 """
-Dashboard Trendz Analytics para Análise de Padrões de Vento
+Dashboard Trendz Analytics para Sistema de Predição de Sensação Térmica
 """
 
 import pandas as pd
@@ -9,16 +9,16 @@ import json
 from typing import Dict, List, Tuple
 import requests
 
-class WindDataProcessor:
-    """Processador de dados de vento para Trendz Analytics"""
+class ThermalDataProcessor:
+    """Processador de dados de sensação térmica para Trendz Analytics"""
     
-    def __init__(self, data_source: str = "/home/raf75/quinto-periodo/avd/avd_projeto/data/sample_wind_data.csv"):
+    def __init__(self, data_source: str = "/home/raf75/quinto-periodo/avd/avd_projeto/data/sample_thermal_data.csv"):
         self.data_source = data_source
         self.df = None
-        self.clusters = None
+        self.comfort_zones = None
     
     def load_data(self) -> pd.DataFrame:
-        """Carregar dados de vento"""
+        """Carregar dados de sensação térmica"""
         try:
             self.df = pd.read_csv(self.data_source)
             self.df['timestamp'] = pd.to_datetime(self.df['timestamp'])
@@ -26,130 +26,136 @@ class WindDataProcessor:
             self.df['day_of_week'] = self.df['timestamp'].dt.dayofweek
             self.df['month'] = self.df['timestamp'].dt.month
             
-            print(f"✅ {len(self.df)} registros carregados")
+            print(f"✅ {len(self.df)} registros térmicos carregados")
             return self.df
             
         except Exception as e:
-            print(f"❌ Erro ao carregar dados: {e}")
+            print(f"❌ Erro ao carregar dados térmicos: {e}")
             return None
     
-    def perform_clustering(self, n_clusters: int = 5) -> pd.DataFrame:
-        """Realizar clustering dos padrões de vento"""
-        from sklearn.cluster import KMeans
-        from sklearn.preprocessing import StandardScaler
+    def classify_comfort_zones(self, n_zones: int = 5) -> pd.DataFrame:
+        """Classificar zonas de conforto térmico"""
         
         if self.df is None:
             self.load_data()
         
-        # Preparar features para clustering
-        features = ['wind_velocity', 'wind_direction', 'hour', 'day_of_week']
-        X = self.df[features].copy()
+        # Classificar zonas de conforto baseado na sensação térmica
+        def get_comfort_zone(thermal_sensation):
+            if thermal_sensation < 16:
+                return "Muito Frio"
+            elif thermal_sensation < 21:
+                return "Frio"  
+            elif thermal_sensation < 26:
+                return "Confortável"
+            elif thermal_sensation < 32:
+                return "Quente"
+            else:
+                return "Muito Quente"
         
-        # Tratar direção do vento (circular)
-        X['wind_direction_sin'] = np.sin(np.radians(X['wind_direction']))
-        X['wind_direction_cos'] = np.cos(np.radians(X['wind_direction']))
-        X = X.drop('wind_direction', axis=1)
+        self.df['comfort_zone_calculated'] = self.df['thermal_sensation'].apply(get_comfort_zone)
         
-        # Normalizar features
-        scaler = StandardScaler()
-        X_scaled = scaler.fit_transform(X)
+        # Estatísticas por zona de conforto
+        comfort_stats = {}
+        for zone in self.df['comfort_zone_calculated'].unique():
+            zone_data = self.df[self.df['comfort_zone_calculated'] == zone]
+            comfort_stats[zone] = {
+                "count": len(zone_data),
+                "avg_thermal_sensation": zone_data['thermal_sensation'].mean(),
+                "avg_temperature": zone_data['temperature'].mean(),
+                "avg_humidity": zone_data['humidity'].mean()
+            }
         
-        # Aplicar K-Means
-        kmeans = KMeans(n_clusters=n_clusters, random_state=42)
-        clusters = kmeans.fit_predict(X_scaled)
-        
-        # Adicionar clusters ao DataFrame
-        self.df['cluster'] = clusters
-        self.clusters = kmeans
-        
-        print(f"✅ Clustering realizado com {n_clusters} clusters")
+        self.comfort_zones = comfort_stats
+        print(f"✅ Classificação de zonas de conforto realizada")
         return self.df
     
-    def get_cluster_statistics(self) -> Dict:
-        """Obter estatísticas por cluster"""
-        if 'cluster' not in self.df.columns:
-            self.perform_clustering()
+    def get_comfort_statistics(self) -> Dict:
+        """Obter estatísticas por zona de conforto"""
+        if 'comfort_zone_calculated' not in self.df.columns:
+            self.classify_comfort_zones()
         
         stats = {}
-        for cluster in sorted(self.df['cluster'].unique()):
-            cluster_data = self.df[self.df['cluster'] == cluster]
+        for zone in sorted(self.df['comfort_zone_calculated'].unique()):
+            zone_data = self.df[self.df['comfort_zone_calculated'] == zone]
             
-            stats[f"Cluster {cluster}"] = {
-                "count": len(cluster_data),
-                "wind_velocity": {
-                    "mean": cluster_data['wind_velocity'].mean(),
-                    "std": cluster_data['wind_velocity'].std(),
-                    "min": cluster_data['wind_velocity'].min(),
-                    "max": cluster_data['wind_velocity'].max()
+            stats[f"Zona {zone}"] = {
+                "count": len(zone_data),
+                "thermal_sensation": {
+                    "mean": zone_data['thermal_sensation'].mean(),
+                    "std": zone_data['thermal_sensation'].std(),
+                    "min": zone_data['thermal_sensation'].min(),
+                    "max": zone_data['thermal_sensation'].max()
                 },
-                "wind_direction": {
-                    "mean": cluster_data['wind_direction'].mean(),
-                    "predominant_hours": cluster_data['hour'].mode().tolist(),
-                    "predominant_days": cluster_data['day_of_week'].mode().tolist()
+                "environmental": {
+                    "avg_temperature": zone_data['temperature'].mean(),
+                    "avg_humidity": zone_data['humidity'].mean(),
+                    "avg_wind": zone_data['wind_velocity'].mean(),
+                    "avg_pressure": zone_data['pressure'].mean() if 'pressure' in zone_data.columns else None
                 },
                 "temporal_patterns": {
-                    "most_common_hour": cluster_data['hour'].mode().iloc[0] if len(cluster_data['hour'].mode()) > 0 else None,
-                    "most_common_day": cluster_data['day_of_week'].mode().iloc[0] if len(cluster_data['day_of_week'].mode()) > 0 else None
+                    "most_common_hour": zone_data['hour'].mode().iloc[0] if len(zone_data['hour'].mode()) > 0 else None,
+                    "most_common_day": zone_data['day_of_week'].mode().iloc[0] if len(zone_data['day_of_week'].mode()) > 0 else None
                 }
             }
         
         return stats
 
 class TrendzDashboardCreator:
-    """Criador de dashboards para Trendz Analytics"""
+    """Criador de dashboards para Trendz Analytics - Sensação Térmica"""
     
-    def __init__(self, processor: WindDataProcessor):
+    def __init__(self, processor: ThermalDataProcessor):
         self.processor = processor
         self.trendz_url = "http://localhost:8888"
     
-    def create_wind_rose_visualization(self) -> Dict:
-        """Criar visualização Rosa dos Ventos"""
+    def create_thermal_heatmap_visualization(self) -> Dict:
+        """Criar visualização de Mapa de Calor de Sensação Térmica"""
         if self.processor.df is None:
             self.processor.load_data()
         
-        if 'cluster' not in self.processor.df.columns:
-            self.processor.perform_clustering()
+        if 'comfort_zone_calculated' not in self.processor.df.columns:
+            self.processor.classify_comfort_zones()
         
-        # Configuração da Rosa dos Ventos para Trendz
-        wind_rose_config = {
-            "name": "Rosa dos Ventos - Clusters",
-            "type": "polar_chart",
-            "data_source": "wind_data",
+        # Configuração do Mapa de Calor Térmico para Trendz
+        thermal_heatmap_config = {
+            "name": "Mapa de Calor - Sensação Térmica",
+            "type": "heatmap",
+            "data_source": "thermal_data",
             "configuration": {
-                "angle_field": "wind_direction",
-                "radius_field": "wind_velocity", 
-                "color_field": "cluster",
+                "x_field": "hour",
+                "y_field": "day_of_week", 
+                "value_field": "thermal_sensation",
+                "color_field": "comfort_zone_calculated",
                 "aggregation": "mean",
-                "bins": 16,  # 16 direções cardeais
-                "color_scheme": "viridis"
+                "color_scheme": "RdYlBu_r"
             },
             "filters": {
                 "time_range": "last_30_days",
-                "min_velocity": 0,
-                "max_velocity": 30
+                "comfort_zone": "all",
+                "min_thermal_sensation": -10,
+                "max_thermal_sensation": 50
             }
         }
         
-        return wind_rose_config
+        return thermal_heatmap_config
     
-    def create_temporal_patterns_dashboard(self) -> Dict:
-        """Criar dashboard de padrões temporais"""
-        temporal_dashboard = {
-            "name": "Padrões Temporais de Vento",
+    def create_comfort_zones_dashboard(self) -> Dict:
+        """Criar dashboard de zonas de conforto térmico"""
+        comfort_dashboard = {
+            "name": "Análise de Zonas de Conforto Térmico",
             "widgets": [
                 {
-                    "type": "heatmap",
-                    "title": "Velocidade por Hora/Dia",
-                    "x_axis": "hour",
-                    "y_axis": "day_of_week",
-                    "z_axis": "wind_velocity",
+                    "type": "scatter",
+                    "title": "Temperatura vs Umidade por Zona",
+                    "x_axis": "temperature",
+                    "y_axis": "humidity",
+                    "color": "comfort_zone_calculated",
                     "aggregation": "mean"
                 },
                 {
                     "type": "line_chart",
                     "title": "Tendência Diária",
                     "x_axis": "hour", 
-                    "y_axis": "wind_velocity",
+                    "y_axis": "thermal_velocity",
                     "group_by": "cluster",
                     "aggregation": "mean"
                 },
@@ -163,8 +169,8 @@ class TrendzDashboardCreator:
                 {
                     "type": "scatter_plot",
                     "title": "Velocidade vs Direção",
-                    "x_axis": "wind_direction",
-                    "y_axis": "wind_velocity", 
+                    "x_axis": "thermal_direction",
+                    "y_axis": "thermal_velocity", 
                     "color_by": "cluster",
                     "size_by": "hour"
                 }
@@ -182,7 +188,7 @@ class TrendzDashboardCreator:
                 {
                     "type": "kpi",
                     "title": "Velocidade Média",
-                    "metric": "wind_velocity",
+                    "metric": "thermal_velocity",
                     "aggregation": "mean",
                     "unit": "m/s",
                     "size": "medium"
@@ -190,7 +196,7 @@ class TrendzDashboardCreator:
                 {
                     "type": "kpi", 
                     "title": "Velocidade Máxima",
-                    "metric": "wind_velocity",
+                    "metric": "thermal_velocity",
                     "aggregation": "max",
                     "unit": "m/s",
                     "size": "medium"
@@ -198,7 +204,7 @@ class TrendzDashboardCreator:
                 {
                     "type": "gauge",
                     "title": "Direção Predominante",
-                    "metric": "wind_direction",
+                    "metric": "thermal_direction",
                     "aggregation": "mode",
                     "min": 0,
                     "max": 360,
@@ -207,7 +213,7 @@ class TrendzDashboardCreator:
                 {
                     "type": "histogram",
                     "title": "Distribuição de Velocidades",
-                    "metric": "wind_velocity",
+                    "metric": "thermal_velocity",
                     "bins": 20,
                     "color_by": "cluster"
                 }
@@ -219,23 +225,26 @@ class TrendzDashboardCreator:
     def export_dashboard_config(self, output_file: str = "/home/raf75/quinto-periodo/avd/avd_projeto/data/trendz_dashboard_config.json"):
         """Exportar configuração completa dos dashboards"""
         config = {
-            "project_name": "Análise de Padrões de Vento",
+            "project_name": "Sistema de Predição de Sensação Térmica",
             "dashboards": {
-                "wind_rose": self.create_wind_rose_visualization(),
-                "temporal_patterns": self.create_temporal_patterns_dashboard(),
+                "thermal_heatmap": self.create_thermal_heatmap_visualization(),
+                "comfort_zones": self.create_comfort_zones_dashboard(),
                 "statistics": self.create_statistics_panel()
             },
             "data_sources": {
                 "primary": {
                     "type": "csv",
-                    "path": "/home/raf75/quinto-periodo/avd/avd_projeto/data/sample_wind_data.csv",
+                    "path": "/home/raf75/quinto-periodo/avd/avd_projeto/data/sample_thermal_data.csv",
                     "fields": {
                         "timestamp": "datetime",
-                        "wind_velocity": "float", 
-                        "wind_direction": "float",
-                        "temperature": "float",
+                        "temperature": "float", 
                         "humidity": "float",
-                        "cluster": "int"
+                        "wind_velocity": "float",
+                        "pressure": "float",
+                        "solar_radiation": "float",
+                        "thermal_sensation": "float",
+                        "comfort_zone": "string",
+                        "comfort_zone_calculated": "string"
                     }
                 }
             },
@@ -315,40 +324,42 @@ class TrendzAPIConnector:
 
 def main():
     """Função principal para configuração completa"""
-    print("🌪️ Configurando Dashboard Trendz para Análise de Vento")
+    print("🌡️ Configurando Dashboard Trendz para Análise de Sensação Térmica")
     print("=" * 60)
     
     # 1. Processar dados
-    processor = WindDataProcessor()
+    processor = ThermalDataProcessor()
     processor.load_data()
-    processor.perform_clustering(n_clusters=5)
+    processor.classify_comfort_zones()
     
     # 2. Exibir estatísticas
-    stats = processor.get_cluster_statistics()
-    print("\n📊 Estatísticas por Cluster:")
-    for cluster, data in stats.items():
-        print(f"\n{cluster}:")
+    stats = processor.get_comfort_statistics()
+    print("\n📊 Estatísticas por Zona de Conforto:")
+    for zone, data in stats.items():
+        print(f"\n{zone}:")
         print(f"  - Registros: {data['count']}")
-        print(f"  - Velocidade média: {data['wind_velocity']['mean']:.2f} m/s")
+        print(f"  - Sensação térmica média: {data['thermal_sensation']['mean']:.1f}°C")
+        print(f"  - Temperatura média: {data['environmental']['avg_temperature']:.1f}°C")
         print(f"  - Hora predominante: {data['temporal_patterns']['most_common_hour']}h")
     
     # 3. Criar dashboards
     dashboard_creator = TrendzDashboardCreator(processor)
-    config = dashboard_creator.export_dashboard_config()
+    dashboard_creator.export_dashboard_config()
     
     # 4. Conectar com Trendz (se disponível)
     connector = TrendzAPIConnector()
     if connector.authenticate():
-        connector.upload_data(processor.df)
+        if processor.df is not None:
+            connector.upload_data(processor.df)
     
     print("\n🎉 Configuração concluída!")
     print("\nArquivos criados:")
-    print("  - data/sample_wind_data.csv")
+    print("  - data/sample_thermal_data.csv")
     print("  - data/trendz_dashboard_config.json")
     print("\nPróximos passos:")
     print("  1. Acesse http://localhost:8888")
-    print("  2. Importe a configuração dos dashboards")
-    print("  3. Visualize os padrões de vento!")
+    print("  2. Importe a configuração dos dashboards térmicos")
+    print("  3. Visualize as zonas de conforto térmico!")
 
 if __name__ == "__main__":
     main()

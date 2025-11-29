@@ -208,7 +208,7 @@ tramp
 .AppleDouble
 .LSOverride
 
-# Windows
+# thermalows
 Thumbs.db
 ehthumbs.db
 Desktop.ini
@@ -325,7 +325,7 @@ coverage/
 
 # === ESPECÍFICO DO PROJETO AVD ===
 # Dados de vento (grandes volumes)
-wind_data/
+thermal_data/
 sensor_data/
 weather_data/
 

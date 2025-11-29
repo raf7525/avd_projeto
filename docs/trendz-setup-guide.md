@@ -1,8 +1,8 @@
-# 📊 Configuração Trendz Analytics - Análise de Padrões de Vento
+# 🌡️ Configuração Trendz Analytics - Sistema de Predição de Sensação Térmica
 
 ## 🎯 Objetivo
 
-Configurar o Trendz Analytics para realizar análise avançada de padrões de vento, incluindo clustering, visualizações e insights de business intelligence.
+Configurar o Trendz Analytics para realizar análise avançada de sensação térmica e predição de conforto térmico, incluindo visualizações de zonas de conforto, mapas de calor térmico e insights de business intelligence sobre conforto humano.
 
 ## 🚀 Configuração Rápida
 
@@ -41,67 +41,75 @@ docker-compose exec app python trendz/dashboard.py
 
 ## 📊 Dashboards Configurados
 
-### 1. Rosa dos Ventos com Clusters
-- **Visualização**: Gráfico polar colorido
-- **Dados**: Direção e velocidade do vento
-- **Agrupamento**: 5 clusters por padrões comportamentais
-- **Filtros**: Período, velocidade mínima/máxima
+### 1. Mapa de Calor de Conforto Térmico
+- **Visualização**: Heatmap de sensação térmica
+- **Dados**: Temperatura, umidade, sensação térmica calculada
+- **Zonas de Conforto**: 5 classificações (Muito Frio → Muito Quente)
+- **Filtros**: Período, zona de conforto, faixa térmica
 
-### 2. Padrões Temporais
-- **Heatmap**: Velocidade por hora/dia da semana
-- **Linha temporal**: Tendências por cluster
-- **Distribuição**: Gráfico de barras por cluster
-- **Scatter**: Velocidade vs Direção
+### 2. Análise Temporal de Conforto
+- **Heatmap**: Sensação térmica por hora/dia da semana
+- **Linha temporal**: Tendências por zona de conforto
+- **Distribuição**: Gráfico de barras por zona
+- **Scatter**: Temperatura vs Umidade com zonas coloridas
 
-### 3. Painel de Estatísticas
-- **KPIs**: Velocidade média e máxima
-- **Gauge**: Direção predominante
-- **Histograma**: Distribuição de velocidades
+### 3. Painel de Estatísticas Térmicas
+- **KPIs**: Sensação térmica média e distribuição
+- **Gauge**: Índice de conforto predominante
+- **Histograma**: Distribuição de sensações térmicas
 
 ## 🔧 Estrutura de Arquivos
 
 ```
 trendz/
-├── config.py          # Configuração e integração
-├── dashboard.py       # Criação de dashboards
+├── config.py          # Configuração térmica e integração
+├── dashboard.py       # Dashboards de conforto térmico
 └── logs/              # Logs do Trendz
 
 data/
-├── sample_wind_data.csv           # Dados de exemplo
-└── trendz_dashboard_config.json   # Configuração dos dashboards
+├── sample_thermal_data.csv           # Dataset térmico (157.800 registros)
+└── trendz_dashboard_config.json   # Configuração térmica dos dashboards
 ```
 
-## 📈 Dados de Exemplo
+## 📈 Dataset Térmico
 
-O sistema gera automaticamente **30 dias** de dados sintéticos incluindo:
-- **Timestamp**: Registros de hora em hora
-- **Velocidade do vento**: 0-15 m/s com padrões sazonais
-- **Direção do vento**: 0-360° com variações temporais
-- **Temperatura**: 15-25°C correlacionada com hora
-- **Umidade**: 30-70% com variação sazonal
+O sistema utiliza **157.800 registros históricos (2000-2017)** incluindo:
+- **Timestamp**: Registros históricos detalhados
+- **Temperatura**: 10-45°C com padrões climáticos brasileiros
+- **Umidade**: 20-95% com variações sazonais
+- **Velocidade do vento**: 0-15 m/s para cálculo térmico
+- **Pressão atmosférica**: 980-1030 hPa
+- **Radiação solar**: 0-1200 W/m² com ciclos diário/sazonal
+- **Sensação térmica**: 5-87°C (Heat Index + Wind Chill)
+- **Zona de conforto**: Muito Frio, Frio, Confortável, Quente, Muito Quente
 
-## 🤖 Algoritmos de Clustering
+## 🤖 Algoritmos de Cálculo Térmico
 
-### K-Means (5 clusters)
-- **Features**: velocidade, direção, hora, dia da semana
-- **Preprocessamento**: Normalização e tratamento circular da direção
-- **Objetivo**: Identificar padrões comportamentais
+### Heat Index (Temperaturas ≥ 27°C)
+- **Fórmula**: Rothfusz com ajustes para umidade brasileira
+- **Variáveis**: Temperatura do ar + Umidade relativa
+- **Ajustes**: Pressão atmosférica e radiação solar
 
-### Interpretação dos Clusters
-- **Cluster 0**: Ventos noturnos fracos
-- **Cluster 1**: Ventos matutinos moderados
-- **Cluster 2**: Ventos vespertinos intensos
-- **Cluster 3**: Ventos irregulares
-- **Cluster 4**: Ventos constantes diurnos
+### Wind Chill (Temperaturas < 27°C)
+- **Fórmula**: Joint Action Group for Temperature Indices
+- **Variáveis**: Temperatura + Velocidade do vento
+- **Correção**: Adaptação para clima tropical/subtropical brasileiro
 
-## 🔄 Fluxo de Dados
+### Classificação de Zonas de Conforto
+- **Muito Frio**: < 16°C sensação térmica
+- **Frio**: 16-21°C sensação térmica
+- **Confortável**: 21-26°C sensação térmica (zona ideal)
+- **Quente**: 26-32°C sensação térmica
+- **Muito Quente**: > 32°C sensação térmica
+
+## 🔄 Fluxo de Dados Térmicos
 
 ```
-Dados de Vento → ThingsBoard → Trendz Analytics → Insights
-     ↓              ↓              ↓
-  Sensores      Dashboard      Clustering/ML
-     ↓              ↓              ↓
-  CSV/API      Tempo Real    Business Intelligence
+Dados Climáticos → Cálculo Térmico → ThingsBoard → Trendz Analytics → Insights
+       ↓                 ↓              ↓              ↓
+   Sensores         Heat Index      Dashboard      Predição ML
+       ↓             Wind Chill         ↓              ↓
+   CSV/API         Zona Conforto   Tempo Real   Business Intelligence
 ```
 
 ## 📋 Checklist de Configuração
@@ -110,20 +118,21 @@ Dados de Vento → ThingsBoard → Trendz Analytics → Insights
 - [ ] Docker e Docker Compose instalados
 - [ ] Portas 8080, 8888, 5432 disponíveis
 - [ ] Pelo menos 4GB de RAM livres
+- [ ] Dataset térmico de 157.800 registros
 
-### ✅ Configuração
+### ✅ Configuração Térmica
 - [ ] Serviços Docker iniciados
 - [ ] ThingsBoard acessível
 - [ ] Trendz Analytics acessível
-- [ ] Dados de exemplo gerados
+- [ ] Dataset térmico carregado
 - [ ] Dashboards configurados
 
 ### ✅ Validação
 - [ ] Login no Trendz realizado
-- [ ] Dados importados com sucesso
-- [ ] Rosa dos ventos visível
-- [ ] Clusters identificados
-- [ ] Métricas calculadas
+- [ ] Dados térmicos importados com sucesso
+- [ ] Mapas de calor térmico visíveis
+- [ ] Zonas de conforto identificadas
+- [ ] Métricas de sensação térmica calculadas
 
 ## 🛠️ Solução de Problemas
 

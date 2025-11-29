@@ -1,5 +1,5 @@
 """
-Configuração do Trendz Analytics para análise de dados de vento
+Configuração do Trendz Analytics para análise de dados de sensação térmica
 """
 
 import os
@@ -42,23 +42,26 @@ class TrendzConfig:
             print(f"Erro ao obter token: {e}")
             return None
     
-    def create_wind_datasource(self) -> Dict:
-        """Criar fonte de dados para análise de vento"""
+    def create_thermal_datasource(self) -> Dict:
+        """Criar fonte de dados para análise de sensação térmica"""
         if not self.api_token:
             self.get_auth_token()
         
         datasource_config = {
-            "name": "Wind Data Source",
+            "name": "Thermal Comfort Data Source",
             "type": "THINGSBOARD",
             "configuration": {
                 "url": self.thingsboard_url,
                 "enableDeviceAttributes": True,
                 "enableEntityAttributes": True,
                 "telemetryKeys": [
-                    "wind_velocity",
-                    "wind_direction", 
                     "temperature",
-                    "humidity"
+                    "humidity", 
+                    "wind_velocity",
+                    "pressure",
+                    "solar_radiation",
+                    "thermal_sensation",
+                    "comfort_zone"
                 ],
                 "attributeKeys": [
                     "location",
@@ -87,73 +90,79 @@ class TrendzConfig:
             print(f"Erro ao criar datasource: {e}")
             return None
 
-class WindAnalyticsViews:
-    """Configurar visualizações específicas para análise de vento"""
+class ThermalAnalyticsViews:
+    """Configurar visualizações específicas para análise de sensação térmica"""
     
     @staticmethod
-    def wind_rose_config() -> Dict:
-        """Configuração para Rosa dos Ventos"""
+    def thermal_heatmap_config() -> Dict:
+        """Configuração para Mapa de Calor de Sensação Térmica"""
         return {
-            "name": "Wind Rose Analysis",
-            "type": "POLAR_CHART",
+            "name": "Thermal Sensation Heatmap",
+            "type": "HEATMAP",
             "settings": {
-                "angleField": "wind_direction",
-                "radiusField": "wind_velocity",
-                "colorField": "cluster_id",
+                "xField": "hour_of_day",
+                "yField": "day_of_week",
+                "valueField": "thermal_sensation",
+                "colorField": "comfort_zone",
                 "aggregation": "AVG",
                 "timeInterval": "1h",
-                "clustering": {
+                "comfort_zones": {
                     "enabled": True,
-                    "algorithm": "KMEANS",
+                    "zones": 5,
                     "clusters": 5
                 }
             }
         }
     
     @staticmethod
-    def wind_patterns_config() -> Dict:
-        """Configuração para análise de padrões temporais"""
+    def comfort_zones_config() -> Dict:
+        """Configuração para análise de zonas de conforto térmico"""
         return {
-            "name": "Wind Patterns Timeline",
-            "type": "TIME_SERIES",
+            "name": "Thermal Comfort Zones Analysis",
+            "type": "SCATTER_CHART",
             "settings": {
-                "metrics": ["wind_velocity", "wind_direction"],
-                "groupBy": ["hour", "day_of_week"],
+                "xField": "temperature",
+                "yField": "humidity",
+                "colorField": "comfort_zone",
+                "sizeField": "thermal_sensation",
                 "aggregation": "AVG",
-                "clustering": {
-                    "enabled": True,
-                    "features": ["wind_velocity", "wind_direction", "hour"],
-                    "algorithm": "DBSCAN"
+                "zones": {
+                    "muito_frio": {"range": [0, 16], "color": "#0066cc"},
+                    "frio": {"range": [16, 21], "color": "#66ccff"},
+                    "confortavel": {"range": [21, 26], "color": "#00cc66"},
+                    "quente": {"range": [26, 32], "color": "#ffcc00"},
+                    "muito_quente": {"range": [32, 50], "color": "#ff6600"}
                 }
             }
         }
     
-    @staticmethod
-    def wind_statistics_config() -> Dict:
-        """Configuração para estatísticas de vento"""
+    @staticmethod  
+    def thermal_statistics_config() -> Dict:
+        """Configuração para estatísticas de sensação térmica"""
         return {
-            "name": "Wind Statistics Dashboard",
+            "name": "Thermal Comfort Statistics Dashboard",
             "type": "KPI_DASHBOARD",
             "widgets": [
                 {
                     "type": "GAUGE",
-                    "metric": "wind_velocity",
+                    "metric": "thermal_sensation",
                     "aggregation": "AVG",
-                    "title": "Velocidade Média"
+                    "title": "Sensação Térmica Média"
                 },
                 {
-                    "type": "COMPASS",
-                    "metric": "wind_direction",
-                    "aggregation": "MODE",
-                    "title": "Direção Predominante"
+                    "type": "PIE_CHART",
+                    "metric": "comfort_zone",
+                    "aggregation": "COUNT",
+                    "title": "Distribuição Zonas de Conforto"
                 },
                 {
                     "type": "HISTOGRAM",
-                    "metric": "wind_velocity",
+                    "metric": "thermal_sensation",
                     "bins": 20,
-                    "title": "Distribuição de Velocidades"
+                    "title": "Distribuição de Sensação Térmica"
                 }
             ]
+        }
         }
 
 class TrendzIntegration:
@@ -161,11 +170,11 @@ class TrendzIntegration:
     
     def __init__(self):
         self.config = TrendzConfig()
-        self.views = WindAnalyticsViews()
+        self.views = ThermalAnalyticsViews()
     
     def setup_complete_analytics(self):
-        """Configuração completa do ambiente de analytics"""
-        print("🚀 Configurando Trendz Analytics para análise de vento...")
+        """Configuração completa do ambiente de analytics térmicos"""
+        print("🚀 Configurando Trendz Analytics para análise de sensação térmica...")
         
         # 1. Autenticar
         token = self.config.get_auth_token()
@@ -176,7 +185,7 @@ class TrendzIntegration:
         print("✅ Autenticado com sucesso")
         
         # 2. Criar datasource
-        datasource = self.config.create_wind_datasource()
+        datasource = self.config.create_thermal_datasource()
         if datasource:
             print("✅ Datasource criado com sucesso")
         else:
@@ -185,9 +194,9 @@ class TrendzIntegration:
         
         # 3. Configurar visualizações (seria feito via API se disponível)
         views_config = {
-            "wind_rose": self.views.wind_rose_config(),
-            "patterns": self.views.wind_patterns_config(),
-            "statistics": self.views.wind_statistics_config()
+            "thermal_heatmap": self.views.thermal_heatmap_config(),
+            "comfort_zones": self.views.comfort_zones_config(),
+            "thermal_statistics": self.views.thermal_statistics_config()
         }
         
         print("✅ Configurações de visualização preparadas:")
@@ -196,14 +205,14 @@ class TrendzIntegration:
         
         return True
     
-    def export_sample_data(self, num_records: int = 1000):
-        """Gerar dados de exemplo para teste"""
+    def export_sample_data(self):
+        """Gerar dados de exemplo térmicos para teste"""
         import numpy as np
         import pandas as pd
         
         np.random.seed(42)
         
-        # Gerar dados sintéticos de vento
+        # Gerar dados sintéticos térmicos
         timestamps = pd.date_range(
             start=datetime.now() - timedelta(days=30),
             end=datetime.now(),
@@ -216,25 +225,39 @@ class TrendzIntegration:
             hour = ts.hour
             day_factor = np.sin(2 * np.pi * hour / 24)
             
-            velocity = 5 + 3 * day_factor + np.random.normal(0, 2)
-            velocity = max(0, velocity)  # Velocidade não pode ser negativa
+            # Dados térmicos realistas
+            temperature = 22 + 8 * day_factor + np.random.normal(0, 3)
+            temperature = max(10, min(45, temperature))  # Range realista
             
-            direction = (180 + 60 * day_factor + np.random.normal(0, 30)) % 360
+            humidity = 60 + 20 * np.sin(2 * np.pi * ts.day / 30) + np.random.normal(0, 10)
+            humidity = max(20, min(95, humidity))
+            
+            wind_velocity = 2 + 3 * abs(day_factor) + np.random.normal(0, 1)
+            wind_velocity = max(0, min(15, wind_velocity))
+            
+            pressure = 1013 + 10 * np.sin(2 * np.pi * ts.day / 365) + np.random.normal(0, 5)
+            solar_radiation = max(0, 800 * max(0, np.sin(np.pi * hour / 12)) + np.random.normal(0, 100))
+            
+            # Calcular sensação térmica (simplificado)
+            thermal_sensation = temperature + 0.1 * humidity - 0.5 * wind_velocity
             
             data.append({
                 "timestamp": ts.isoformat(),
-                "wind_velocity": round(velocity, 2),
-                "wind_direction": round(direction, 2),
-                "temperature": round(20 + 5 * day_factor + np.random.normal(0, 3), 1),
-                "humidity": round(50 + 20 * np.sin(2 * np.pi * ts.day / 30) + np.random.normal(0, 10), 1)
+                "temperature": round(temperature, 1),
+                "humidity": round(humidity, 1),
+                "wind_velocity": round(wind_velocity, 2),
+                "pressure": round(pressure, 1),
+                "solar_radiation": round(solar_radiation, 1),
+                "thermal_sensation": round(thermal_sensation, 1),
+                "comfort_zone": "Confortável" if 21 <= thermal_sensation <= 26 else "Outro"
             })
         
         # Salvar arquivo para importação
         df = pd.DataFrame(data)
-        output_path = '/home/raf75/quinto-periodo/avd/avd_projeto/data/sample_wind_data.csv'
+        output_path = '/home/raf75/quinto-periodo/avd/avd_projeto/data/sample_thermal_data.csv'
         df.to_csv(output_path, index=False)
         
-        print(f"✅ {len(data)} registros de dados de exemplo gerados")
+        print(f"✅ {len(data)} registros de dados térmicos de exemplo gerados")
         print(f"📁 Arquivo salvo: {output_path}")
         
         return df
@@ -248,10 +271,10 @@ if __name__ == "__main__":
     if success:
         # Gerar dados de exemplo
         integration.export_sample_data()
-        print("\n🎉 Configuração do Trendz Analytics concluída!")
+        print("\n🎉 Configuração do Trendz Analytics para análise térmica concluída!")
         print("\nPróximos passos:")
         print("1. Acesse http://localhost:8888 para Trendz Analytics")
-        print("2. Importe os dados de exemplo")
-        print("3. Configure os dashboards de análise de vento")
+        print("2. Importe os dados térmicos de exemplo")
+        print("3. Configure os dashboards de sensação térmica")
     else:
         print("\n❌ Falha na configuração. Verifique se os serviços estão rodando.")

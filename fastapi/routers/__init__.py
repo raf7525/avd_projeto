@@ -1,5 +1,5 @@
 """
-API Routers - Wind Pattern Analysis
+API Routers - thermal Pattern Analysis
 ===================================
 
 Módulo contendo todos os routers da API.

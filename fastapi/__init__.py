@@ -1,5 +1,5 @@
 """
-Wind Pattern Analysis API
+thermal Pattern Analysis API
 ========================
 
 API para análise de padrões de vento usando Machine Learning.

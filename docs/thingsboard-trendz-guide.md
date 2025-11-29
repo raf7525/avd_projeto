@@ -61,10 +61,10 @@ Dados de Vento → ThingsBoard → Trendz Analytics → Insights
 # Exemplo de envio de dados para ThingsBoard
 import requests
 
-def send_wind_data(velocity, direction, timestamp):
+def send_thermal_data(velocity, direction, timestamp):
     data = {
-        "wind_velocity": velocity,
-        "wind_direction": direction, 
+        "thermal_velocity": velocity,
+        "thermal_direction": direction, 
         "timestamp": timestamp
     }
     response = requests.post(

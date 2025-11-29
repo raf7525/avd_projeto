@@ -6,6 +6,7 @@ API REST para análise de padrões de vento usando ML.
 Integrada com MLflow, ThingsBoard e Trendz Analytics.
 """
 
+from avd_projeto.fastapi.routers import thermal
 from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -23,12 +24,12 @@ import asyncio
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from fastapi.models.schemas import (
-    WindDataInput, WindDataOutput, WindDataBatch, 
+    thermalDataInput, thermalDataOutput, thermalDataBatch, 
     ClusteringRequest, ClusteringResponse,
     PredictionRequest, PredictionResponse,
     DashboardData, SystemHealth, APIResponse
 )
-from fastapi.routers import health, wind, clustering, prediction, dashboard
+from fastapi.routers import health, clustering, prediction, dashboard
 from fastapi.services.database import get_db_connection
 from fastapi.services.mlflow_service import MLflowService
 
@@ -41,7 +42,7 @@ logger = logging.getLogger(__name__)
 
 # Inicializar FastAPI
 app = FastAPI(
-    title="Wind Pattern Analysis API",
+    title="thermal Pattern Analysis API",
     description="""
     🌪️ **API para Análise de Padrões de Vento**
     
@@ -103,7 +104,7 @@ async def startup_event():
     """Inicializar serviços na inicialização da aplicação."""
     global mlflow_service
     
-    logger.info("🚀 Inicializando Wind Pattern Analysis API...")
+    logger.info("🚀 Inicializando thermal Pattern Analysis API...")
     
     try:
         # Inicializar MLflow
@@ -124,11 +125,11 @@ async def startup_event():
 @app.on_event("shutdown")
 async def shutdown_event():
     """Cleanup na finalização da aplicação."""
-    logger.info("🛑 Finalizando Wind Pattern Analysis API...")
+    logger.info("🛑 Finalizando thermal Pattern Analysis API...")
 
 # Incluir routers
 app.include_router(health.router, prefix="/health", tags=["Health"])
-app.include_router(wind.router, prefix="/api/v1/wind", tags=["Wind Data"])
+app.include_router(thermal.router, prefix="/api/v1/thermal", tags=["thermal Data"])
 app.include_router(clustering.router, prefix="/api/v1/clustering", tags=["Clustering"])
 app.include_router(prediction.router, prefix="/api/v1/prediction", tags=["Prediction"])
 app.include_router(dashboard.router, prefix="/api/v1/dashboard", tags=["Dashboard"])
@@ -143,7 +144,7 @@ async def root():
     """
     return APIResponse(
         success=True,
-        message="Wind Pattern Analysis API está funcionando!",
+        message="thermal Pattern Analysis API está funcionando!",
         data={
             "version": "1.0.0",
             "description": "API para análise de padrões de vento",
@@ -151,7 +152,7 @@ async def root():
             "health": "/health",
             "timestamp": datetime.now(),
             "endpoints": {
-                "wind_data": "/api/v1/wind",
+                "thermal_data": "/api/v1/thermal",
                 "clustering": "/api/v1/clustering", 
                 "prediction": "/api/v1/prediction",
                 "dashboard": "/api/v1/dashboard"
@@ -167,7 +168,7 @@ async def api_info():
     Retorna informações técnicas sobre a configuração da API.
     """
     return {
-        "api_name": "Wind Pattern Analysis API",
+        "api_name": "thermal Pattern Analysis API",
         "version": "1.0.0",
         "python_version": sys.version,
         "environment": {

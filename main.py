@@ -1,15 +1,15 @@
 """
-FastAPI - Análise de Padrões de Vento
-=====================================
+FastAPI - Sistema de Predição de Sensação Térmica
+=================================================
 
-API REST para análise de padrões de vento com clustering e visualização.
+API REST para análise de sensação térmica e predição de conforto térmico.
 Integrado com MLflow, ThingsBoard e Trendz Analytics.
 
 Endpoints principais:
-- /wind/data: CRUD de dados de vento
-- /wind/analysis: Análise e clustering
-- /wind/prediction: Predições ML
-- /dashboard: Integrações com dashboards
+- /thermal/data: CRUD de dados térmicos (temperatura, umidade, pressão, radiação solar)
+- /thermal/analysis: Cálculo de sensação térmica e classificação de conforto
+- /thermal/prediction: Predições ML de conforto térmico
+- /dashboard: Visualizações de zonas de conforto e análises temporais
 """
 
 from fastapi import FastAPI, HTTPException
@@ -21,13 +21,13 @@ import os
 from datetime import datetime
 
 # Routers
-from fastapi.routers import wind_data, analysis, prediction, dashboard, health
+from fastapi.routers import thermal_data, analysis, prediction, dashboard, health
 
 # Configurações
 app = FastAPI(
-    title="AVD - Análise de Padrões de Vento",
-    description="API REST para análise de padrões de vento com Machine Learning",
-    version="1.0.0",
+    title="AVD - Sistema de Predição de Sensação Térmica",
+    description="API REST para predição de conforto térmico com Machine Learning e análise de sensação térmica",
+    version="2.0.0",
     docs_url="/docs",
     redoc_url="/redoc",
     openapi_url="/openapi.json"
@@ -44,10 +44,10 @@ app.add_middleware(
 
 # Incluir routers
 app.include_router(health.router, prefix="/health", tags=["Health"])
-app.include_router(wind_data.router, prefix="/wind", tags=["Wind Data"])
-app.include_router(analysis.router, prefix="/analysis", tags=["Analysis"])
-app.include_router(prediction.router, prefix="/prediction", tags=["Prediction"])
-app.include_router(dashboard.router, prefix="/dashboard", tags=["Dashboard"])
+app.include_router(thermal_data.router, prefix="/thermal", tags=["Thermal Comfort"])
+app.include_router(analysis.router, prefix="/analysis", tags=["Thermal Analysis"])
+app.include_router(prediction.router, prefix="/prediction", tags=["Thermal Prediction"])
+app.include_router(dashboard.router, prefix="/dashboard", tags=["Thermal Dashboard"])
 
 # Servir arquivos estáticos (se necessário)
 # app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -59,7 +59,7 @@ async def root():
     <!DOCTYPE html>
     <html>
     <head>
-        <title>AVD - Análise de Padrões de Vento</title>
+        <title>AVD - Sistema de Predição de Sensação Térmica</title>
         <style>
             body { 
                 font-family: Arial, sans-serif; 
@@ -86,7 +86,7 @@ async def root():
                 margin: 20px 0;
             }
             .link-card {
-                background: #3498db;
+                background: #e74c3c;
                 color: white;
                 padding: 15px;
                 text-decoration: none;
@@ -94,9 +94,9 @@ async def root():
                 text-align: center;
                 transition: background 0.3s;
             }
-            .link-card:hover { background: #2980b9; }
+            .link-card:hover { background: #c0392b; }
             .status { 
-                background: #e8f5e8; 
+                background: #fff3cd; 
                 padding: 15px; 
                 border-radius: 5px; 
                 margin: 20px 0;
@@ -108,12 +108,12 @@ async def root():
     <body>
         <div class="container">
             <div class="header">
-                <h1>🌪️ AVD - Análise de Padrões de Vento</h1>
-                <p>API REST para análise de padrões de vento com Machine Learning</p>
+                <h1>🌡️ AVD - Sistema de Predição de Sensação Térmica</h1>
+                <p>API REST para predição de conforto térmico com Machine Learning</p>
             </div>
             
             <div class="status">
-                <strong>📊 Status:</strong> API Online - """ + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + """
+                <strong>🌡️ Status:</strong> API Online - Análise Térmica Ativa - """ + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + """
             </div>
 
             <h2>🔗 Links Úteis</h2>
@@ -136,44 +136,44 @@ async def root():
                 <a href="http://localhost:1010" class="link-card">
                     <span class="emoji">📊</span><br>
                     Jupyter Notebooks<br>
-                    <small>(Desenvolvimento)</small>
+                    <small>(Análise Térmica)</small>
                 </a>
                 <a href="http://localhost:5000" class="link-card">
                     <span class="emoji">🔬</span><br>
                     MLflow<br>
-                    <small>(Tracking ML)</small>
+                    <small>(ML Térmico)</small>
                 </a>
                 <a href="http://localhost:8080" class="link-card">
                     <span class="emoji">🌐</span><br>
                     ThingsBoard<br>
-                    <small>(IoT Platform)</small>
+                    <small>(Dados Térmicos)</small>
                 </a>
                 <a href="http://localhost:8888" class="link-card">
                     <span class="emoji">📈</span><br>
                     Trendz Analytics<br>
-                    <small>(Business Intelligence)</small>
+                    <small>(Análise Térmica)</small>
                 </a>
                 <a href="http://localhost:9001" class="link-card">
                     <span class="emoji">🗄️</span><br>
                     MinIO Console<br>
-                    <small>(Storage)</small>
+                    <small>(Storage Térmico)</small>
                 </a>
             </div>
 
             <h2>🎯 Endpoints Principais</h2>
             <ul>
-                <li><strong>GET /wind/data</strong> - Listar dados de vento</li>
-                <li><strong>POST /wind/data</strong> - Adicionar dados de vento</li>
-                <li><strong>POST /analysis/cluster</strong> - Análise de clustering</li>
-                <li><strong>GET /analysis/patterns</strong> - Padrões identificados</li>
-                <li><strong>POST /prediction/wind</strong> - Predição de vento</li>
-                <li><strong>GET /dashboard/thingsboard</strong> - Dados para ThingsBoard</li>
+                <li><strong>GET /thermal/data</strong> - Listar dados de sensação térmica</li>
+                <li><strong>POST /thermal/data</strong> - Adicionar dados térmicos</li>
+                <li><strong>POST /thermal/calculate</strong> - Calcular sensação térmica</li>
+                <li><strong>GET /thermal/comfort-zones</strong> - Análise de zonas de conforto</li>
+                <li><strong>POST /prediction/thermal</strong> - Predição de conforto térmico</li>
+                <li><strong>GET /dashboard/thermal-stats</strong> - Estatísticas térmicas</li>
             </ul>
 
             <div class="status">
-                <strong>🚀 Projeto:</strong> Agrupar Padrões de Vento<br>
-                <strong>🎯 Objetivo:</strong> Agrupar horários/dias com comportamentos semelhantes de vento<br>
-                <strong>📊 Visualização:</strong> Rosa dos ventos colorida por cluster + painel com médias
+                <strong>🚀 Projeto:</strong> Sistema de Predição de Sensação Térmica<br>
+                <strong>🎯 Objetivo:</strong> Predizer sensação térmica e classificar zonas de conforto<br>
+                <strong>📊 Dataset:</strong> 157.800 registros históricos (2000-2017) + 5 zonas de conforto
             </div>
         </div>
     </body>
@@ -185,10 +185,16 @@ async def root():
 async def info():
     """Informações da API e versão."""
     return {
-        "name": "AVD - Análise de Padrões de Vento",
-        "version": "1.0.0",
-        "description": "API REST para análise de padrões de vento com Machine Learning",
+        "name": "AVD - Sistema de Predição de Sensação Térmica",
+        "version": "2.0.0",
+        "description": "API REST para predição de conforto térmico com Machine Learning",
         "timestamp": datetime.now().isoformat(),
+        "dataset": {
+            "records": 157800,
+            "period": "2000-2017",
+            "comfort_zones": 5,
+            "algorithm": "Heat Index + Wind Chill"
+        },
         "docs": {
             "swagger": "/docs",
             "redoc": "/redoc",
