@@ -13,7 +13,7 @@ import asyncio
 import time
 from typing import Dict, Any
 
-from fastapi.models.schemas import SystemHealth, HealthStatus, APIResponse
+from app.models.schemas import SystemHealth, HealthStatus, APIResponse
 
 router = APIRouter()
 

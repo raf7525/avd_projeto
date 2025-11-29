@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from fastapi.models.schemas import ClusteringRequest, ClusteringResponse, APIResponse
+from app.models.schemas import ClusteringRequest, ClusteringResponse, APIResponse
 
 router = APIRouter()
 

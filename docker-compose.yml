@@ -26,7 +26,15 @@ services:
         echo '  - MLflow: http://localhost:5000'
         echo '  - Trendz Analytics: http://localhost:8888'
         echo '  - ThingsBoard: http://localhost:8080'
-        tail -f /dev/null
+        
+        # Iniciar FastAPI
+        cd /app && uvicorn main:app --host 0.0.0.0 --port 8060 &
+        
+        # Iniciar Jupyter Notebook
+        jupyter lab --ip=0.0.0.0 --port=1010 --no-browser --allow-root &
+        
+        # Manter container vivo
+        wait
       "
 
   # MLflow Tracking Server

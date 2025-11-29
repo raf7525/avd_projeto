@@ -21,7 +21,7 @@ import os
 from datetime import datetime
 
 # Routers
-from fastapi.routers import thermal_data, analysis, prediction, dashboard, health
+from app.routers import thermal_comfort, prediction, dashboard, health, clustering
 
 # Configurações
 app = FastAPI(
@@ -44,8 +44,8 @@ app.add_middleware(
 
 # Incluir routers
 app.include_router(health.router, prefix="/health", tags=["Health"])
-app.include_router(thermal_data.router, prefix="/thermal", tags=["Thermal Comfort"])
-app.include_router(analysis.router, prefix="/analysis", tags=["Thermal Analysis"])
+app.include_router(thermal_comfort.router, prefix="/thermal", tags=["Thermal Comfort"])
+app.include_router(clustering.router, prefix="/analysis", tags=["Thermal Analysis"])
 app.include_router(prediction.router, prefix="/prediction", tags=["Thermal Prediction"])
 app.include_router(dashboard.router, prefix="/dashboard", tags=["Thermal Dashboard"])
 

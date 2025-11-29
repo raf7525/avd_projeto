@@ -5,9 +5,27 @@ Objetivo: Desenvolver sistema de previsão de sensação térmica e classificaç
 Dados: Temperatura, umidade, velocidade do vento, pressão atmosférica e radiação solar (2000-2017).  
 Visualização: Mapas de calor de conforto térmico + dashboards de predição + análises temporais de zonas de conforto.
 
-## 🚀 CONFIGURAÇÃO RÁPIDA TRENDZ ANALYTICS - ANÁLISE TÉRMICA
+## 🚀 EXECUÇÃO DO SISTEMA
 
-### Executar configuração automática:
+## SENHA THINGSBOARD
+tenant@thingsboard.org
+tenant
+
+### ⚡ Início Rápido (RECOMENDADO)
+```bash
+./executar.sh
+```
+Este script automatiza toda a configuração e verificação do sistema.
+
+### 📋 Guias de Execução Disponíveis
+
+1. **[COMANDOS_EXECUCAO.md](COMANDOS_EXECUCAO.md)** - Guia completo de comandos
+2. **[REFERENCIA_RAPIDA.md](REFERENCIA_RAPIDA.md)** - Comandos essenciais
+3. **`./executar.sh`** - Script automatizado de execução
+
+### 🚀 CONFIGURAÇÃO TRENDZ ANALYTICS
+
+#### Executar configuração automática:
 ```bash
 ./setup-trendz.sh
 ```
