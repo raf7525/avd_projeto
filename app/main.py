@@ -128,7 +128,9 @@ async def shutdown_event():
     logger.info("🛑 Finalizando thermal Pattern Analysis API...")
 
 # Incluir routers
+from fastapi.routers import inmet
 app.include_router(health.router, prefix="/health", tags=["Health"])
+app.include_router(inmet.router, prefix="/api/v1", tags=["INMET Data Ingestion"])
 app.include_router(thermal.router, prefix="/api/v1/thermal", tags=["thermal Data"])
 app.include_router(clustering.router, prefix="/api/v1/clustering", tags=["Clustering"])
 app.include_router(prediction.router, prefix="/api/v1/prediction", tags=["Prediction"])
