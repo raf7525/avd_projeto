@@ -16,6 +16,7 @@ ipykernel
 # === FASTAPI (WEB API) ===
 fastapi
 uvicorn[standard]
+python-multipart
 
 # === STORAGE S3/MinIO ===
 boto3
@@ -27,21 +28,16 @@ psycopg2-binary
 
 # === MLFLOW ===
 mlflow
-mlflow[extras]
-
-# === DOCKER UTILITIES ===
-python-dotenv
 
 # === SNOWFLAKE ===
 snowflake-connector-python
 snowflake-sqlalchemy
 
-# === ADDITIONAL TOOLS ===
+# === IOT / THINGSBOARD ===
+tb-mqtt-client
 requests
-pyyaml
-python-multipart
 
 # === UTILITIES ===
-requests
 python-dotenv
 tqdm
+pyyaml

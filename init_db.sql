@@ -1,19 +1,23 @@
 -- Script de inicialização do banco de dados
--- Cria databases necessários para o projeto
+-- PostgreSQL
 
--- Database para MLflow
-CREATE DATABASE IF NOT EXISTS mlflow;
+-- Database para MLflow (created by POSTGRES_DB env var, but good to ensure)
+SELECT 'CREATE DATABASE mlflow'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'mlflow')\gexec
 
--- Database para dados do projeto (opcional)
-CREATE DATABASE IF NOT EXISTS avd_wind_data;
+-- Database para dados do projeto
+SELECT 'CREATE DATABASE avd_wind_data'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'avd_wind_data')\gexec
 
 -- Database para ThingsBoard
-CREATE DATABASE IF NOT EXISTS thingsboard;
+SELECT 'CREATE DATABASE thingsboard'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'thingsboard')\gexec
 
 -- Database para Trendz Analytics
-CREATE DATABASE IF NOT EXISTS trendz;
+SELECT 'CREATE DATABASE trendz'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'trendz')\gexec
 
--- Usuário para aplicação (já criado via env vars, mas garantindo permissões)
+-- Grant privileges
 GRANT ALL PRIVILEGES ON DATABASE mlflow TO "user";
 GRANT ALL PRIVILEGES ON DATABASE avd_wind_data TO "user";
 GRANT ALL PRIVILEGES ON DATABASE thingsboard TO "user";

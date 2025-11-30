@@ -10,25 +10,20 @@ services:
       - "1010:1010"  # Jupyter Notebook
     volumes:
       - .:/app
-      - avd_data:/app/data
     environment:
       - PYTHONPATH=/app
       - JUPYTER_ENABLE_LAB=yes
+      - THINGSBOARD_HOST=http://thingsboard:9090
     depends_on:
-      - postgres
-      - minio
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_started
     command: >
       bash -c "
         echo 'Iniciando serviços...'
-        echo 'Acesse:'
-        echo '  - FastAPI: http://localhost:8060'
-        echo '  - Jupyter: http://localhost:1010'
-        echo '  - MLflow: http://localhost:5000'
-        echo '  - Trendz Analytics: http://localhost:8888'
-        echo '  - ThingsBoard: http://localhost:8080'
-        
         # Iniciar FastAPI
-        cd /app && uvicorn main:app --host 0.0.0.0 --port 8060 &
+        uvicorn main:app --host 0.0.0.0 --port 8060 &
         
         # Iniciar Jupyter Notebook
         jupyter lab --ip=0.0.0.0 --port=1010 --no-browser --allow-root &
@@ -52,8 +47,10 @@ services:
       - AWS_SECRET_ACCESS_KEY=minioadmin
       - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
     depends_on:
-      - postgres
-      - minio
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_started
     command: >
       mlflow server 
       --backend-store-uri postgresql://user:password@postgres:5432/mlflow
@@ -74,6 +71,11 @@ services:
       - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
     ports:
       - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d mlflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   # MinIO (S3-compatible) para armazenamento de artifacts
   minio:
@@ -110,7 +112,8 @@ services:
       - tb_data:/data
       - tb_logs:/var/log/thingsboard
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
 
   # Trendz Analytics
   trendz:
@@ -131,19 +134,10 @@ services:
       - trendz_data:/data
       - trendz_logs:/var/log/trendz
     depends_on:
-      - postgres
-      - thingsboard
-
-  # Snowflake Connector (para quando configurarmos)
-  # snowflake_connector:
-  #   build: .
-  #   container_name: avd_snowflake
-  #   environment:
-  #     - SNOWFLAKE_ACCOUNT=your_account
-  #     - SNOWFLAKE_USER=your_user
-  #     - SNOWFLAKE_PASSWORD=your_password
-  #   volumes:
-  #     - .:/app
+      postgres:
+        condition: service_healthy
+      thingsboard:
+        condition: service_started
 
 volumes:
   postgres_data:

@@ -1,61 +1,55 @@
-# 🌡️ Projeto AVD - Análise e Visualização de Dados  
-## PROBLEMA SELECIONADO
-**Prever Sensação Térmica**  
-Objetivo: Desenvolver sistema de previsão de sensação térmica e classificação de zonas de conforto baseado em dados meteorológicos históricos.  
-Dados: Temperatura, umidade, velocidade do vento, pressão atmosférica e radiação solar (2000-2017).  
-Visualização: Mapas de calor de conforto térmico + dashboards de predição + análises temporais de zonas de conforto.
+# 🌡️ Projeto AVD - Análise e Visualização de Dados
 
-## 🚀 EXECUÇÃO DO SISTEMA
+## 🎯 Objetivo
+**Prever Sensação Térmica**
+Desenvolver sistema de previsão de sensação térmica e classificação de zonas de conforto baseado em dados meteorológicos históricos.
 
-## SENHA THINGSBOARD
-tenant@thingsboard.org
-tenant
+## 🏗️ Arquitetura
+- **FastAPI**: Ingestão e API de dados (Porta 8060)
+- **Jupyter Notebook**: Análise e Modelagem (Porta 1010)
+- **MLflow**: Versionamento de Modelos (Porta 5000)
+- **ThingsBoard**: Visualização IoT (Porta 8080)
+- **Trendz Analytics**: Analytics Avançado (Porta 8888)
+- **MinIO**: Armazenamento de Objetos (S3) (Porta 9000/9001)
+- **PostgreSQL**: Banco de Dados Relacional
 
-### ⚡ Início Rápido (RECOMENDADO)
+## 🚀 Como Executar
+
+### 1. Iniciar Serviços
+Certifique-se de ter Docker e Docker Compose instalados.
+
 ```bash
-./executar.sh
-```
-Este script automatiza toda a configuração e verificação do sistema.
-
-### 📋 Guias de Execução Disponíveis
-
-1. **[COMANDOS_EXECUCAO.md](COMANDOS_EXECUCAO.md)** - Guia completo de comandos
-2. **[REFERENCIA_RAPIDA.md](REFERENCIA_RAPIDA.md)** - Comandos essenciais
-3. **`./executar.sh`** - Script automatizado de execução
-
-### 🚀 CONFIGURAÇÃO TRENDZ ANALYTICS
-
-#### Executar configuração automática:
-```bash
-./setup-trendz.sh
+docker-compose up --build
 ```
 
-### Acesso aos serviços:
-- **Trendz Analytics**: http://localhost:8888 (tenant@thingsboard.org / tenant)  
-- **ThingsBoard**: http://localhost:8080 (tenant@thingsboard.org / tenant)
+### 2. Gerar e Ingerir Dados
+Para popular o ThingsBoard com dados para visualização:
 
-📖 **Guia completo**: [docs/trendz-setup-guide.md](docs/trendz-setup-guide.md)
+```bash
+# 1. Gerar dados sintéticos (se necessário)
+python3 scripts/generate_data.py #JA TEMOS!!!
 
-### 🌡️ Dataset Térmico  
-- **157.800 registros** históricos (2000-2017)  
-- **Campos**: temperature, humidity, wind_velocity, pressure, solar_radiation, thermal_sensation, comfort_zone  
-- **5 Zonas de Conforto**: Muito Frio, Frio, Confortável, Quente, Muito Quente  
-- **Algoritmos**: Heat Index + Wind Chill para cálculo de sensação térmica
+# 2. Enviar dados para o ThingsBoard
+python3 scripts/ingest_data.py
+```
 
+### 3. Acessar Dashboards
+- **ThingsBoard**: http://localhost:8080
+  - **Login**: tenant@thingsboard.org
+  - **Senha**: tenant
+- **Trendz**: http://localhost:8888
 
-# PORTAS
-como requisitado no projeto as portas são essas:
- FastAPI:         http://localhost:8060
- Jupyter:         http://localhost:1010
- MLflow:          http://localhost:5000
- Trendz Analytics: http://localhost:8888
- ThingsBoard:     http://localhost:8080
-  MinIO Console:    http://localhost:9001 (admin/minioadmin)
- PostgreSQL:      localhost:5433 (user/password)
+## 📂 Estrutura do Projeto
+- `app/`: Código fonte da API FastAPI
+- `data/`: Dados brutos e processados
+- `docs/`: Documentação detalhada
+- `notebooks/`: Notebooks Jupyter para análise
+- `scripts/`: Scripts de automação (ingestão, geração de dados)
+- `legacy/`: Arquivos antigos/descontinuados
 
-# PASSOS FASTAPI - PREDIÇÃO TÉRMICA
- ✅ API de Sensação Térmica: Endpoints para cálculo e predição (thermal_comfort.py)  
- ✅ Banco PostgreSQL: Dataset de 157.800 registros térmicos integrado  
- 🔄 ML Pipeline: Modelos de predição de conforto térmico em desenvolvimento  
- 🔄 Dashboard: Visualizações de zonas de conforto e mapas de calor  
- ✅ Deploy: Sistema containerizado com Docker Compose funcionando
+## 🛠️ Solução de Problemas
+Se os gráficos no ThingsBoard estiverem vazios:
+1. Verifique se o script `scripts/ingest_data.py` foi executado com sucesso.
+2. Verifique se o dispositivo "Sensor Térmico 01" foi criado no ThingsBoard.
+3. Certifique-se de que os widgets do dashboard estão configurados para usar a fonte de dados correta (Entity alias).
+
