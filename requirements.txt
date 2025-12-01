@@ -41,3 +41,4 @@ requests
 python-dotenv
 tqdm
 pyyaml
+papermill
