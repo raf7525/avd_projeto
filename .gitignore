@@ -157,7 +157,6 @@ processed_data/
 *.zip
 
 # Model files
-models/
 *.joblib
 *.model
 *.pt
@@ -348,4 +347,5 @@ model_cache/
 
 # Arquivos de configuração local do Docker
 docker-compose.override.yml
-.env.docker
+.env.dockermodels/
+logs.txt

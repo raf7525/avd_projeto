@@ -6,7 +6,7 @@ API REST para análise de padrões de vento usando ML.
 Integrada com MLflow, ThingsBoard e Trendz Analytics.
 """
 
-from app.routers import thermal_comfort
+from avd_projeto.fastapi.routers import thermal
 from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -23,15 +23,15 @@ import asyncio
 # Adicionar o diretório raiz ao Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from app.models.schemas import (
-    ThermalDataInput, ThermalDataOutput, ThermalDataBatch, 
+from fastapi.models.schemas import (
+    thermalDataInput, thermalDataOutput, thermalDataBatch, 
     ClusteringRequest, ClusteringResponse,
     PredictionRequest, PredictionResponse,
     DashboardData, SystemHealth, APIResponse
 )
-from app.routers import health, clustering, prediction, dashboard
-from app.services.database import get_db_connection
-from app.services.mlflow_service import MLflowService
+from fastapi.routers import health, clustering, prediction, dashboard
+from fastapi.services.database import get_db_connection
+from fastapi.services.mlflow_service import MLflowService
 
 # Configuração de logging
 logging.basicConfig(
