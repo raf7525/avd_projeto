@@ -6,8 +6,11 @@ import sys
 import os
 import pandas as pd
 from pydantic import BaseModel
+from app.services.storage_service import StorageService
+from app.services.database import get_db_connection
 
 router = APIRouter()
+storage_service = StorageService()
 
 class ThermalDataInput(BaseModel):
     timestamp: datetime
@@ -63,7 +66,47 @@ async def create_thermal_data(thermal_data: ThermalDataInput):
             "comfort_zone": comfort_zone
         })
         
+        # Save to In-Memory Storage
         thermal_data_storage.append(data_dict)
+
+        # Save to MinIO (S3)
+        try:
+            s3_path = storage_service.save_json(data_dict)
+            data_dict["s3_path"] = s3_path
+        except Exception as e:
+            print(f"Failed to save to S3: {e}")
+
+        # Save to PostgreSQL
+        try:
+            conn = get_db_connection()
+            if conn:
+                cur = conn.cursor()
+                cur.execute(
+                    """
+                    INSERT INTO thermal_measurements 
+                    (timestamp, temperature, humidity, wind_velocity, pressure, solar_radiation, thermal_sensation, comfort_zone, created_at)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    RETURNING id
+                    """,
+                    (
+                        data_dict["timestamp"],
+                        data_dict["temperature"],
+                        data_dict["humidity"],
+                        data_dict["wind_velocity"],
+                        data_dict["pressure"],
+                        data_dict["solar_radiation"],
+                        data_dict["thermal_sensation"],
+                        data_dict["comfort_zone"],
+                        data_dict["created_at"]
+                    )
+                )
+                db_id = cur.fetchone()['id']
+                data_dict["db_id"] = db_id
+                conn.commit()
+                cur.close()
+                conn.close()
+        except Exception as e:
+            print(f"Failed to save to DB: {e}")
         
         return APIResponse(
             success=True,

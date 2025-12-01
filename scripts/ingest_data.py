@@ -11,6 +11,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 # Configuration
 THINGSBOARD_HOST = os.getenv("THINGSBOARD_HOST", "http://localhost:8080")
+FASTAPI_HOST = os.getenv("FASTAPI_HOST", "http://localhost:8060")
 USERNAME = os.getenv("TB_USER", "tenant@thingsboard.org")
 PASSWORD = os.getenv("TB_PASSWORD", "tenant")
 DEVICE_NAME = "Sensor Térmico 01"
@@ -83,6 +84,23 @@ def send_telemetry(device_token, data):
     except Exception as e:
         print(f"Error sending telemetry: {e}")
 
+def send_to_api(row):
+    """Send data to FastAPI for storage"""
+    url = f"{FASTAPI_HOST}/thermal/"
+    try:
+        payload = {
+            "timestamp": row['timestamp'],
+            "temperature": row['temperature'],
+            "humidity": row['humidity'],
+            "wind_velocity": row['wind_velocity'],
+            "pressure": row['pressure'],
+            "solar_radiation": row['solar_radiation']
+        }
+        requests.post(url, json=payload)
+    except Exception as e:
+        # print(f"Error sending to API: {e}")
+        pass
+
 def main():
     print("Starting data ingestion to ThingsBoard...")
     
@@ -121,7 +139,7 @@ def main():
     # Since it's historical data, we might want to send it all at once or simulate real-time.
     # For historical data in ThingsBoard, we need to include the 'ts' (timestamp) in milliseconds.
     
-    for index, row in df.iterrows():
+    for i, (index, row) in enumerate(df.iterrows()):
         # Convert timestamp to milliseconds
         ts = int(pd.to_datetime(row['timestamp']).timestamp() * 1000)
         
@@ -138,10 +156,14 @@ def main():
             }
         }
         
-        send_telemetry(device_access_token, telemetry)
+        # Send to ThingsBoard (only if needed - comment out if already populated)
+        # send_telemetry(device_access_token, telemetry)
         
-        if index % 100 == 0:
-            print(f"Sent {index} records...")
+        # Send to FastAPI (for DB and S3 storage)
+        send_to_api(row)
+        
+        if i % 100 == 0:
+            print(f"Sent {i} records...")
             
     print("Ingestion complete!")
 

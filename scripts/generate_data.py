@@ -61,7 +61,7 @@ def get_comfort_zone(thermal_sensation):
     else:
         return "Muito Quente"
 
-def generate_thermal_data(years_range=(2000, 2017)):
+def generate_thermal_data(years_range=(2023, 2025)):
     """
     Gera dados sintéticos de sensação térmica para o período especificado
     Simula dados realistas baseados em padrões climáticos brasileiros
@@ -142,11 +142,11 @@ def generate_thermal_data(years_range=(2000, 2017)):
     return pd.DataFrame(data)
 
 def main():
-    print("🌡️ Gerando dados de sensação térmica (2000-2017)...")
+    print("🌡️ Gerando dados de sensação térmica (2023-2025)...")
     print("📊 Colunas: timestamp, temperature, humidity, wind_velocity, pressure, solar_radiation, thermal_sensation, comfort_zone")
     
     # Gerar dados
-    df = generate_thermal_data(years_range=(2000, 2017))
+    df = generate_thermal_data(years_range=(2023, 2025))
     
     # Salvar arquivo
     output_file = "/home/raf75/quinto-periodo/avd/avd_projeto/data/sample_thermal_data.csv"
