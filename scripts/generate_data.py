@@ -149,7 +149,7 @@ def main():
     df = generate_thermal_data(years_range=(2023, 2025))
     
     # Salvar arquivo
-    output_file = "/home/raf75/quinto-periodo/avd/avd_projeto/data/sample_thermal_data.csv"
+    output_file = "data/sample_thermal_data.csv"
     df.to_csv(output_file, index=False)
     
     # Estatísticas
