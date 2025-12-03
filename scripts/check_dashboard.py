@@ -3,7 +3,6 @@
 Script para verificar dados no ThingsBoard antes de criar dashboard
 """
 import requests
-import json
 from datetime import datetime
 
 # Configurações
@@ -63,7 +62,7 @@ def check_thingsboard_data():
         
         if response.status_code == 200:
             telemetry = response.json()
-            print(f"📊 Dados de telemetria encontrados:")
+            print("📊 Dados de telemetria encontrados:")
             
             for key, values in telemetry.items():
                 if values:
@@ -115,9 +114,9 @@ def show_dashboard_guide():
         print(f"{name:<20} | {widget_type:<15} | {description}")
     
     print("\n🔗 URLs Importantes:")
-    print(f"📊 ThingsBoard: http://localhost:8080")
-    print(f"📖 API Docs: http://localhost:8060/docs")
-    print(f"📋 Guia completo: GUIA_DASHBOARD_THINGSBOARD.md")
+    print("📊 ThingsBoard: http://localhost:8080")
+    print("📖 API Docs: http://localhost:8060/docs")
+    print("📋 Guia completo: GUIA_DASHBOARD_THINGSBOARD.md")
 
 if __name__ == "__main__":
     check_thingsboard_data()

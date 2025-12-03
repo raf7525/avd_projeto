@@ -8,7 +8,6 @@ Serviços para conexão com banco de dados.
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import os
-from typing import Optional
 
 def get_db_connection():
     """

@@ -5,8 +5,8 @@ Dashboard Router
 Endpoints para dados de dashboard e visualizações.
 """
 
-from fastapi import APIRouter, HTTPException
-from app.models.schemas import DashboardData, APIResponse
+from fastapi import APIRouter
+from app.models.schemas import APIResponse
 
 router = APIRouter()
 

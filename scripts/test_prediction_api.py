@@ -8,8 +8,6 @@ Testa os endpoints da API de predição.
 
 import requests
 import json
-from datetime import datetime
-from typing import Dict, Any
 
 # Configuração
 API_BASE_URL = "http://localhost:8060"
@@ -123,13 +121,13 @@ def test_multiple_scenarios():
         if response.status_code == 200:
             result = response.json()['data']
             
-            print(f"  Entrada:")
+            print("  Entrada:")
             print(f"    • Temperatura: {scenario['data']['temperature']}°C")
             print(f"    • Umidade: {scenario['data']['humidity']}%")
             print(f"    • Vento: {scenario['data']['wind_velocity']} km/h")
             print(f"    • Radiação: {scenario['data']['solar_radiation']} W/m²")
             
-            print(f"\n  Resultado:")
+            print("\n  Resultado:")
             print(f"    • Sensação Física: {result.get('physical_sensation')}°C")
             print(f"    • Zona Física: {result.get('physical_comfort_zone')}")
             
@@ -138,7 +136,7 @@ def test_multiple_scenarios():
                 print(f"    • Zona ML: {result['ml_comfort_zone']}")
                 print(f"    • Diferença: {result['prediction_difference']}°C")
             else:
-                print(f"    • ⚠️ Modelos ML não treinados ainda")
+                print("    • ⚠️ Modelos ML não treinados ainda")
         else:
             print(f"  ❌ Erro: {response.status_code}")
 
@@ -294,8 +292,8 @@ def main():
     print("="*70)
     print("\n📚 Para mais informações, acesse:")
     print(f"   • Documentação Interativa: {API_BASE_URL}/docs")
-    print(f"   • MLflow UI: http://localhost:5000")
-    print(f"   • Guia completo: docs/PREDICTION_API.md")
+    print("   • MLflow UI: http://localhost:5000")
+    print("   • Guia completo: docs/PREDICTION_API.md")
     print()
 
 if __name__ == "__main__":

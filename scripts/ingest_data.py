@@ -1,10 +1,7 @@
 import pandas as pd
 import requests
-import json
-import time
 import os
 import sys
-from datetime import datetime
 
 # Add project root to path to import other modules if needed
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -97,7 +94,7 @@ def send_to_api(row):
             "solar_radiation": row['solar_radiation']
         }
         requests.post(url, json=payload)
-    except Exception as e:
+    except Exception:
         # print(f"Error sending to API: {e}")
         pass
 

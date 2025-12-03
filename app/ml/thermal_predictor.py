@@ -8,10 +8,8 @@ Suporta múltiplos modelos: Random Forest, Gradient Boosting, Neural Networks.
 
 import numpy as np
 import pandas as pd
-import pickle
 import os
 from typing import Dict, Tuple, Optional, List
-from datetime import datetime
 import joblib
 
 # ML Libraries
@@ -148,7 +146,7 @@ class ThermalSensationPredictor:
         train_mae = mean_absolute_error(y_train, y_pred_train)
         test_mae = mean_absolute_error(y_test, y_pred_test)
         
-        print(f"\n📈 Métricas de Treinamento:")
+        print("\n📈 Métricas de Treinamento:")
         print(f"   R² Score (treino): {train_r2:.4f}")
         print(f"   R² Score (teste):  {test_r2:.4f}")
         print(f"   RMSE (treino):     {train_rmse:.4f}°C")

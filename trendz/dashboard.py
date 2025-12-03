@@ -3,10 +3,8 @@ Dashboard Trendz Analytics para Sistema de Predição de Sensação Térmica
 """
 
 import pandas as pd
-import numpy as np
-from datetime import datetime, timedelta
 import json
-from typing import Dict, List, Tuple
+from typing import Dict
 import requests
 
 class ThermalDataProcessor:
@@ -66,7 +64,7 @@ class ThermalDataProcessor:
             }
         
         self.comfort_zones = comfort_stats
-        print(f"✅ Classificação de zonas de conforto realizada")
+        print("✅ Classificação de zonas de conforto realizada")
         return self.df
     
     def get_comfort_statistics(self) -> Dict:

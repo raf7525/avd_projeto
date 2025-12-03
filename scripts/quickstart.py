@@ -10,7 +10,6 @@ import subprocess
 import time
 import requests
 import sys
-from typing import Optional
 
 COLORS = {
     'GREEN': '\033[92m',

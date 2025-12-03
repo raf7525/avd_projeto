@@ -9,9 +9,7 @@ from fastapi import APIRouter, HTTPException
 from datetime import datetime
 import psutil
 import requests
-import asyncio
 import time
-from typing import Dict, Any
 
 from app.models.schemas import SystemHealth, HealthStatus, APIResponse
 

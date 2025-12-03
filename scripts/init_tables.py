@@ -1,7 +1,6 @@
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 import os
-import time
 
 def get_db_connection(db_name="avd_wind_data"):
     return psycopg2.connect(

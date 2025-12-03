@@ -1,19 +1,23 @@
-from fastapi import APIRouter, HTTPException, Query, Depends
-from typing import List, Optional
 from datetime import datetime
-import psycopg2
+from typing import Optional
+
+from fastapi import APIRouter, Depends, HTTPException, Query
 from psycopg2.extras import RealDictCursor
 
-from app.models.schemas import ThermalDataInput, ThermalDataOutput, APIResponse, ThermalDataBatch
-from app.services.storage_service import StorageService
+from app.models.schemas import (
+    APIResponse,
+    ThermalDataBatch,
+    ThermalDataInput,
+    ThermalDataOutput,
+)
 from app.services.database import get_db_connection
+from app.services.storage_service import StorageService
 
 router = APIRouter()
 storage_service = StorageService()
 
 def calculate_thermal_sensation(temp, humidity, wind_speed, pressure=None, solar_radiation=None):
     # ... (implementation remains the same)
-    import math
     
     if temp < 27:
         if wind_speed > 1.79:

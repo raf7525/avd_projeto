@@ -6,25 +6,21 @@ API REST para análise de padrões de vento usando ML.
 Integrada com MLflow, ThingsBoard e Trendz Analytics.
 """
 
-from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
-from fastapi.openapi.docs import get_swagger_ui_html
-from fastapi.openapi.utils import get_openapi
-import uvicorn
+import logging
 import os
 import sys
-import logging
 from datetime import datetime
-from typing import List, Dict, Any
-import asyncio
+
+import uvicorn
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 # Adicionar o diretório raiz ao Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from app.models import schemas
 from app.models.schemas import APIResponse
-from app.routers import health, clustering, prediction, dashboard, thermal_comfort
+from app.routers import clustering, dashboard, health, prediction, thermal_comfort
 from app.services.database import get_db_connection
 from app.services.mlflow_service import MLflowService
 

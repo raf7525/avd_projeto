@@ -5,8 +5,7 @@ Converte dados de vento para dados térmicos com pressão e radiação solar
 
 import pandas as pd
 import numpy as np
-from datetime import datetime, timedelta
-import math
+from datetime import datetime
 
 def calculate_thermal_sensation(temp, humidity, wind_speed, pressure=None, solar_radiation=None):
     """
@@ -153,12 +152,12 @@ def main():
     df.to_csv(output_file, index=False)
     
     # Estatísticas
-    print(f"\n✅ Dados gerados com sucesso!")
+    print("\n✅ Dados gerados com sucesso!")
     print(f"📁 Arquivo: {output_file}")
     print(f"📊 Total de registros: {len(df):,}")
     print(f"📅 Período: {df['timestamp'].min()} a {df['timestamp'].max()}")
     
-    print(f"\n📈 Estatísticas:")
+    print("\n📈 Estatísticas:")
     print(f"  Temperatura: {df['temperature'].min():.1f}°C - {df['temperature'].max():.1f}°C (média: {df['temperature'].mean():.1f}°C)")
     print(f"  Umidade: {df['humidity'].min():.1f}% - {df['humidity'].max():.1f}% (média: {df['humidity'].mean():.1f}%)")
     print(f"  Vento: {df['wind_velocity'].min():.1f} - {df['wind_velocity'].max():.1f} m/s (média: {df['wind_velocity'].mean():.1f} m/s)")
@@ -166,7 +165,7 @@ def main():
     print(f"  Radiação Solar: {df['solar_radiation'].min():.1f} - {df['solar_radiation'].max():.1f} W/m² (média: {df['solar_radiation'].mean():.1f} W/m²)")
     print(f"  Sensação Térmica: {df['thermal_sensation'].min():.1f}°C - {df['thermal_sensation'].max():.1f}°C (média: {df['thermal_sensation'].mean():.1f}°C)")
     
-    print(f"\n🏠 Zonas de Conforto:")
+    print("\n🏠 Zonas de Conforto:")
     comfort_counts = df['comfort_zone'].value_counts()
     for zone, count in comfort_counts.items():
         percentage = (count / len(df)) * 100
