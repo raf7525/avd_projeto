@@ -23,15 +23,10 @@ import asyncio
 # Adicionar o diretório raiz ao Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from fastapi.models.schemas import (
-    thermalDataInput, thermalDataOutput, thermalDataBatch, 
-    ClusteringRequest, ClusteringResponse,
-    PredictionRequest, PredictionResponse,
-    DashboardData, SystemHealth, APIResponse
-)
-from fastapi.routers import health, clustering, prediction, dashboard
-from fastapi.services.database import get_db_connection
-from fastapi.services.mlflow_service import MLflowService
+from app.models import schemas
+from app.routers import health, clustering, prediction, dashboard, thermal_comfort
+from app.services.database import get_db_connection
+from app.services.mlflow_service import MLflowService
 
 # Configuração de logging
 logging.basicConfig(

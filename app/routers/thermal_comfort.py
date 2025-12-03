@@ -1,349 +1,18 @@
-from fastapi import APIRouter, HTTPException, Query, BackgroundTasks
+from fastapi import APIRouter, HTTPException, Query, Depends
 from typing import List, Optional
-from datetime import datetime, timedelta
-import json
-import sys
-import os
-import pandas as pd
-from pydantic import BaseModel
+from datetime import datetime
+import psycopg2
+from psycopg2.extras import RealDictCursor
+
+from app.models.schemas import ThermalDataInput, ThermalDataOutput, APIResponse, ThermalDataBatch
 from app.services.storage_service import StorageService
 from app.services.database import get_db_connection
 
 router = APIRouter()
 storage_service = StorageService()
 
-class ThermalDataInput(BaseModel):
-    timestamp: datetime
-    temperature: float
-    humidity: float
-    wind_velocity: float
-    pressure: float
-    solar_radiation: float
-
-class ThermalDataOutput(BaseModel):
-    id: int
-    timestamp: datetime
-    temperature: float
-    humidity: float
-    wind_velocity: float
-    pressure: float
-    solar_radiation: float
-    thermal_sensation: float
-    comfort_zone: str
-    created_at: datetime
-
-class ThermalDataBatch(BaseModel):
-    data: List[ThermalDataInput]
-
-class APIResponse(BaseModel):
-    success: bool
-    message: str
-    data: dict = None
-
-thermal_data_storage: List[dict] = []
-
-@router.post("/", response_model=APIResponse)
-async def create_thermal_data(thermal_data: ThermalDataInput):
-    try:
-        new_id = len(thermal_data_storage) + 1
-        
-        data_dict = thermal_data.dict()
-        
-        thermal_sensation = calculate_thermal_sensation(
-            thermal_data.temperature,
-            thermal_data.humidity, 
-            thermal_data.wind_velocity,
-            thermal_data.pressure,
-            thermal_data.solar_radiation
-        )
-        
-        comfort_zone = get_comfort_zone(thermal_sensation)
-        
-        data_dict.update({
-            "id": new_id,
-            "created_at": datetime.now(),
-            "thermal_sensation": thermal_sensation,
-            "comfort_zone": comfort_zone
-        })
-        
-        # Save to In-Memory Storage
-        thermal_data_storage.append(data_dict)
-
-        # Save to MinIO (S3)
-        try:
-            s3_path = storage_service.save_json(data_dict)
-            data_dict["s3_path"] = s3_path
-        except Exception as e:
-            print(f"Failed to save to S3: {e}")
-
-        # Save to PostgreSQL
-        try:
-            conn = get_db_connection()
-            if conn:
-                cur = conn.cursor()
-                cur.execute(
-                    """
-                    INSERT INTO thermal_measurements 
-                    (timestamp, temperature, humidity, wind_velocity, pressure, solar_radiation, thermal_sensation, comfort_zone, created_at)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-                    RETURNING id
-                    """,
-                    (
-                        data_dict["timestamp"],
-                        data_dict["temperature"],
-                        data_dict["humidity"],
-                        data_dict["wind_velocity"],
-                        data_dict["pressure"],
-                        data_dict["solar_radiation"],
-                        data_dict["thermal_sensation"],
-                        data_dict["comfort_zone"],
-                        data_dict["created_at"]
-                    )
-                )
-                db_id = cur.fetchone()['id']
-                data_dict["db_id"] = db_id
-                conn.commit()
-                cur.close()
-                conn.close()
-        except Exception as e:
-            print(f"Failed to save to DB: {e}")
-        
-        return APIResponse(
-            success=True,
-            message="Dados térmicos criados com sucesso",
-            data=data_dict
-        )
-        
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-@router.post("/batch", response_model=APIResponse)
-async def create_thermal_data_batch(batch_data: ThermalDataBatch):
-    try:
-        created_records = []
-        
-        for thermal_data in batch_data.data:
-            new_id = len(thermal_data_storage) + 1
-            
-            data_dict = thermal_data.dict()
-            
-            thermal_sensation = calculate_thermal_sensation(
-                thermal_data.temperature,
-                thermal_data.humidity,
-                thermal_data.wind_velocity, 
-                thermal_data.pressure,
-                thermal_data.solar_radiation
-            )
-            
-            comfort_zone = get_comfort_zone(thermal_sensation)
-            
-            data_dict.update({
-                "id": new_id,
-                "created_at": datetime.now(),
-                "thermal_sensation": thermal_sensation,
-                "comfort_zone": comfort_zone
-            })
-            
-            thermal_data_storage.append(data_dict)
-            created_records.append(data_dict)
-        
-        return APIResponse(
-            success=True,
-            message=f"{len(created_records)} registros criados com sucesso",
-            data={
-                "created_count": len(created_records),
-                "records": created_records
-            }
-        )
-        
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-@router.get("/", response_model=APIResponse)
-async def get_thermal_data(
-    limit: int = Query(default=100, description="Número máximo de registros"),
-    offset: int = Query(default=0, description="Número de registros para pular"),
-    start_date: Optional[datetime] = Query(default=None, description="Data inicial"),
-    end_date: Optional[datetime] = Query(default=None, description="Data final"),
-    min_temp: Optional[float] = Query(default=None, description="Temperatura mínima"),
-    max_temp: Optional[float] = Query(default=None, description="Temperatura máxima"),
-    comfort_zone: Optional[str] = Query(default=None, description="Zona de conforto")
-):
-    try:
-        filtered_data = thermal_data_storage.copy()
-        
-        if start_date or end_date:
-            filtered_data = [
-                record for record in filtered_data
-                if (not start_date or record["timestamp"] >= start_date) and
-                   (not end_date or record["timestamp"] <= end_date)
-            ]
-        
-        if min_temp is not None:
-            filtered_data = [
-                record for record in filtered_data
-                if record["temperature"] >= min_temp
-            ]
-            
-        if max_temp is not None:
-            filtered_data = [
-                record for record in filtered_data
-                if record["temperature"] <= max_temp
-            ]
-            
-        if comfort_zone:
-            filtered_data = [
-                record for record in filtered_data
-                if record["comfort_zone"].lower() == comfort_zone.lower()
-            ]
-        
-        total_records = len(filtered_data)
-        paginated_data = filtered_data[offset:offset + limit]
-        
-        return APIResponse(
-            success=True,
-            message="Dados recuperados com sucesso",
-            data={
-                "records": paginated_data,
-                "pagination": {
-                    "total": total_records,
-                    "limit": limit,
-                    "offset": offset,
-                    "has_next": offset + limit < total_records
-                }
-            }
-        )
-        
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-@router.get("/{thermal_id}", response_model=APIResponse)
-async def get_thermal_data_by_id(thermal_id: int):
-    try:
-        record = next((r for r in thermal_data_storage if r["id"] == thermal_id), None)
-        
-        if not record:
-            raise HTTPException(status_code=404, detail="Registro não encontrado")
-        
-        return APIResponse(
-            success=True,
-            message="Registro encontrado",
-            data=record
-        )
-        
-    except HTTPException:
-        raise
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-@router.delete("/{thermal_id}", response_model=APIResponse)
-async def delete_thermal_data(thermal_id: int):
-    try:
-        record_index = None
-        for i, record in enumerate(thermal_data_storage):
-            if record["id"] == thermal_id:
-                record_index = i
-                break
-        
-        if record_index is None:
-            raise HTTPException(status_code=404, detail="Registro não encontrado")
-        
-        deleted_record = thermal_data_storage.pop(record_index)
-        
-        return APIResponse(
-            success=True,
-            message="Registro deletado com sucesso",
-            data=deleted_record
-        )
-        
-    except HTTPException:
-        raise
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-@router.get("/stats/summary", response_model=APIResponse)
-async def get_thermal_stats():
-    try:
-        if not thermal_data_storage:
-            return APIResponse(
-                success=True,
-                message="Nenhum dado disponível",
-                data={
-                    "total_records": 0,
-                    "stats": None
-                }
-            )
-        
-        temperatures = [record["temperature"] for record in thermal_data_storage]
-        thermal_sensations = [record["thermal_sensation"] for record in thermal_data_storage]
-        humidities = [record["humidity"] for record in thermal_data_storage]
-        
-        stats = {
-            "total_records": len(thermal_data_storage),
-            "temperature": {
-                "min": min(temperatures),
-                "max": max(temperatures),
-                "avg": sum(temperatures) / len(temperatures),
-                "count": len(temperatures)
-            },
-            "thermal_sensation": {
-                "min": min(thermal_sensations),
-                "max": max(thermal_sensations),
-                "avg": sum(thermal_sensations) / len(thermal_sensations)
-            },
-            "humidity": {
-                "min": min(humidities),
-                "max": max(humidities),
-                "avg": sum(humidities) / len(humidities)
-            },
-            "comfort_zones": {
-                zone: len([r for r in thermal_data_storage if r["comfort_zone"] == zone])
-                for zone in set(record["comfort_zone"] for record in thermal_data_storage)
-            }
-        }
-        
-        return APIResponse(
-            success=True,
-            message="Estatísticas calculadas com sucesso",
-            data=stats
-        )
-        
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-@router.post("/predict-comfort")
-async def predict_thermal_comfort(data: List[ThermalDataInput]):
-    try:
-        predictions = []
-        
-        for item in data:
-            thermal_sensation = calculate_thermal_sensation(
-                item.temperature,
-                item.humidity,
-                item.wind_velocity,
-                item.pressure,
-                item.solar_radiation
-            )
-            
-            comfort_zone = get_comfort_zone(thermal_sensation)
-            
-            predictions.append({
-                "timestamp": item.timestamp,
-                "predicted_thermal_sensation": thermal_sensation,
-                "predicted_comfort_zone": comfort_zone,
-                "input_data": item.dict()
-            })
-        
-        return APIResponse(
-            success=True,
-            message=f"{len(predictions)} previsões calculadas",
-            data={"predictions": predictions}
-        )
-    
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
 def calculate_thermal_sensation(temp, humidity, wind_speed, pressure=None, solar_radiation=None):
+    # ... (implementation remains the same)
     import math
     
     if temp < 27:
@@ -389,3 +58,283 @@ def get_comfort_zone(thermal_sensation):
         return "Quente"
     else:
         return "Muito Quente"
+
+@router.post("/", response_model=APIResponse)
+async def create_thermal_data(thermal_data: ThermalDataInput, conn: RealDictCursor = Depends(get_db_connection)):
+    try:
+        data_dict = thermal_data.dict()
+        
+        thermal_sensation = calculate_thermal_sensation(
+            temp=thermal_data.temperature, 
+            humidity=thermal_data.humidity, 
+            wind_speed=thermal_data.wind_velocity,
+            pressure=thermal_data.pressure,
+            solar_radiation=thermal_data.solar_radiation
+        )
+        comfort_zone = get_comfort_zone(thermal_sensation)
+        
+        data_dict.update({
+            "created_at": datetime.now(),
+            "thermal_sensation": thermal_sensation,
+            "comfort_zone": comfort_zone
+        })
+
+        # Save to PostgreSQL
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                INSERT INTO thermal_measurements 
+                (timestamp, temperature, humidity, wind_velocity, pressure, solar_radiation, thermal_sensation, comfort_zone, created_at)
+                VALUES (%(timestamp)s, %(temperature)s, %(humidity)s, %(wind_velocity)s, %(pressure)s, %(solar_radiation)s, %(thermal_sensation)s, %(comfort_zone)s, %(created_at)s)
+                RETURNING id;
+                """,
+                data_dict
+            )
+            db_id = cur.fetchone()['id']
+            data_dict["id"] = db_id
+            conn.commit()
+
+        # Save to MinIO (S3)
+        try:
+            s3_path = storage_service.save_json(data_dict)
+            data_dict["s3_path"] = s3_path
+        except Exception as e:
+            print(f"Failed to save to S3: {e}")
+
+        return APIResponse(
+            success=True,
+            message="Dados térmicos criados com sucesso",
+            data=data_dict
+        )
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        if conn:
+            conn.close()
+
+@router.post("/batch", response_model=APIResponse)
+async def create_thermal_data_batch(batch_data: ThermalDataBatch, conn: RealDictCursor = Depends(get_db_connection)):
+    try:
+        created_records = []
+        with conn.cursor() as cur:
+            for item in batch_data.data:
+                data_dict = item.dict()
+                
+                thermal_sensation = calculate_thermal_sensation(
+                    temp=item.temperature, 
+                    humidity=item.humidity, 
+                    wind_speed=item.wind_velocity,
+                    pressure=item.pressure,
+                    solar_radiation=item.solar_radiation
+                )
+                comfort_zone = get_comfort_zone(thermal_sensation)
+                
+                data_dict.update({
+                    "created_at": datetime.now(),
+                    "thermal_sensation": thermal_sensation,
+                    "comfort_zone": comfort_zone
+                })
+
+                cur.execute(
+                    """
+                    INSERT INTO thermal_measurements 
+                    (timestamp, temperature, humidity, wind_velocity, pressure, solar_radiation, thermal_sensation, comfort_zone, created_at)
+                    VALUES (%(timestamp)s, %(temperature)s, %(humidity)s, %(wind_velocity)s, %(pressure)s, %(solar_radiation)s, %(thermal_sensation)s, %(comfort_zone)s, %(created_at)s)
+                    RETURNING id;
+                    """,
+                    data_dict
+                )
+                db_id = cur.fetchone()['id']
+                data_dict["id"] = db_id
+                
+                # Offload S3 saving to background task if it becomes slow
+                storage_service.save_json(data_dict)
+
+                created_records.append(data_dict)
+            
+            conn.commit()
+
+        return APIResponse(
+            success=True,
+            message=f"{len(created_records)} registros criados com sucesso",
+            data={
+                "created_count": len(created_records)
+            }
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        if conn:
+            conn.close()
+
+@router.get("/", response_model=APIResponse)
+async def get_thermal_data(
+    limit: int = Query(default=100, ge=1, le=1000),
+    offset: int = Query(default=0, ge=0),
+    start_date: Optional[datetime] = None,
+    end_date: Optional[datetime] = None,
+    min_temp: Optional[float] = None,
+    max_temp: Optional[float] = None,
+    comfort_zone: Optional[str] = None,
+    conn: RealDictCursor = Depends(get_db_connection)
+):
+    try:
+        query_params = []
+        where_clauses = []
+        
+        if start_date:
+            where_clauses.append("timestamp >= %s")
+            query_params.append(start_date)
+        if end_date:
+            where_clauses.append("timestamp <= %s")
+            query_params.append(end_date)
+        if min_temp is not None:
+            where_clauses.append("temperature >= %s")
+            query_params.append(min_temp)
+        if max_temp is not None:
+            where_clauses.append("temperature <= %s")
+            query_params.append(max_temp)
+        if comfort_zone:
+            where_clauses.append("comfort_zone = %s")
+            query_params.append(comfort_zone)
+
+        where_sql = f"WHERE {' AND '.join(where_clauses)}" if where_clauses else ""
+        
+        with conn.cursor() as cur:
+            # Get total records for pagination
+            cur.execute(f"SELECT COUNT(*) FROM thermal_measurements {where_sql}", query_params)
+            total_records = cur.fetchone()['count']
+            
+            # Get paginated data
+            query = f"""
+                SELECT * FROM thermal_measurements 
+                {where_sql}
+                ORDER BY timestamp DESC
+                LIMIT %s OFFSET %s
+            """
+            cur.execute(query, query_params + [limit, offset])
+            records = cur.fetchall()
+
+        return APIResponse(
+            success=True,
+            message="Dados recuperados com sucesso",
+            data={
+                "records": [ThermalDataOutput(**rec) for rec in records],
+                "pagination": {
+                    "total": total_records,
+                    "limit": limit,
+                    "offset": offset,
+                    "has_next": offset + limit < total_records
+                }
+            }
+        )
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        if conn:
+            conn.close()
+
+@router.get("/{thermal_id}", response_model=APIResponse)
+async def get_thermal_data_by_id(thermal_id: int, conn: RealDictCursor = Depends(get_db_connection)):
+    try:
+        with conn.cursor() as cur:
+            cur.execute("SELECT * FROM thermal_measurements WHERE id = %s", (thermal_id,))
+            record = cur.fetchone()
+        
+        if not record:
+            raise HTTPException(status_code=404, detail="Registro não encontrado")
+        
+        return APIResponse(
+            success=True,
+            message="Registro encontrado",
+            data=ThermalDataOutput(**record)
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        if conn:
+            conn.close()
+
+@router.delete("/{thermal_id}", response_model=APIResponse)
+async def delete_thermal_data(thermal_id: int, conn: RealDictCursor = Depends(get_db_connection)):
+    try:
+        with conn.cursor() as cur:
+            cur.execute("DELETE FROM thermal_measurements WHERE id = %s RETURNING *;", (thermal_id,))
+            deleted_record = cur.fetchone()
+            conn.commit()
+
+        if not deleted_record:
+            raise HTTPException(status_code=404, detail="Registro não encontrado")
+        
+        return APIResponse(
+            success=True,
+            message="Registro deletado com sucesso",
+            data=ThermalDataOutput(**deleted_record)
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        if conn:
+            conn.close()
+
+@router.get("/stats/summary", response_model=APIResponse)
+async def get_thermal_stats(conn: RealDictCursor = Depends(get_db_connection)):
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT 
+                    COUNT(*) as total_records,
+                    MIN(temperature) as min_temp,
+                    MAX(temperature) as max_temp,
+                    AVG(temperature) as avg_temp,
+                    MIN(thermal_sensation) as min_thermal_sensation,
+                    MAX(thermal_sensation) as max_thermal_sensation,
+                    AVG(thermal_sensation) as avg_thermal_sensation
+                FROM thermal_measurements;
+            """)
+            summary_stats = cur.fetchone()
+
+            if summary_stats['total_records'] == 0:
+                 return APIResponse(success=True, message="Nenhum dado disponível", data={"total_records": 0})
+
+            cur.execute("""
+                SELECT comfort_zone, COUNT(*) as count
+                FROM thermal_measurements
+                GROUP BY comfort_zone;
+            """)
+            comfort_zones = {row['comfort_zone']: row['count'] for row in cur.fetchall()}
+
+        stats = {
+            "total_records": summary_stats['total_records'],
+            "temperature": {
+                "min": summary_stats['min_temp'],
+                "max": summary_stats['max_temp'],
+                "avg": round(summary_stats['avg_temp'], 2) if summary_stats['avg_temp'] else None,
+            },
+            "thermal_sensation": {
+                "min": summary_stats['min_thermal_sensation'],
+                "max": summary_stats['max_thermal_sensation'],
+                "avg": round(summary_stats['avg_thermal_sensation'], 2) if summary_stats['avg_thermal_sensation'] else None,
+            },
+            "comfort_zones": comfort_zones
+        }
+        
+        return APIResponse(
+            success=True,
+            message="Estatísticas calculadas com sucesso",
+            data=stats
+        )
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        if conn:
+            conn.close()

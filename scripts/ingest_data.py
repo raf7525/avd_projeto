@@ -86,7 +86,7 @@ def send_telemetry(device_token, data):
 
 def send_to_api(row):
     """Send data to FastAPI for storage"""
-    url = f"{FASTAPI_HOST}/thermal/"
+    url = f"{FASTAPI_HOST}/api/v1/thermal/"
     try:
         payload = {
             "timestamp": row['timestamp'],
@@ -122,11 +122,7 @@ def main():
     # 4. Read Data
     data_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'sample_thermal_data.csv')
     if not os.path.exists(data_path):
-        print(f"Data file not found at {data_path}. Please run generate_thermal_data.py first.")
-        # Optional: Run generation if missing
-        # from generate_thermal_data import generate_thermal_data
-        # df = generate_thermal_data()
-        # df.to_csv(data_path, index=False)
+        print(f"Data file not found at {data_path}. Please run generate_data.py first.")
         return
 
     print(f"Reading data from {data_path}...")
@@ -135,10 +131,6 @@ def main():
     print(f"Sending {len(df)} records to ThingsBoard...")
     
     # 5. Send Data
-    # For demonstration, we'll send data with a small delay, or batch it.
-    # Since it's historical data, we might want to send it all at once or simulate real-time.
-    # For historical data in ThingsBoard, we need to include the 'ts' (timestamp) in milliseconds.
-    
     for i, (index, row) in enumerate(df.iterrows()):
         # Convert timestamp to milliseconds
         ts = int(pd.to_datetime(row['timestamp']).timestamp() * 1000)

@@ -18,7 +18,7 @@ def get_db_connection():
         connection = psycopg2.connect(
             host=os.getenv("POSTGRES_HOST", "localhost"),
             port=os.getenv("POSTGRES_PORT", "5433"),
-            database=os.getenv("POSTGRES_DB", "mlflow"),
+            database=os.getenv("POSTGRES_DB", "avd_wind_data"),
             user=os.getenv("POSTGRES_USER", "user"),
             password=os.getenv("POSTGRES_PASSWORD", "password"),
             cursor_factory=RealDictCursor
