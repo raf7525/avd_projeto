@@ -138,7 +138,7 @@ class TrendzDashboardCreator:
     
     def create_comfort_zones_dashboard(self) -> Dict:
         """Criar dashboard de zonas de conforto térmico"""
-        comfort_dashboard = {
+        return  {
             "name": "Análise de Zonas de Conforto Térmico",
             "widgets": [
                 {
@@ -175,11 +175,10 @@ class TrendzDashboardCreator:
             ]
         }
         
-        return temporal_dashboard
     
     def create_statistics_panel(self) -> Dict:
         """Criar painel de estatísticas"""
-        stats_panel = {
+        return {
             "name": "Estatísticas de Vento",
             "layout": "grid",
             "widgets": [
@@ -218,7 +217,6 @@ class TrendzDashboardCreator:
             ]
         }
         
-        return stats_panel
     
     def export_dashboard_config(self, output_file: str = "/home/raf75/quinto-periodo/avd/avd_projeto/data/trendz_dashboard_config.json"):
         """Exportar configuração completa dos dashboards"""

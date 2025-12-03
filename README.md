@@ -1,129 +1,192 @@
-# Projeto AVD - Pipeline de Dados Meteorológicos
+# 🌦️ Projeto AVD - Sistema de Predição de Sensação Térmica
+
+![Python](https://img.shields.io/badge/python-3.11-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Docker](https://img.shields.io/badge/docker-24.0-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.104-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![Postgres](https://img.shields.io/badge/postgres-15.0-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![MLflow](https://img.shields.io/badge/mlflow-2.8-0194E2?style=for-the-badge&logo=mlflow&logoColor=white)
+![Scikit-Learn](https://img.shields.io/badge/scikit--learn-1.3-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![ThingsBoard](https://img.shields.io/badge/ThingsBoard-CE-26619C?style=for-the-badge&logo=thingsboard&logoColor=white)
 
 **DISCIPLINA:** Análise e Visualização de Dados - 2025.2  
 **INSTITUIÇÃO:** CESAR School  
 
 ## 👥 Equipe
-* **Nome do Aluno 1** (@usuario_github)
-* **Nome do Aluno 2** (@usuario_github)
-* **Nome do Aluno 3** (@usuario_github)
-* **Nome do Aluno 4** (@usuario_github)
-* **Nome do Aluno 5** (@usuario_github)
-* **Nome do Aluno 6** (@usuario_github)
+* [![ticogafa](https://img.shields.io/badge/ticogafa-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ticogafa)
+* [![raf7525](https://img.shields.io/badge/raf7525-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/raf7525)
+* [![MigueldsBatista](https://img.shields.io/badge/MigueldsBatista-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/MigueldsBatista)
 
 ---
 
-## 📝 Descrição do Projeto
+## 📖 Sobre o Projeto
 
-Este projeto implementa um pipeline completo de Business Intelligence (BI) e Machine Learning (ML) para análise de dados meteorológicos. O objetivo principal é coletar dados, armazená-los de forma estruturada e bruta, realizar tratamento, treinar modelos preditivos de **Sensação Térmica** e **Zonas de Conforto**, e visualizar os resultados em dashboards interativos.
+Este projeto implementa um pipeline completo de **IoT, Business Intelligence (BI) e Machine Learning (ML)** para monitoramento e predição de **Sensação Térmica**. O sistema coleta dados meteorológicos simulados, armazena-os em um Data Lake, processa-os para treinar modelos de ML e disponibiliza visualizações em tempo real via dashboards.
 
-### 🎯 Problema Solucionado (Seção 7.5 e 7.10)
-O sistema resolve o problema de **Classificação de Níveis de Conforto Térmico** e **Previsão de Sensação Térmica**, permitindo identificar se o ambiente está "Frio", "Confortável" ou "Quente" com base em variáveis como temperatura, umidade e vento.
+O objetivo central é ir além da temperatura bruta e calcular o **Conforto Térmico Humano**, classificando o ambiente em zonas como "Confortável", "Muito Quente" ou "Frio" usando normas internacionais (ASHRAE 55 / ISO 7730).
 
-## 🏗️ Arquitetura e Fluxo de Dados
+---
 
-O projeto utiliza uma arquitetura baseada em microsserviços com Docker:
+## 🚀 Quick Start (Início Rápido)
 
-1. **Ingestão (FastAPI + Scripts):** Dados são gerados/coletados e enviados para a API (Porta 8060) e para o ThingsBoard.
-2. **Armazenamento Bruto (MinIO/S3):** A API salva os dados brutos (JSON) em um bucket S3 (MinIO).
-3. **Armazenamento Estruturado (PostgreSQL):** Os dados tratados são persistidos em banco relacional (substituindo Snowflake/SQLite para este ambiente).
-4. **Processamento e ML (Jupyter + MLflow):** Notebooks consomem os dados, treinam modelos (Regressão/Classificação) e registram métricas/artefatos no MLflow (Porta 5000).
-5. **Visualização (ThingsBoard + Trendz):** Dashboards consomem dados de telemetria e exibem gráficos históricos e predições.
+Para rodar todo o ecossistema (Banco de dados, API, MLflow, ThingsBoard, etc) com um único comando:
 
-| Serviço | Porta | Função |
-|---------|-------|--------|
-| **FastAPI** | 8060 | API de Ingestão e Predição |
-| **ThingsBoard** | 8080 | Plataforma IoT e Dashboards |
-| **Trendz** | 8888 | Analytics Avançado |
-| **Jupyter** | 1010 | Ambiente de Desenvolvimento |
-| **MLflow** | 5000 | Registro de Modelos |
-| **MinIO** | 9000/9001 | Object Storage (S3 Compatible) |
+### 1. Iniciar o Ambiente
+```bash
+# Opção recomendada (Script de automação)
+./scripts/docker-manager.sh start
 
-## 🚀 Como Executar
+# OU via Docker Compose tradicional
+docker-compose up -d --build
+```
+*Aguarde cerca de 30-60 segundos para que todos os serviços (especialmente ThingsBoard) inicializem.*
 
-### Pré-requisitos
-- Docker e Docker Compose instalados.
-- Git instalado.
+### 2. Verificar Status
+```bash
+docker-compose ps
+```
 
-### Passo a Passo
+### 3. Acessar a Aplicação
+Abra seu navegador em: **[http://localhost:8060/docs](http://localhost:8060/docs)** para ver a API Swagger.
 
-1. **Clonar o Repositório:**
-   ```bash
-   git clone <url-do-repositorio>
-   cd avd_projeto
-   ```
+---
 
-2. **Iniciar a Infraestrutura:**
-   O script abaixo levanta todos os containers necessários.
-   ```bash
-   docker-compose up --build -d
-   ```
-   *Aguarde alguns minutos para que todos os serviços (especialmente ThingsBoard e Postgres) inicializem completamente.*
+## 🧠 Modelos de Machine Learning
 
-3. **Gerar e Ingerir Dados:**
-   Execute os scripts para popular o banco de dados e o ThingsBoard.
-   ```bash
-   # Instalar dependências locais dos scripts (opcional, se rodar fora do container)
-   pip install -r requirements.txt
+O sistema utiliza dois modelos de regressão robustos para prever a sensação térmica com base em variáveis ambientais.
 
-   # 1. Gerar dados sintéticos
-   python3 scripts/generate_data.py
+### 1. Random Forest Regressor
+*   **O que é:** Um modelo de "ensemble" que cria centenas de árvores de decisão durante o treinamento e retorna a média das previsões das árvores individuais.
+*   **Por que usamos:** É excelente para lidar com relações não-lineares e robusto contra "overfitting" (ajuste excessivo aos dados de treino).
+*   **Configuração:**
+    *   `n_estimators`: 200 (número de árvores)
+    *   `max_depth`: 20 (profundidade máxima)
+    *   **Performance Esperada:** RMSE ~0.85°C, R² ~0.96
 
-   # 2. Ingerir dados na API e ThingsBoard
-   python3 scripts/ingest_data.py
-   ```
+### 2. Gradient Boosting Regressor
+*   **O que é:** Uma técnica que constrói modelos de forma sequencial, onde cada novo modelo tenta corrigir os erros do anterior.
+*   **Por que usamos:** Frequentemente oferece a maior precisão possível em dados tabulares estruturados.
+*   **Configuração:**
+    *   `n_estimators`: 200
+    *   `learning_rate`: 0.1
+    *   **Performance Esperada:** RMSE ~0.79°C, R² ~0.96
 
-4. **Treinar o Modelo de ML:**
-   Você pode treinar o modelo via API ou via Jupyter.
-   
-   **Via API:**
-   ```bash
-   curl -X POST "http://localhost:8060/prediction/train"
-   ```
+### 🌡️ Zonas de Conforto (ASHRAE 55)
+Além da predição numérica, o sistema classifica o resultado em 6 zonas:
+1.  🔵 **Muito Frio:** < 15°C
+2.  ❄️ **Frio:** 15-18°C
+3.  🍃 **Fresco:** 18-20°C
+4.  ✅ **Confortável:** 20-26°C (Meta ideal)
+5.  ⚠️ **Quente:** 26-29°C
+6.  🔴 **Muito Quente:** > 29°C
 
-   **Via Jupyter:**
-   - Acesse `http://localhost:1010` (Token pode ser visto nos logs: `docker-compose logs app`)
-   - Abra `notebooks/pipeline_ml.ipynb` e execute as células.
+---
 
-5. **Acessar os Dashboards:**
-   - **ThingsBoard:** Acesse `http://localhost:8080`
-     - **Login:** `tenant@thingsboard.org`
-     - **Senha:** `tenant`
-   - **MLflow:** Acesse `http://localhost:5000` para ver os modelos registrados.
-   - **MinIO:** Acesse `http://localhost:9001` (User/Pass: `minioadmin`) para ver os arquivos no bucket `avd-raw-data`.
+## 🛠️ Tecnologias e Bibliotecas
 
-## 📂 Estrutura do Repositório
+*   **[FastAPI](https://fastapi.tiangolo.com/):** Framework moderno e de alta performance para construção de APIs com Python 3.11+. Usado para servir os modelos de ML e ingerir dados.
+*   **[MLflow](https://mlflow.org/):** Plataforma para ciclo de vida de ML. Usado para rastrear experimentos, registrar parâmetros, métricas e versionar os modelos treinados (`.pkl`).
+*   **[Scikit-Learn](https://scikit-learn.org/):** Biblioteca de aprendizado de máquina. Fornece as implementações de RandomForest, GradientBoosting e ferramentas de pré-processamento (`StandardScaler`).
+*   **[ThingsBoard](https://thingsboard.io/):** Plataforma IoT open-source. Usada para visualização de telemetria em tempo real e criação de dashboards complexos.
+*   **[Trendz Analytics](https://thingsboard.io/products/trendz/):** Ferramenta de BI conectada ao ThingsBoard para análises preditivas e de negócios avançadas.
+*   **[MinIO](https://min.io/):** Armazenamento de objetos compatível com S3. Usado como Data Lake (Bronze Layer) e armazenamento de artefatos do MLflow.
+
+---
+
+## 🖥️ Guia de Interfaces (Onde Clicar)
+
+### 1. ThingsBoard (IoT Dashboards)
+*   **URL:** [http://localhost:8080](http://localhost:8080)
+*   **Login:** `tenant@thingsboard.org`
+*   **Senha:** `tenant`
+*   **Como Criar Dashboard:**
+    1.  Vá em **"Dashboards"** no menu lateral esquerdo.
+    2.  Clique no botão **"+"** (Add Dashboard) > "Create new dashboard".
+    3.  Dê um nome (ex: "Monitoramento Térmico").
+    4.  Abra o dashboard e clique no **Lápis Laranja** (canto inferior direito) para editar.
+    5.  Clique em **"Add new widget"** para adicionar gráficos (Charts) ou mostradores (Gauges).
+    6.  Selecione o dispositivo "Sensor Térmico AVD" como fonte de dados.
+
+### 2. MLflow (Tracking de ML)
+*   **URL:** [http://localhost:5000](http://localhost:5000)
+*   **O que ver:**
+    1.  Na tela inicial, clique no experimento `thermal_sensation_prediction` na barra lateral.
+    2.  Você verá uma tabela com todas as execuções ("Runs").
+    3.  Clique em uma execução para ver os **Parâmetros** (n_estimators, learning_rate), **Métricas** (RMSE, MAE) e **Artefatos** (o modelo salvo).
+
+### 3. API Swagger (Documentação Interativa)
+*   **URL:** [http://localhost:8060/docs](http://localhost:8060/docs)
+*   **Como usar:**
+    1.  Esta interface lista todos os endpoints disponíveis (`POST /prediction/predict`, `POST /prediction/train`, etc.).
+    2.  Clique em um endpoint para expandir.
+    3.  Clique em **"Try it out"**, preencha o JSON de exemplo e clique em **"Execute"** para testar a API diretamente do navegador.
+
+### 4. Trendz Analytics (BI Avançado)
+*   **URL:** [http://localhost:8888](http://localhost:8888)
+*   **Login:** Mesmo do ThingsBoard (`tenant@thingsboard.org` / `tenant`).
+*   **O que fazer:** Conectar ao ThingsBoard para gerar mapas de calor e previsões de tendências futuras baseadas nos dados históricos armazenados.
+
+### 5. MinIO (Data Lake)
+*   **URL:** [http://localhost:9001](http://localhost:9001)
+*   **Login:** `minioadmin` / `minioadmin`
+*   **O que ver:** Navegue pelos "Buckets" para ver os dados brutos (json) salvos pela API ou os artefatos de modelos do MLflow.
+
+---
+
+## 🕹️ Comandos de Execução e Uso
+
+### Treinar os Modelos
+Para treinar (ou retreinar) os modelos com os dados disponíveis no banco:
+```bash
+curl -X POST "http://localhost:8060/prediction/train"
+```
+*Resposta esperada: JSON com métricas de performance (RMSE, MAE) dos modelos treinados.*
+
+### Fazer uma Predição (Teste)
+Envie dados climáticos para receber a sensação térmica e a zona de conforto:
+```bash
+curl -X POST "http://localhost:8060/prediction/predict?model=random_forest" \
+  -H "Content-Type: application/json" \
+  -d 
+    "temperature": 32.5,
+    "humidity": 60.0,
+    "wind_velocity": 3.0,
+    "pressure": 1012.0,
+    "solar_radiation": 800.0
+  
+```
+
+### Gerar Dados de Teste
+Se o banco estiver vazio, gere dados sintéticos:
+```bash
+# 1. Gerar CSV
+docker-compose exec app python scripts/generate_data.py
+
+# 2. Ingerir no Banco e ThingsBoard
+docker-compose exec app python scripts/ingest_data.py
+```
+
+---
+
+## 📂 Estrutura de Pastas Importantes
 
 ```
 /
-├── app/                 # Código fonte da aplicação (FastAPI)
-│   ├── main.py          # Entrypoint da API
-│   ├── routers/         # Rotas da API
-│   └── services/        # Lógica de negócios e integrações
-├── data/                # Dados locais (CSV/JSON)
-├── docs/                # Documentação complementar
-├── notebooks/           # Notebooks para análise e treino
-├── reports/             # Relatórios PDF e imagens
-├── scripts/             # Scripts auxiliares (ingestão, setup)
-├── trendz/              # Configurações do Trendz
-├── docker-compose.yml   # Definição dos serviços
-└── README.md            # Este arquivo
+├── app/
+│   ├── models/          # Definição dos schemas Pydantic
+│   ├── routers/         # Endpoints da API (prediction.py, etc)
+│   └── services/        # Lógica ML (prediction_service.py)
+├── data/                # Dados CSV/JSON locais
+├── docs/                # Documentação detalhada (Manuais, Guias)
+├── notebooks/           # Jupyter Notebooks para experimentação
+├── scripts/             # Scripts de automação (geração de dados, setup)
+├── trendz/              # Configurações de dashboards Trendz
+├── docker-compose.yml   # Orquestração dos containers
+└── README.md            # Este guia
 ```
 
-## 🧪 Testes e Verificação
+## 📚 Referências
+*   **ASHRAE Standard 55:** Thermal Environmental Conditions for Human Occupancy.
+*   **ISO 7730:** Ergonomics of the thermal environment.
+*   **NOAA:** Fórmulas de Heat Index e Wind Chill.
 
-Para verificar se a API de predição está funcionando:
-
-```bash
-# Teste de predição única
-curl -X POST "http://localhost:8060/prediction/predict" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "temperature": 28.5,
-    "humidity": 70.0,
-    "wind_velocity": 5.0,
-    "pressure": 1013.0,
-    "solar_radiation": 600.0
-  }'
-```
-
+---
