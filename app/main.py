@@ -6,7 +6,6 @@ API REST para análise de padrões de vento usando ML.
 Integrada com MLflow, ThingsBoard e Trendz Analytics.
 """
 
-from avd_projeto.fastapi.routers import thermal
 from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -24,6 +23,7 @@ import asyncio
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from app.models import schemas
+from app.models.schemas import APIResponse
 from app.routers import health, clustering, prediction, dashboard, thermal_comfort
 from app.services.database import get_db_connection
 from app.services.mlflow_service import MLflowService
@@ -120,15 +120,14 @@ async def startup_event():
 @app.on_event("shutdown")
 async def shutdown_event():
     """Cleanup na finalização da aplicação."""
-    logger.info("🛑 Finalizando thermal Pattern Analysis API...")
+    logger.info("🛑 Finalizando Thermal Pattern Analysis API...")
 
 # Incluir routers
-from fastapi.routers import inmet
 app.include_router(health.router, prefix="/health", tags=["Health"])
-app.include_router(inmet.router, prefix="/api/v1", tags=["INMET Data Ingestion"])
-app.include_router(thermal.router, prefix="/api/v1/thermal", tags=["thermal Data"])
-app.include_router(clustering.router, prefix="/api/v1/clustering", tags=["Clustering"])
-app.include_router(prediction.router, prefix="/api/v1/prediction", tags=["Prediction"])
+app.include_router(thermal_comfort.router, prefix="/thermal_comfort", tags=["Thermal Comfort"])
+app.include_router(clustering.router, prefix="/clustering", tags=["Clustering"])
+app.include_router(prediction.router, prefix="/prediction", tags=["Prediction"])
+app.include_router(dashboard.router, prefix="/dashboard", tags=["Dashboard"])
 app.include_router(dashboard.router, prefix="/api/v1/dashboard", tags=["Dashboard"])
 
 # Endpoints principais

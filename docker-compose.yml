@@ -24,7 +24,9 @@ services:
       postgres:
         condition: service_healthy
       minio:
-        condition: service_started
+        condition: service_healthy
+      minio-init:
+        condition: service_completed_successfully
     command: >
       bash -c "
         echo 'Iniciando serviços...'
@@ -57,7 +59,9 @@ services:
       postgres:
         condition: service_healthy
       minio:
-        condition: service_started
+        condition: service_healthy
+      minio-init:
+        condition: service_completed_successfully
     command: >
       mlflow server 
       --backend-store-uri postgresql://user:password@postgres:5432/mlflow
@@ -93,11 +97,33 @@ services:
       - "9000:9000"
       - "9001:9001"
     environment:
-      MINIO_ACCESS_KEY: minioadmin
-      MINIO_SECRET_KEY: minioadmin
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
     volumes:
       - minio_data:/data
     command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Inicializador do MinIO - cria bucket automaticamente
+  minio-init:
+    image: minio/mc:latest
+    container_name: avd_minio_init
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      echo '🪣 Configurando MinIO...';
+      mc alias set myminio http://minio:9000 minioadmin minioadmin;
+      mc mb myminio/mlflow-artifacts --ignore-existing;
+      mc anonymous set download myminio/mlflow-artifacts;
+      echo '✅ MinIO configurado com sucesso!';
+      exit 0;
+      "
 
   # ThingsBoard CE (IoT Platform)
   thingsboard:
