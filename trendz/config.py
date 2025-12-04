@@ -27,7 +27,7 @@ class TrendzConfig:
             }
             
             response = requests.post(
-                f"{self.trendz_url}/api/auth/login",
+                f"{self.thingsboard_url}/api/auth/login",
                 json=auth_data,
                 headers={"Content-Type": "application/json"}
             )
