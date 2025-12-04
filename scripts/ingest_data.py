@@ -2,6 +2,7 @@ import pandas as pd
 import requests
 import os
 import sys
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Add project root to path to import other modules if needed
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -13,6 +14,9 @@ USERNAME = os.getenv("TB_USER", "tenant@thingsboard.org")
 PASSWORD = os.getenv("TB_PASSWORD", "tenant")
 DEVICE_NAME = "Sensor Térmico 01"
 DEVICE_TYPE = "Thermal Sensor"
+
+# Number of parallel workers
+MAX_WORKERS = 10
 
 def get_token():
     """Login to ThingsBoard and get JWT token"""
@@ -98,6 +102,35 @@ def send_to_api(row):
         # print(f"Error sending to API: {e}")
         pass
 
+def process_row(row, device_access_token):
+    """Process a single row: send to ThingsBoard and API"""
+    try:
+        # Convert timestamp to milliseconds
+        ts = int(pd.to_datetime(row['timestamp']).timestamp() * 1000)
+        
+        telemetry = {
+            "ts": ts,
+            "values": {
+                "temperature": row['temperature'],
+                "humidity": row['humidity'],
+                "wind_velocity": row['wind_velocity'],
+                "pressure": row['pressure'],
+                "solar_radiation": row['solar_radiation'],
+                "thermal_sensation": row['thermal_sensation'],
+                "comfort_zone": row['comfort_zone']
+            }
+        }
+        
+        # Send to ThingsBoard
+        send_telemetry(device_access_token, telemetry)
+        
+        # Send to FastAPI
+        send_to_api(row)
+        return True
+    except Exception as e:
+        print(f"Error processing row: {e}")
+        return False
+
 def main():
     print("Starting data ingestion to ThingsBoard...")
     
@@ -125,34 +158,20 @@ def main():
     print(f"Reading data from {data_path}...")
     df = pd.read_csv(data_path)
     
-    print(f"Sending {len(df)} records to ThingsBoard...")
+    total_records = len(df)
+    print(f"Sending {total_records} records to ThingsBoard with {MAX_WORKERS} workers...")
     
-    # 5. Send Data
-    for i, (index, row) in enumerate(df.iterrows()):
-        # Convert timestamp to milliseconds
-        ts = int(pd.to_datetime(row['timestamp']).timestamp() * 1000)
-        
-        telemetry = {
-            "ts": ts,
-            "values": {
-                "temperature": row['temperature'],
-                "humidity": row['humidity'],
-                "wind_velocity": row['wind_velocity'],
-                "pressure": row['pressure'],
-                "solar_radiation": row['solar_radiation'],
-                "thermal_sensation": row['thermal_sensation'],
-                "comfort_zone": row['comfort_zone']
-            }
-        }
-        
-        # Send to ThingsBoard (only if needed - comment out if already populated)
-        send_telemetry(device_access_token, telemetry)
-        
-        # Send to FastAPI (for DB and S3 storage)
-        send_to_api(row)
-        
-        if i % 100 == 0:
-            print(f"Sent {i} records...")
+    # 5. Send Data in Parallel
+    completed = 0
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+        futures = []
+        for index, row in df.iterrows():
+            futures.append(executor.submit(process_row, row, device_access_token))
+            
+        for future in as_completed(futures):
+            completed += 1
+            if completed % 100 == 0:
+                print(f"Processed {completed}/{total_records} records...")
             
     print("Ingestion complete!")
 

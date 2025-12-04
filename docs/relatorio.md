@@ -1,23 +1,27 @@
-# Relatório Técnico - Pipeline de Dados Meteorológicos
+# Pipeline de Dados Meteorológicos: Monitoramento e Previsão de Conforto Térmico
 
-**Instituição:** CESAR School  
-**Disciplina:** Análise e Visualização de Dados (2025.2)  
-**Data:** 03 de Dezembro de 2025  
+<center>
+<b>ticogafa, raf7525, MigueldsBatista</b>
+<br>
+CESAR School – Análise e Visualização de Dados (2025.2)
+<br>
+Recife – PE – Brazil
+<br>
+<code>{@ticogafa, @raf7525, @MigueldsBatista}</code>
+</center>
 
-**Equipe:**
-* ticogafa (@ticogafa)
-* raf7525 (@raf7525)
-* MigueldsBatista (@MigueldsBatista)
+**Abstract.** *This project presents the development of an End-to-End Data Pipeline capable of ingesting, processing, storing, and analyzing real-time climatic data. The solution addresses specific challenges such as classifying thermal comfort levels and predicting thermal sensation using Machine Learning. The architecture utilizes containerized microservices (Docker), including FastAPI for ingestion, MinIO and PostgreSQL for storage, and MLflow for experiment tracking. Results show that the Gradient Boosting Regressor achieved an RMSE of 0.16°C. Final visualizations are provided via ThingsBoard.*
 
----
+**Resumo.** *Este projeto apresenta o desenvolvimento de um Pipeline de Dados Completo (End-to-End) capaz de ingerir, processar, armazenar e analisar dados climáticos em tempo real. A solução aborda desafios específicos como a classificação de níveis de conforto térmico e a previsão de sensação térmica utilizando Machine Learning. A arquitetura utiliza microsserviços conteinerizados (Docker), incluindo FastAPI para ingestão, MinIO e PostgreSQL para armazenamento e MLflow para rastreamento de experimentos. Os resultados mostram que o modelo Gradient Boosting Regressor obteve um RMSE de 0.16°C. As visualizações finais são disponibilizadas via ThingsBoard.*
 
 ## 1. Introdução e Objetivos
 
 A análise de dados meteorológicos é fundamental para diversos setores, desde a agricultura até o planejamento urbano. Este projeto tem como objetivo principal o desenvolvimento de um **Pipeline de Dados Completo (End-to-End)**, capaz de ingerir, processar, armazenar e analisar dados climáticos em tempo real.
 
 O foco específico da análise recai sobre dois problemas da especificação:
-1.  **Classificação de Níveis de Conforto Térmico (Item 7.5):** Categorização do ambiente em zonas (ex: "Confortável", "Quente", "Frio").
-2.  **Previsão de Sensação Térmica (Item 7.10):** Utilização de Machine Learning para estimar a sensação térmica percebida com base em variáveis ambientais.
+
+1.  **Classificação de Níveis de Conforto Térmico:** Categorização do ambiente em zonas (ex: "Confortável", "Quente", "Frio").
+2.  **Previsão de Sensação Térmica:** Utilização de Machine Learning para estimar a sensação térmica percebida com base em variáveis ambientais.
 
 ## 2. Arquitetura da Solução
 
@@ -25,9 +29,9 @@ A solução foi desenvolvida utilizando uma arquitetura de microsserviços conte
 
 ### 2.1. Diagrama Geral
 > *[INSERIR AQUI: Print ou Diagrama da Arquitetura do Docker Compose]*
-> *(Sugestão: Usar a imagem da Figura 1 da especificação ou um print do `docker-compose ps`)*
 
 ### 2.2. Ferramentas Utilizadas
+
 *   **Ingestão:**
     *   **Python Scripts:** Simulação de sensores IoT enviando dados via HTTP/MQTT.
     *   **FastAPI:** Gateway de entrada que recebe os dados e orquestra o armazenamento.
@@ -45,6 +49,7 @@ A solução foi desenvolvida utilizando uma arquitetura de microsserviços conte
 ## 3. Metodologia
 
 ### 3.1. Coleta e Tratamento de Dados
+
 Os dados utilizados simulam estações automáticas do INMET no estado de Pernambuco. As seguintes variáveis são monitoradas:
 *   Temperatura (°C)
 *   Umidade Relativa (%)
@@ -58,6 +63,7 @@ Os dados utilizados simulam estações automáticas do INMET no estado de Pernam
 3.  Os dados limpos são inseridos no PostgreSQL para consumo pelos modelos.
 
 ### 3.2. Modelagem Preditiva
+
 Para resolver o problema da **Sensação Térmica**, testamos algoritmos de regressão para prever a variável alvo com base nas entradas (Temperatura, Umidade, Vento).
 
 *   **Algoritmos Testados:** Random Forest Regressor e Gradient Boosting.
@@ -70,13 +76,15 @@ O MLflow foi utilizado para registrar cada execução de treinamento, permitindo
 ## 4. Análises e Resultados
 
 ### 4.1. Desempenho do Modelo
+
 O modelo selecionado para produção foi o **Gradient Boosting Regressor**, apresentando os seguintes resultados nos dados de teste:
 
-*   **RMSE:** ~0.79°C (Erro médio menor que 1 grau).
-*   **R²:** ~0.96 (O modelo explica 96% da variância dos dados).
+*   **RMSE:** 0.1606°C (Erro médio muito baixo).
+*   **R²:** 0.9988 (O modelo explica 99.8% da variância dos dados).
 
 ### 4.2. Importância das Variáveis
-A análise de *Feature Importance* demonstrou que a **Temperatura** e a **Umidade** são os fatores mais determinantes para a sensação térmica, seguidos pela velocidade do vento, corroborando com a teoria física do conforto térmico.
+
+A análise de *Feature Importance* demonstrou que a **Temperatura** é o fator dominante absoluto para a sensação térmica (aprox. 94.8%), seguida pela radiação solar (normalizada e absoluta) e velocidade do vento. A umidade apresentou uma influência menor no modelo final.
 
 > *[INSERIR AQUI: Gráfico de Feature Importance gerado no Jupyter]*
 
@@ -85,6 +93,7 @@ A análise de *Feature Importance* demonstrou que a **Temperatura** e a **Umidad
 O dashboard no **ThingsBoard** foi configurado para permitir o monitoramento em tempo real pelos operadores.
 
 ### 5.1. Visualizações Implementadas
+
 1.  **Cards de Tempo Real:** Exibem a temperatura atual, umidade e a sensação térmica predita pelo modelo.
 2.  **Gráficos de Linha:** Histórico das últimas 24 horas.
 3.  **Alarms/Widgets:** Indicadores visuais da "Zona de Conforto". Se a predição indica "Muito Quente", o widget muda de cor (ex: Vermelho).
@@ -102,5 +111,11 @@ O projeto cumpriu com sucesso o objetivo de implementar um pipeline de dados mod
 *   Implementação de alertas por SMS/Email via ThingsBoard quando a zona de conforto atingir níveis críticos ("Perigo").
 *   Aumento da janela de dados históricos para capturar sazonalidade anual.
 
----
-*Documento gerado automaticamente como parte da entrega do Projeto AVD.*
+## Referências
+
+[1] Documentação do Scikit-Learn. Disponível em: https://scikit-learn.org/
+
+[2] Documentação do MLflow. Disponível em: https://mlflow.org/
+
+[3] Documentação do ThingsBoard. Disponível em: https://thingsboard.io/
+

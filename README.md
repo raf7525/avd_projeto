@@ -83,7 +83,7 @@ Além da predição numérica, o sistema classifica o resultado em 6 zonas:
 
 ## 🛠️ Tecnologias e Bibliotecas
 
-*   **[FastAPI](https://fastapi.tiangolo.com/):** Framework moderno e de alta performance para construção de APIs com Python 3.11+.
+*   **[FastAPI](https://fastapi.tiangolo.com/):** Framework moderno e de alta performance para construção de APIs com Python 3.11+. Usado para servir os modelos de ML e ingerir dados.
 *   **[MLflow](https://mlflow.org/):** Plataforma para ciclo de vida de ML. Usado para rastrear experimentos, registrar parâmetros, métricas e versionar os modelos treinados (`.pkl`).
 *   **[Scikit-Learn](https://scikit-learn.org/):** Biblioteca de aprendizado de máquina. Fornece as implementações de RandomForest, GradientBoosting e ferramentas de pré-processamento (`StandardScaler`).
 *   **[ThingsBoard](https://thingsboard.io/):** Plataforma IoT open-source. Usada para visualização de telemetria em tempo real e criação de dashboards complexos.
@@ -146,14 +146,13 @@ Envie dados climáticos para receber a sensação térmica e a zona de conforto:
 ```bash
 curl -X POST "http://localhost:8060/prediction/predict?model=random_forest" \
   -H "Content-Type: application/json" \
-  -d 
-  {
+  -d '{'\
     "temperature": 32.5,
     "humidity": 60.0,
     "wind_velocity": 3.0,
     "pressure": 1012.0,
     "solar_radiation": 800.0
-  }
+  }'
 ```
 
 ---
@@ -165,7 +164,7 @@ Aqui estão alguns scripts úteis para gerenciar o projeto e seus dados:
 ### Preparar Dados
 Se o banco estiver vazio, prepare e ingira os dados:
 ```bash
-# 1. Converter dados do INMET (certifique-se que data/inmet.csv está presente)
+# 1. Converter dados do INMET (certifique-se que inmet.csv está na raiz do projeto)
 docker-compose exec app python scripts/convert_inmet_data.py
 
 # 2. Ingerir no Banco de Dados (PostgreSQL) e ThingsBoard
@@ -182,12 +181,6 @@ docker-compose exec app python scripts/init_tables.py
 Use este script para verificar se os dados estão sendo enviados corretamente para o ThingsBoard antes de criar dashboards.
 ```bash
 docker-compose exec app python scripts/check_dashboard.py
-```
-
-### Importar Dashboards do ThingsBoard
-Este script carrega o dashboard pré-configurado (`data/thingsboard.json`) para o ThingsBoard.
-```bash
-docker-compose exec app python scripts/import_dashboards.py
 ```
 
 ### Configurar Dashboards do Trendz Analytics
