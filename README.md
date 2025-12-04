@@ -12,9 +12,9 @@
 **INSTITUIÇÃO:** CESAR School  
 
 ## 👥 Equipe
-* [![ticogafa](https://img.shields.io/badge/ticogafa-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ticogafa)
-* [![raf7525](https://img.shields.io/badge/raf7525-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/raf7525)
-* [![MigueldsBatista](https://img.shields.io/badge/MigueldsBatista-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/MigueldsBatista)
+* [![ticogafa](https://img.shields.io/badge/ticogafa-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ticogafa) - **Tiago Gurgel**
+* [![raf7525](https://img.shields.io/badge/raf7525-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/raf7525) - **Rafael Leite**
+* [![MigueldsBatista](https://img.shields.io/badge/MigueldsBatista-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/MigueldsBatista) - **Miguel Batista**
 
 ---
 
