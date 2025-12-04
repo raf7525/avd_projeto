@@ -83,7 +83,7 @@ def send_telemetry(device_token, data):
 
 def send_to_api(row):
     """Send data to FastAPI for storage"""
-    url = f"{FASTAPI_HOST}/api/v1/thermal/"
+    url = f"{FASTAPI_HOST}/thermal_comfort/"
     try:
         payload = {
             "timestamp": row['timestamp'],
@@ -119,7 +119,7 @@ def main():
     # 4. Read Data
     data_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'sample_thermal_data.csv')
     if not os.path.exists(data_path):
-        print(f"Data file not found at {data_path}. Please run generate_data.py first.")
+        print(f"Data file not found at {data_path}. Please run convert_inmet_data.py to process data first.")
         return
 
     print(f"Reading data from {data_path}...")
@@ -146,7 +146,7 @@ def main():
         }
         
         # Send to ThingsBoard (only if needed - comment out if already populated)
-        # send_telemetry(device_access_token, telemetry)
+        send_telemetry(device_access_token, telemetry)
         
         # Send to FastAPI (for DB and S3 storage)
         send_to_api(row)

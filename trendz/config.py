@@ -12,8 +12,8 @@ class TrendzConfig:
     """Classe para gerenciar configuração do Trendz Analytics"""
     
     def __init__(self):
-        self.trendz_url = os.getenv('TRENDZ_URL', 'http://localhost:8888')
-        self.thingsboard_url = os.getenv('THINGSBOARD_URL', 'http://localhost:8080')
+        self.trendz_url = os.getenv('TRENDZ_URL', 'http://trendz:8888')
+        self.thingsboard_url = os.getenv('THINGSBOARD_URL', 'http://thingsboard:9090')
         self.username = os.getenv('TRENDZ_USERNAME', 'tenant@thingsboard.org')
         self.password = os.getenv('TRENDZ_PASSWORD', 'tenant')
         self.api_token = None
@@ -163,7 +163,6 @@ class ThermalAnalyticsViews:
                 }
             ]
         }
-        }
 
 class TrendzIntegration:
     """Classe para integração completa com Trendz Analytics"""
@@ -209,6 +208,7 @@ class TrendzIntegration:
         """Gerar dados de exemplo térmicos para teste"""
         import numpy as np
         import pandas as pd
+        import os
         
         np.random.seed(42)
         
@@ -254,7 +254,11 @@ class TrendzIntegration:
         
         # Salvar arquivo para importação
         df = pd.DataFrame(data)
-        output_path = '/home/raf75/quinto-periodo/avd/avd_projeto/data/sample_thermal_data.csv'
+        output_path = '/app/data/sample_trendz_data.csv'
+        
+        # Ensure directory exists
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        
         df.to_csv(output_path, index=False)
         
         print(f"✅ {len(data)} registros de dados térmicos de exemplo gerados")

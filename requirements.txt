@@ -29,10 +29,6 @@ psycopg2-binary
 # === MLFLOW ===
 mlflow
 
-# === SNOWFLAKE ===
-snowflake-connector-python
-snowflake-sqlalchemy
-
 # === IOT / THINGSBOARD ===
 tb-mqtt-client
 requests

@@ -157,7 +157,7 @@ async def train_models():
     except FileNotFoundError:
         raise HTTPException(
             status_code=404, 
-            detail="Arquivo de dados não encontrado. Execute generate_data.py primeiro."
+            detail="Arquivo de dados não encontrado. Verifique se os dados do INMET foram convertidos ou ingeridos."
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro no treinamento: {str(e)}")

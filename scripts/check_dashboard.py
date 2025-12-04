@@ -4,9 +4,10 @@ Script para verificar dados no ThingsBoard antes de criar dashboard
 """
 import requests
 from datetime import datetime
+import os
 
 # Configurações
-THINGSBOARD_HOST = "http://localhost:8080"
+THINGSBOARD_HOST = os.getenv("THINGSBOARD_HOST", "http://localhost:8080")
 USERNAME = "tenant@thingsboard.org"
 PASSWORD = "tenant"
 

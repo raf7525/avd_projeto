@@ -2,6 +2,9 @@
 # .gitignore - Projeto AVD (Análise de Vento)
 # ==============================================
 
+.gemini
+.ruff_cache
+
 # === LOGS ESPECÍFICOS DO PROJETO ===
 api.log
 *.log

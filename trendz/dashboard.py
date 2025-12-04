@@ -10,7 +10,7 @@ import requests
 class ThermalDataProcessor:
     """Processador de dados de sensação térmica para Trendz Analytics"""
     
-    def __init__(self, data_source: str = "/home/raf75/quinto-periodo/avd/avd_projeto/data/sample_thermal_data.csv"):
+    def __init__(self, data_source: str = "/app/data/sample_thermal_data.csv"):
         self.data_source = data_source
         self.df = None
         self.comfort_zones = None
@@ -103,7 +103,7 @@ class TrendzDashboardCreator:
     
     def __init__(self, processor: ThermalDataProcessor):
         self.processor = processor
-        self.trendz_url = "http://localhost:8888"
+        self.trendz_url = "http://trendz:8888"
     
     def create_thermal_heatmap_visualization(self) -> Dict:
         """Criar visualização de Mapa de Calor de Sensação Térmica"""
@@ -218,7 +218,7 @@ class TrendzDashboardCreator:
         }
         
     
-    def export_dashboard_config(self, output_file: str = "/home/raf75/quinto-periodo/avd/avd_projeto/data/trendz_dashboard_config.json"):
+    def export_dashboard_config(self, output_file: str = "/app/data/trendz_dashboard_config.json"):
         """Exportar configuração completa dos dashboards"""
         config = {
             "project_name": "Sistema de Predição de Sensação Térmica",
@@ -230,7 +230,7 @@ class TrendzDashboardCreator:
             "data_sources": {
                 "primary": {
                     "type": "csv",
-                    "path": "/home/raf75/quinto-periodo/avd/avd_projeto/data/sample_thermal_data.csv",
+                    "path": "/app/data/sample_thermal_data.csv",
                     "fields": {
                         "timestamp": "datetime",
                         "temperature": "float", 
@@ -262,7 +262,7 @@ class TrendzDashboardCreator:
 class TrendzAPIConnector:
     """Conector para API do Trendz Analytics"""
     
-    def __init__(self, base_url: str = "http://localhost:8888"):
+    def __init__(self, base_url: str = "http://trendz:8888"):
         self.base_url = base_url
         self.token = None
     

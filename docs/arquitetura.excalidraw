@@ -1,0 +1,2787 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "http://127.0.0.1:3000",
+  "elements": [
+    {
+      "id": "Storage",
+      "type": "rectangle",
+      "x": 945.5425492881775,
+      "y": 817.2983623079157,
+      "width": 636.9555754364488,
+      "height": 234.48831110168274,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_Storage"
+      ],
+      "frameId": null,
+      "index": "a0",
+      "roundness": null,
+      "seed": 1383397511,
+      "version": 400,
+      "versionNonce": 1815486215,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "2272kGpzIJ9zdtvJ2RX13"
+        }
+      ],
+      "updated": 1764809095865,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "IoT_Infra",
+      "type": "rectangle",
+      "x": 1195.246545056994,
+      "y": 303.223177,
+      "width": 674.4628433322043,
+      "height": 356.558073,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_IoT_Infra"
+      ],
+      "frameId": null,
+      "index": "a1",
+      "roundness": null,
+      "seed": 1977218921,
+      "version": 97,
+      "versionNonce": 2032309065,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "iHJhfFy5yjn85ageSLjo-"
+        }
+      ],
+      "updated": 1764809130771,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "ML_Infra",
+      "type": "rectangle",
+      "x": -24.285714285714448,
+      "y": 589.8948489912159,
+      "width": 704.77734375,
+      "height": 441.89182441838244,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_ML_Infra"
+      ],
+      "frameId": null,
+      "index": "a2",
+      "roundness": null,
+      "seed": 1718767527,
+      "version": 84,
+      "versionNonce": 1776269639,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "9nOlAYdwEhA98rfUy-n7d"
+        }
+      ],
+      "updated": 1764809043965,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "App_Container",
+      "type": "rectangle",
+      "x": 348.1015625,
+      "y": 309.220837966158,
+      "width": 804.9140625,
+      "height": 176.56041203384203,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_App_Container"
+      ],
+      "frameId": null,
+      "index": "a3",
+      "roundness": null,
+      "seed": 744038985,
+      "version": 81,
+      "versionNonce": 2051371303,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "id": "8tPvOPj7oPx1d5_IqTSSQ",
+          "type": "text"
+        },
+        {
+          "id": "User_FastAPI",
+          "type": "arrow"
+        },
+        {
+          "id": "User_Jupyter",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1764809022427,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "User",
+      "type": "ellipse",
+      "x": 674.3225446428571,
+      "y": -152.14285714285717,
+      "width": 205.78125,
+      "height": 205.78125,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_External"
+      ],
+      "frameId": null,
+      "index": "a5",
+      "roundness": null,
+      "seed": 1668280617,
+      "version": 111,
+      "versionNonce": 1541951431,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "id": "User_MLflow",
+          "type": "arrow"
+        },
+        {
+          "id": "User_ThingsBoard",
+          "type": "arrow"
+        },
+        {
+          "id": "User_Trendz",
+          "type": "arrow"
+        },
+        {
+          "id": "43h4DvVoT14-E01xVPv3Y",
+          "type": "text"
+        },
+        {
+          "id": "User_MinIO",
+          "type": "arrow"
+        },
+        {
+          "id": "User_FastAPI",
+          "type": "arrow"
+        },
+        {
+          "id": "User_Jupyter",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1764809022427,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "FastAPI",
+      "type": "rectangle",
+      "x": 484.296875,
+      "y": 359.78125,
+      "width": 260.21875,
+      "height": 85,
+      "angle": 0,
+      "strokeColor": "#333",
+      "backgroundColor": "#d4e157",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_App_Container"
+      ],
+      "frameId": null,
+      "index": "a6",
+      "roundness": null,
+      "seed": 1084346855,
+      "version": 35,
+      "versionNonce": 152092041,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "6y_PNPNXZjKxtmFmTyrQe"
+        },
+        {
+          "id": "FastAPI_MLflow",
+          "type": "arrow"
+        },
+        {
+          "id": "FastAPI_Postgres",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1764809028404,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "Jupyter",
+      "type": "rectangle",
+      "x": 794.515625,
+      "y": 359.78125,
+      "width": 260.21875,
+      "height": 85,
+      "angle": 0,
+      "strokeColor": "#333",
+      "backgroundColor": "#ffcc80",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_App_Container"
+      ],
+      "frameId": null,
+      "index": "a7",
+      "roundness": null,
+      "seed": 1888085001,
+      "version": 33,
+      "versionNonce": 1200559977,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "Rl0ndoyVLFIG60PWKrIxa"
+        },
+        {
+          "id": "Jupyter_MLflow",
+          "type": "arrow"
+        },
+        {
+          "id": "Jupyter_Postgres",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1764809020352,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "MLflow",
+      "type": "rectangle",
+      "x": 177.35881696428555,
+      "y": 657.4955357142858,
+      "width": 279.69334964483187,
+      "height": 85,
+      "angle": 0,
+      "strokeColor": "#333",
+      "backgroundColor": "#4fc3f7",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_ML_Infra"
+      ],
+      "frameId": null,
+      "index": "a8",
+      "roundness": null,
+      "seed": 545062151,
+      "version": 70,
+      "versionNonce": 141775625,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "sU5vKXKaNTfCqjjmx0jWL"
+        },
+        {
+          "id": "FastAPI_MLflow",
+          "type": "arrow"
+        },
+        {
+          "id": "Jupyter_MLflow",
+          "type": "arrow"
+        },
+        {
+          "id": "MLflow_Postgres",
+          "type": "arrow"
+        },
+        {
+          "id": "MLflow_MinIO",
+          "type": "arrow"
+        },
+        {
+          "id": "User_MLflow",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1764809041648,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "MinIO",
+      "type": "rectangle",
+      "x": 31.270618386227056,
+      "y": 881.1622392069584,
+      "width": 260.21875,
+      "height": 102,
+      "angle": 0,
+      "strokeColor": "#333",
+      "backgroundColor": "#ef9a9a",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_ML_Infra"
+      ],
+      "frameId": null,
+      "index": "a9",
+      "roundness": null,
+      "seed": 1872919273,
+      "version": 165,
+      "versionNonce": 1148397031,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "kNdz73pHlVO2BT6ka3Hg5"
+        },
+        {
+          "id": "MLflow_MinIO",
+          "type": "arrow"
+        },
+        {
+          "id": "User_MinIO",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1764809057083,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "ThingsBoard",
+      "type": "rectangle",
+      "x": 1247.203125,
+      "y": 561.78125,
+      "width": 287.0614571049068,
+      "height": 73,
+      "angle": 0,
+      "strokeColor": "#333",
+      "backgroundColor": "#ffab91",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_IoT_Infra"
+      ],
+      "frameId": null,
+      "index": "aA",
+      "roundness": null,
+      "seed": 772129831,
+      "version": 28,
+      "versionNonce": 1087950921,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "aC_Rl8JMn_N4BYrysXG-J"
+        },
+        {
+          "id": "Trendz_ThingsBoard",
+          "type": "arrow"
+        },
+        {
+          "id": "User_ThingsBoard",
+          "type": "arrow"
+        },
+        {
+          "id": "ThingsBoard_Postgres",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1764809111830,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "Trendz",
+      "type": "rectangle",
+      "x": 1480.21875,
+      "y": 359.78125,
+      "width": 337.1678437007324,
+      "height": 85,
+      "angle": 0,
+      "strokeColor": "#333",
+      "backgroundColor": "#ce93d8",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_IoT_Infra"
+      ],
+      "frameId": null,
+      "index": "aB",
+      "roundness": null,
+      "seed": 1900361161,
+      "version": 73,
+      "versionNonce": 275130983,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "K2RLUDTNT_P8o4AJ-ZmtM"
+        },
+        {
+          "id": "Trendz_Postgres",
+          "type": "arrow"
+        },
+        {
+          "id": "Trendz_ThingsBoard",
+          "type": "arrow"
+        },
+        {
+          "id": "User_Trendz",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1764809129001,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "Postgres",
+      "type": "rectangle",
+      "x": 1106.2965411627977,
+      "y": 880.4744117948472,
+      "width": 297.25965529722026,
+      "height": 147.29115295410156,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_Storage"
+      ],
+      "frameId": null,
+      "index": "aC",
+      "roundness": null,
+      "seed": 422094663,
+      "version": 261,
+      "versionNonce": 228823911,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "fC3TreoO07sKI54tH5sG5"
+        },
+        {
+          "id": "Jupyter_Postgres",
+          "type": "arrow"
+        },
+        {
+          "id": "MLflow_Postgres",
+          "type": "arrow"
+        },
+        {
+          "id": "Trendz_Postgres",
+          "type": "arrow"
+        },
+        {
+          "id": "FastAPI_Postgres",
+          "type": "arrow"
+        },
+        {
+          "id": "ThingsBoard_Postgres",
+          "type": "arrow"
+        }
+      ],
+      "updated": 1764809089356,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "User_FastAPI",
+      "type": "arrow",
+      "x": 712.4722572997649,
+      "y": 35.81516486730757,
+      "width": 95.63193234416099,
+      "height": 264.61068610940447,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "aD",
+      "roundness": {
+        "type": 2
+      },
+      "seed": 1754109097,
+      "version": 210,
+      "versionNonce": 1565033385,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "hmWCtlEuLWafiHiTjjOd7"
+        }
+      ],
+      "updated": 1764809016172,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0.5
+        ],
+        [
+          -95.63193234416087,
+          166.4106861094045
+        ],
+        [
+          -95.63193234416087,
+          205.9106861094045
+        ],
+        [
+          -95.63193234416099,
+          265.11068610940447
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "User",
+        "focus": 0.09506528114623743,
+        "gap": 4.408793274802844
+      },
+      "endBinding": {
+        "elementId": "App_Container",
+        "focus": -0.33225477109712237,
+        "gap": 8.294986989445988
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": false
+    },
+    {
+      "id": "User_Jupyter",
+      "type": "arrow",
+      "x": 835.8069472202477,
+      "y": 43.78797746198333,
+      "width": 86.3837278241482,
+      "height": 256.63787351472865,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "aE",
+      "roundness": {
+        "type": 2
+      },
+      "seed": 1614947943,
+      "version": 206,
+      "versionNonce": 2062201927,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "63qqZSb4PXhCHXxVE1xB5"
+        }
+      ],
+      "updated": 1764809022607,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0.5
+        ],
+        [
+          86.3837278241482,
+          158.4378735147287
+        ],
+        [
+          86.3837278241482,
+          197.9378735147287
+        ],
+        [
+          86.3837278241482,
+          257.13787351472865
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "User",
+        "focus": -0.046694480117725104,
+        "gap": 7.486010134915281
+      },
+      "endBinding": {
+        "elementId": "App_Container",
+        "focus": 0.4264606354654067,
+        "gap": 8.294986989445988
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": false
+    },
+    {
+      "id": "User_MLflow",
+      "type": "arrow",
+      "x": 685.7867820580121,
+      "y": 0.5036531210717499,
+      "width": 460.95878205801216,
+      "height": 653.839632593214,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "aF",
+      "roundness": {
+        "type": 2
+      },
+      "seed": 1495734153,
+      "version": 154,
+      "versionNonce": 1920028009,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "W_l_Dqbgp71mZ21_GHuiF"
+        }
+      ],
+      "updated": 1764809041649,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0.5,
+          0.5
+        ],
+        [
+          -460.45878205801216,
+          255.27734687892826
+        ],
+        [
+          -460.45878205801216,
+          294.77734687892826
+        ],
+        [
+          -460.45878205801216,
+          334.27734687892826
+        ],
+        [
+          -460.45878205801216,
+          395.77734687892826
+        ],
+        [
+          -460.45878205801216,
+          457.27734687892826
+        ],
+        [
+          -460.45878205801216,
+          496.77734687892826
+        ],
+        [
+          -460.45878205801216,
+          536.2773468789281
+        ],
+        [
+          -387.8761036454982,
+          654.339632593214
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "User",
+        "focus": 0.0000012510112632044706,
+        "gap": 1
+      },
+      "endBinding": {
+        "elementId": "MLflow",
+        "focus": 0.05099576402602814,
+        "gap": 2.652249999999981
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": false
+    },
+    {
+      "id": "User_MinIO",
+      "type": "arrow",
+      "x": 682.0484923496292,
+      "y": -6.951988733972939,
+      "width": 579.9934923496292,
+      "height": 883.1384014638805,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "aG",
+      "roundness": {
+        "type": 2
+      },
+      "seed": 35570055,
+      "version": 508,
+      "versionNonce": 51018567,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "e_1kU_4mkozdpWc2PPmak"
+        }
+      ],
+      "updated": 1764809057084,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0.5,
+          0.5
+        ],
+        [
+          -579.4934923496292,
+          262.73298873397295
+        ],
+        [
+          -579.4934923496292,
+          302.23298873397295
+        ],
+        [
+          -579.4934923496292,
+          341.73298873397295
+        ],
+        [
+          -579.4934923496292,
+          403.23298873397295
+        ],
+        [
+          -579.4934923496292,
+          464.7329887339729
+        ],
+        [
+          -579.4934923496292,
+          504.2329887339729
+        ],
+        [
+          -579.4934923496292,
+          543.7329887339727
+        ],
+        [
+          -579.4934923496292,
+          605.2329887339724
+        ],
+        [
+          -579.4934923496292,
+          666.7329887339724
+        ],
+        [
+          -579.4934923496292,
+          706.2329887339724
+        ],
+        [
+          -579.4934923496292,
+          745.7329887339724
+        ],
+        [
+          -537.5444270419035,
+          883.6384014638805
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "User",
+        "focus": 0.0000039074187943814726,
+        "gap": 1
+      },
+      "endBinding": {
+        "elementId": "MinIO",
+        "focus": -0.000006112828523995751,
+        "gap": 4.475826477050759
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": false
+    },
+    {
+      "id": "User_ThingsBoard",
+      "type": "arrow",
+      "x": 867.5033676810995,
+      "y": 0.7492718255145405,
+      "width": 479.7762342258079,
+      "height": 556.4757281744854,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "aH",
+      "roundness": {
+        "type": 2
+      },
+      "seed": 1162690153,
+      "version": 112,
+      "versionNonce": 1870008841,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "m1Ml7Xls49559R1raRlRu"
+        }
+      ],
+      "updated": 1764809111830,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0.5,
+          0.5
+        ],
+        [
+          458.0946323189005,
+          255.03172817448547
+        ],
+        [
+          458.0946323189005,
+          294.53172817448547
+        ],
+        [
+          458.0946323189005,
+          334.0317281744854
+        ],
+        [
+          458.0946323189005,
+          395.5317281744854
+        ],
+        [
+          458.0946323189005,
+          457.0317281744855
+        ],
+        [
+          458.0946323189005,
+          496.5317281744855
+        ],
+        [
+          458.0946323189005,
+          536.0317281744857
+        ],
+        [
+          480.2762342258079,
+          556.9757281744854
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "User",
+        "focus": 0.0000031544756106446906,
+        "gap": 1
+      },
+      "endBinding": {
+        "elementId": "ThingsBoard",
+        "focus": -0.000008190851492758053,
+        "gap": 4.056249999999977
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": false
+    },
+    {
+      "id": "User_Trendz",
+      "type": "arrow",
+      "x": 901.6128926998416,
+      "y": -26.55921791184204,
+      "width": 756.8445881848667,
+      "height": 368.01362126288564,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "aI",
+      "roundness": {
+        "type": 2
+      },
+      "seed": 1878718631,
+      "version": 203,
+      "versionNonce": 1978793289,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "DhivCDU5MFHnu9E2N6BR3"
+        }
+      ],
+      "updated": 1764809132978,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0,
+          0.5
+        ],
+        [
+          735.557814405065,
+          269.8136212628857
+        ],
+        [
+          735.557814405065,
+          309.3136212628858
+        ],
+        [
+          756.8445881848667,
+          368.51362126288564
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "User",
+        "focus": -0.15903320265301782,
+        "gap": 23.65267591227473
+      },
+      "endBinding": {
+        "elementId": "Trendz",
+        "focus": 0.17048720003353288,
+        "gap": 17.826846648956405
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": false
+    },
+    {
+      "id": "FastAPI_Postgres",
+      "type": "arrow",
+      "x": 753.17425,
+      "y": 437.8087667125372,
+      "width": 347.5472911627976,
+      "height": 440.02360127227956,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "aJ",
+      "roundness": {
+        "type": 2
+      },
+      "seed": 1540065609,
+      "version": 333,
+      "versionNonce": 509055751,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "x0UV6WLFoec1VT-n1ohtH"
+        }
+      ],
+      "updated": 1764809089357,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0.5,
+          0.5
+        ],
+        [
+          65.02474999999993,
+          19.972233287462814
+        ],
+        [
+          65.02474999999993,
+          59.472233287462814
+        ],
+        [
+          65.02474999999993,
+          98.97223328746276
+        ],
+        [
+          65.02474999999993,
+          160.47223328746276
+        ],
+        [
+          65.02474999999993,
+          221.97223328746276
+        ],
+        [
+          65.02474999999993,
+          261.47223328746276
+        ],
+        [
+          65.02474999999993,
+          300.97223328746276
+        ],
+        [
+          348.0472911627976,
+          440.52360127227956
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "FastAPI",
+        "focus": -0.07338998133448091,
+        "gap": 9.158625000000029
+      },
+      "endBinding": {
+        "elementId": "Postgres",
+        "focus": -0.000002743352260604932,
+        "gap": 5.0750000000000455
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": false
+    },
+    {
+      "id": "FastAPI_MLflow",
+      "type": "arrow",
+      "x": 472.7966249999999,
+      "y": 449.15337099076095,
+      "width": 125.36394536816323,
+      "height": 205.40691472352484,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "aK",
+      "roundness": {
+        "type": 2
+      },
+      "seed": 1065569223,
+      "version": 94,
+      "versionNonce": 1183189481,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "Ca5issL7XABqrBBcX_iNt"
+        }
+      ],
+      "updated": 1764809041648,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          -0.5,
+          0.5
+        ],
+        [
+          -22.140624999999886,
+          8.627629009239058
+        ],
+        [
+          -22.140624999999886,
+          48.12762900923906
+        ],
+        [
+          -22.140624999999886,
+          87.627629009239
+        ],
+        [
+          -125.86394536816323,
+          205.90691472352484
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "FastAPI",
+        "focus": 0.0656744516763535,
+        "gap": 12.000249999999994
+      },
+      "endBinding": {
+        "elementId": "MLflow",
+        "focus": -0.054642776969937204,
+        "gap": 2.4352499999999964
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": false
+    },
+    {
+      "id": "Jupyter_MLflow",
+      "type": "arrow",
+      "x": 794.015625,
+      "y": 429.39950454031845,
+      "width": 384.5620679246332,
+      "height": 222.3743124239673,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "aL",
+      "roundness": {
+        "type": 2
+      },
+      "seed": 1711110185,
+      "version": 93,
+      "versionNonce": 1658774729,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "4Gn5QSR7z1M_6_Qg5m1Wo"
+        }
+      ],
+      "updated": 1764809041649,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          -0.5,
+          0.5
+        ],
+        [
+          -109.23862499999996,
+          28.38149545968156
+        ],
+        [
+          -109.23862499999996,
+          67.88149545968156
+        ],
+        [
+          -109.23862499999996,
+          107.3814954596815
+        ],
+        [
+          -385.0620679246332,
+          222.8743124239673
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "Jupyter",
+        "focus": 0.07908250841131025,
+        "gap": 1
+      },
+      "endBinding": {
+        "elementId": "MLflow",
+        "focus": -0.09207671166820179,
+        "gap": 5.2217187499999795
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": false
+    },
+    {
+      "id": "Jupyter_Postgres",
+      "type": "arrow",
+      "x": 1057.75338436,
+      "y": 456.2815,
+      "width": 118.72633148530872,
+      "height": 422.69291179484736,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "aM",
+      "roundness": {
+        "type": 2
+      },
+      "seed": 483670759,
+      "version": 297,
+      "versionNonce": 463807911,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "bUDaJw2q0QoFO1cuChWkB"
+        }
+      ],
+      "updated": 1764809089356,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0.5,
+          0.5
+        ],
+        [
+          2.7076156400000855,
+          1.4995000000000118
+        ],
+        [
+          2.7076156400000855,
+          40.99950000000001
+        ],
+        [
+          2.7076156400000855,
+          80.49949999999995
+        ],
+        [
+          2.7076156400000855,
+          141.99949999999995
+        ],
+        [
+          2.7076156400000855,
+          203.49949999999995
+        ],
+        [
+          2.7076156400000855,
+          242.99949999999995
+        ],
+        [
+          2.7076156400000855,
+          282.49949999999995
+        ],
+        [
+          119.22633148530872,
+          423.19291179484736
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "Jupyter",
+        "focus": -0.05916864746502521,
+        "gap": 12.000249999999994
+      },
+      "endBinding": {
+        "elementId": "Postgres",
+        "focus": -0.07693438164707134,
+        "gap": 1
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": false
+    },
+    {
+      "id": "MLflow_Postgres",
+      "type": "arrow",
+      "x": 457.55216660911736,
+      "y": 675.9040251161593,
+      "width": 643.0243745536802,
+      "height": 244.99660944186337,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "aN",
+      "roundness": {
+        "type": 2
+      },
+      "seed": 1976470281,
+      "version": 334,
+      "versionNonce": 794810567,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "qLS1OiU-1lfeiAZJiGhDk"
+        }
+      ],
+      "updated": 1764809089356,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          0.5,
+          0.5
+        ],
+        [
+          125.95183339088265,
+          -16.123025116159397
+        ],
+        [
+          125.95183339088265,
+          23.376974883840603
+        ],
+        [
+          125.95183339088265,
+          62.8769748838406
+        ],
+        [
+          643.5243745536802,
+          228.87358432570397
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "MLflow",
+        "focus": -0.08075626197512412,
+        "gap": 1
+      },
+      "endBinding": {
+        "elementId": "Postgres",
+        "focus": -0.00000460836959125768,
+        "gap": 5.220000000000027
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": false
+    },
+    {
+      "id": "MLflow_MinIO",
+      "type": "arrow",
+      "x": 226.18430601533524,
+      "y": 753.4957857142858,
+      "width": 28.956425605172257,
+      "height": 122.60162701562172,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_ML_Infra"
+      ],
+      "frameId": null,
+      "index": "aO",
+      "roundness": {
+        "type": 2
+      },
+      "seed": 2088388103,
+      "version": 267,
+      "versionNonce": 76683303,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "OpO7BQN-d9riRx6DFV6Ig"
+        }
+      ],
+      "updated": 1764809057083,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          -0.5,
+          0.5
+        ],
+        [
+          -2.806020301049699,
+          1.9994999999998981
+        ],
+        [
+          -2.806020301049699,
+          41.4994999999999
+        ],
+        [
+          -2.806020301049699,
+          80.9994999999999
+        ],
+        [
+          -29.456425605172257,
+          123.10162701562172
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "MLflow",
+        "focus": 0.041306790565994435,
+        "gap": 11.500250000000051
+      },
+      "endBinding": {
+        "elementId": "MinIO",
+        "focus": 0.0010817648948520337,
+        "gap": 4.564826477050815
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": false
+    },
+    {
+      "id": "ThingsBoard_Postgres",
+      "type": "arrow",
+      "x": 1476.0000952021996,
+      "y": 635.2812500000001,
+      "width": 87.66421832105902,
+      "height": 239.81866179484734,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "aP",
+      "roundness": {
+        "type": 2
+      },
+      "seed": 1404715497,
+      "version": 423,
+      "versionNonce": 1557719273,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "aod_fCn625r_0_WkEgeqP"
+        }
+      ],
+      "updated": 1764809111830,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          -0.5,
+          0.5
+        ],
+        [
+          -14.504018545677354,
+          24.499749999999835
+        ],
+        [
+          -14.504018545677354,
+          63.999749999999835
+        ],
+        [
+          -14.504018545677354,
+          103.49974999999984
+        ],
+        [
+          -88.16421832105902,
+          240.31866179484734
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "ThingsBoard",
+        "focus": -0.6470216051419975,
+        "gap": 1
+      },
+      "endBinding": {
+        "elementId": "Postgres",
+        "focus": 0.4813925613849141,
+        "gap": 4.8744999999997844
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": false
+    },
+    {
+      "id": "Trendz_Postgres",
+      "type": "arrow",
+      "x": 1662.4002578020943,
+      "y": 456.2815,
+      "width": 258.04234868310436,
+      "height": 418.4874117948471,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "aQ",
+      "roundness": {
+        "type": 2
+      },
+      "seed": 225570087,
+      "version": 338,
+      "versionNonce": 388121991,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "61XLSekO1zOsTxi2vKjqZ"
+        }
+      ],
+      "updated": 1764809129001,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          -0.5,
+          0.5
+        ],
+        [
+          -0.35725780209440927,
+          1.4995000000000118
+        ],
+        [
+          -0.35725780209440927,
+          40.99950000000001
+        ],
+        [
+          -0.35725780209440927,
+          80.49949999999995
+        ],
+        [
+          -0.35725780209440927,
+          141.99949999999995
+        ],
+        [
+          -0.35725780209440927,
+          203.49949999999995
+        ],
+        [
+          -0.35725780209440927,
+          242.99949999999995
+        ],
+        [
+          -0.35725780209440927,
+          282.49949999999995
+        ],
+        [
+          -258.3996064851988,
+          418.9874117948471
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "Trendz",
+        "focus": -0.03042715313578125,
+        "gap": 12.000249999999994
+      },
+      "endBinding": {
+        "elementId": "Postgres",
+        "focus": -0.000002022121120750168,
+        "gap": 5.205500000000029
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": false
+    },
+    {
+      "id": "Trendz_ThingsBoard",
+      "type": "arrow",
+      "x": 1502.3862731658453,
+      "y": 456.28149999999994,
+      "width": 42.41448893698248,
+      "height": 102.61650000000009,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_IoT_Infra"
+      ],
+      "frameId": null,
+      "index": "aR",
+      "roundness": {
+        "type": 2
+      },
+      "seed": 751574217,
+      "version": 92,
+      "versionNonce": 569244839,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "vT4GqYBX8RhAr9We9g_X2"
+        }
+      ],
+      "updated": 1764809129001,
+      "link": null,
+      "locked": false,
+      "points": [
+        [
+          -0.5,
+          0.5
+        ],
+        [
+          -2.9332731658453213,
+          1.4995000000000687
+        ],
+        [
+          -2.9332731658453213,
+          40.99950000000007
+        ],
+        [
+          -2.9332731658453213,
+          80.49950000000001
+        ],
+        [
+          -42.91448893698248,
+          103.11650000000009
+        ]
+      ],
+      "lastCommittedPoint": null,
+      "startBinding": {
+        "elementId": "Trendz",
+        "focus": 0.05232889172027755,
+        "gap": 12.000249999999994
+      },
+      "endBinding": {
+        "elementId": "ThingsBoard",
+        "focus": 0.00000981181507816675,
+        "gap": 2.3832499999999754
+      },
+      "startArrowhead": null,
+      "endArrowhead": "arrow",
+      "elbowed": false
+    },
+    {
+      "id": "2272kGpzIJ9zdtvJ2RX13",
+      "type": "text",
+      "x": 1217.0603760689019,
+      "y": 822.2983623079157,
+      "width": 93.919921875,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_Storage"
+      ],
+      "frameId": null,
+      "index": "aS",
+      "roundness": null,
+      "seed": 329897991,
+      "version": 436,
+      "versionNonce": 322705833,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764809097768,
+      "link": null,
+      "locked": false,
+      "text": "Database",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "top",
+      "containerId": "Storage",
+      "originalText": "Database",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "iHJhfFy5yjn85ageSLjo-",
+      "type": "text",
+      "x": 1454.3080219599124,
+      "y": 308.223177,
+      "width": 156.3398895263672,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_IoT_Infra"
+      ],
+      "frameId": null,
+      "index": "aT",
+      "roundness": null,
+      "seed": 2095005479,
+      "version": 98,
+      "versionNonce": 400769577,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764809130771,
+      "link": null,
+      "locked": false,
+      "text": "IoT & Analytics",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "top",
+      "containerId": "IoT_Infra",
+      "originalText": "IoT & Analytics",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "9nOlAYdwEhA98rfUy-n7d",
+      "type": "text",
+      "x": 239.95303235735196,
+      "y": 594.8948489912159,
+      "width": 176.2998504638672,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_ML_Infra"
+      ],
+      "frameId": null,
+      "index": "aU",
+      "roundness": null,
+      "seed": 1696252487,
+      "version": 85,
+      "versionNonce": 1816590439,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764809043965,
+      "link": null,
+      "locked": false,
+      "text": "ML Infrastructure",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "top",
+      "containerId": "ML_Infra",
+      "originalText": "ML Infrastructure",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "8tPvOPj7oPx1d5_IqTSSQ",
+      "type": "text",
+      "x": 630.3386840820312,
+      "y": 314.220837966158,
+      "width": 240.4398193359375,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_App_Container"
+      ],
+      "frameId": null,
+      "index": "aV",
+      "roundness": null,
+      "seed": 1027137895,
+      "version": 101,
+      "versionNonce": 69920487,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764809009978,
+      "link": null,
+      "locked": false,
+      "text": "App Container (avd_app)",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "top",
+      "containerId": "App_Container",
+      "originalText": "App Container (avd_app)",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "43h4DvVoT14-E01xVPv3Y",
+      "type": "text",
+      "x": 750.3185344833702,
+      "y": -61.50689080087929,
+      "width": 54.27995300292969,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_External"
+      ],
+      "frameId": null,
+      "index": "aX",
+      "roundness": null,
+      "seed": 1690235815,
+      "version": 101,
+      "versionNonce": 384107719,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764808972078,
+      "link": null,
+      "locked": false,
+      "text": "Client",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "User",
+      "originalText": "Client",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "6y_PNPNXZjKxtmFmTyrQe",
+      "type": "text",
+      "x": 507.78631591796875,
+      "y": 389.78125,
+      "width": 213.2398681640625,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#333",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_App_Container"
+      ],
+      "frameId": null,
+      "index": "aY",
+      "roundness": null,
+      "seed": 269477575,
+      "version": 87,
+      "versionNonce": 1097778473,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764808874911,
+      "link": null,
+      "locked": false,
+      "text": "FastAPI (Port 8060)",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "FastAPI",
+      "originalText": "FastAPI (Port 8060)",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "Rl0ndoyVLFIG60PWKrIxa",
+      "type": "text",
+      "x": 806.6450729370117,
+      "y": 389.78125,
+      "width": 235.95985412597656,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#333",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_App_Container"
+      ],
+      "frameId": null,
+      "index": "aZ",
+      "roundness": null,
+      "seed": 932347913,
+      "version": 87,
+      "versionNonce": 1705655783,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764808874911,
+      "link": null,
+      "locked": false,
+      "text": "Jupyter Lab (Port 1010)",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "Jupyter",
+      "originalText": "Jupyter Lab (Port 1010)",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "sU5vKXKaNTfCqjjmx0jWL",
+      "type": "text",
+      "x": 184.85557723592024,
+      "y": 687.4955357142858,
+      "width": 264.6998291015625,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#333",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_ML_Infra"
+      ],
+      "frameId": null,
+      "index": "aa",
+      "roundness": null,
+      "seed": 518023207,
+      "version": 80,
+      "versionNonce": 127252553,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764809041649,
+      "link": null,
+      "locked": false,
+      "text": "MLflow Server (Port 5000)",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "MLflow",
+      "originalText": "MLflow Server (Port 5000)",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "kNdz73pHlVO2BT6ka3Hg5",
+      "type": "text",
+      "x": 53.700054116207525,
+      "y": 919.6622392069584,
+      "width": 215.35987854003906,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#333",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_ML_Infra"
+      ],
+      "frameId": null,
+      "index": "ab",
+      "roundness": null,
+      "seed": 1988866217,
+      "version": 167,
+      "versionNonce": 1191432455,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764809057083,
+      "link": null,
+      "locked": false,
+      "text": "MinIO S3 (Port 9001)",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "MinIO",
+      "originalText": "MinIO S3 (Port 9001)",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "aC_Rl8JMn_N4BYrysXG-J",
+      "type": "text",
+      "x": 1263.7139332033323,
+      "y": 585.78125,
+      "width": 254.0398406982422,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#333",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_IoT_Infra"
+      ],
+      "frameId": null,
+      "index": "ac",
+      "roundness": null,
+      "seed": 956412809,
+      "version": 37,
+      "versionNonce": 159245257,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764809111830,
+      "link": null,
+      "locked": false,
+      "text": "ThingsBoard (Port 8080)",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "ThingsBoard",
+      "originalText": "ThingsBoard (Port 8080)",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "K2RLUDTNT_P8o4AJ-ZmtM",
+      "type": "text",
+      "x": 1502.442778051538,
+      "y": 389.78125,
+      "width": 292.71978759765625,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#333",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_IoT_Infra"
+      ],
+      "frameId": null,
+      "index": "ad",
+      "roundness": null,
+      "seed": 125065833,
+      "version": 83,
+      "versionNonce": 1758871271,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764809129001,
+      "link": null,
+      "locked": false,
+      "text": "Trendz Analytics (Port 8888)",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "Trendz",
+      "originalText": "Trendz Analytics (Port 8888)",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "fC3TreoO07sKI54tH5sG5",
+      "type": "text",
+      "x": 1133.866455176154,
+      "y": 941.619988271898,
+      "width": 242.1198272705078,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_Storage"
+      ],
+      "frameId": null,
+      "index": "ae",
+      "roundness": null,
+      "seed": 523726791,
+      "version": 306,
+      "versionNonce": 986353287,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764809089356,
+      "link": null,
+      "locked": false,
+      "text": "PostgreSQL (Port 5433)",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "Postgres",
+      "originalText": "PostgreSQL (Port 5433)",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "hmWCtlEuLWafiHiTjjOd7",
+      "type": "text",
+      "x": 533.9795910304234,
+      "y": 264.1152094317789,
+      "width": 147.2398681640625,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "af",
+      "roundness": null,
+      "seed": 979623655,
+      "version": 4,
+      "versionNonce": 1887320103,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764808831431,
+      "link": null,
+      "locked": false,
+      "text": "Access UI/API",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "User_FastAPI",
+      "originalText": "Access UI/API",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "63qqZSb4PXhCHXxVE1xB5",
+      "type": "text",
+      "x": 855.8774162008789,
+      "y": 264.50330243321616,
+      "width": 151.1199188232422,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "ag",
+      "roundness": null,
+      "seed": 229233735,
+      "version": 5,
+      "versionNonce": 1334720521,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764808874911,
+      "link": null,
+      "locked": false,
+      "text": "Dev/Notebooks",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "User_Jupyter",
+      "originalText": "Dev/Notebooks",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "W_l_Dqbgp71mZ21_GHuiF",
+      "type": "text",
+      "x": 135.00807659912107,
+      "y": 383.781,
+      "width": 180.6398468017578,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "ah",
+      "roundness": null,
+      "seed": 1443841447,
+      "version": 3,
+      "versionNonce": 443204745,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764808812078,
+      "link": null,
+      "locked": false,
+      "text": "Track Experiments",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "User_MLflow",
+      "originalText": "Track Experiments",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "e_1kU_4mkozdpWc2PPmak",
+      "type": "text",
+      "x": 23.40506713867194,
+      "y": 484.78099999999995,
+      "width": 158.29986572265625,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "ai",
+      "roundness": null,
+      "seed": 1266004743,
+      "version": 7,
+      "versionNonce": 336195977,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764808957564,
+      "link": null,
+      "locked": false,
+      "text": "Manage Buckets",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "User_MinIO",
+      "originalText": "Manage Buckets",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "m1Ml7Xls49559R1raRlRu",
+      "type": "text",
+      "x": 1250.2380451660156,
+      "y": 383.78099999999995,
+      "width": 150.71990966796875,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "aj",
+      "roundness": null,
+      "seed": 254712935,
+      "version": 4,
+      "versionNonce": 1551014727,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764808831431,
+      "link": null,
+      "locked": false,
+      "text": "IoT Dashboard",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "User_ThingsBoard",
+      "originalText": "IoT Dashboard",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "DhivCDU5MFHnu9E2N6BR3",
+      "type": "text",
+      "x": 1571.4796134798921,
+      "y": 270.4065375727234,
+      "width": 186.01983642578125,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "ak",
+      "roundness": null,
+      "seed": 1643872711,
+      "version": 4,
+      "versionNonce": 1309466793,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764808831431,
+      "link": null,
+      "locked": false,
+      "text": "Advanced Analytics",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "User_Trendz",
+      "originalText": "Advanced Analytics",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "x0UV6WLFoec1VT-n1ohtH",
+      "type": "text",
+      "x": 733.8790689697265,
+      "y": 585.781,
+      "width": 168.63986206054688,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "al",
+      "roundness": null,
+      "seed": 437117735,
+      "version": 3,
+      "versionNonce": 935851593,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764808812078,
+      "link": null,
+      "locked": false,
+      "text": "Read/Write Data",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "FastAPI_Postgres",
+      "originalText": "Read/Write Data",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "Ca5issL7XABqrBBcX_iNt",
+      "type": "text",
+      "x": 390.65603814697266,
+      "y": 484.781,
+      "width": 119.99992370605469,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "am",
+      "roundness": null,
+      "seed": 1493647495,
+      "version": 3,
+      "versionNonce": 26226375,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764808812078,
+      "link": null,
+      "locked": false,
+      "text": "Load Models",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "FastAPI_MLflow",
+      "originalText": "Load Models",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "4Gn5QSR7z1M_6_Qg5m1Wo",
+      "type": "text",
+      "x": 623.0670466918946,
+      "y": 484.781,
+      "width": 123.41990661621094,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "an",
+      "roundness": null,
+      "seed": 33102311,
+      "version": 3,
+      "versionNonce": 1105478953,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764808812078,
+      "link": null,
+      "locked": false,
+      "text": "Train Models",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "Jupyter_MLflow",
+      "originalText": "Train Models",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "bUDaJw2q0QoFO1cuChWkB",
+      "type": "text",
+      "x": 1003.7910399780274,
+      "y": 585.781,
+      "width": 113.33992004394531,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "ao",
+      "roundness": null,
+      "seed": 1868885831,
+      "version": 3,
+      "versionNonce": 1900854759,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764808812079,
+      "link": null,
+      "locked": false,
+      "text": "Fetch Data",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "Jupyter_Postgres",
+      "originalText": "Fetch Data",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "qLS1OiU-1lfeiAZJiGhDk",
+      "type": "text",
+      "x": 536.0840323486328,
+      "y": 686.781,
+      "width": 94.83993530273438,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "ap",
+      "roundness": null,
+      "seed": 1765556391,
+      "version": 3,
+      "versionNonce": 626243593,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764808812079,
+      "link": null,
+      "locked": false,
+      "text": "Metadata",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "MLflow_Postgres",
+      "originalText": "Metadata",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "OpO7BQN-d9riRx6DFV6Ig",
+      "type": "text",
+      "x": 177.49832660784023,
+      "y": 782.4952857142857,
+      "width": 91.75991821289062,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_ML_Infra"
+      ],
+      "frameId": null,
+      "index": "aq",
+      "roundness": null,
+      "seed": 1524665863,
+      "version": 51,
+      "versionNonce": 1003879527,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764808820316,
+      "link": null,
+      "locked": false,
+      "text": "Artifacts",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "MLflow_MinIO",
+      "originalText": "Artifacts",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "aod_fCn625r_0_WkEgeqP",
+      "type": "text",
+      "x": 1298.5630457763673,
+      "y": 686.781,
+      "width": 157.49990844726562,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "ar",
+      "roundness": null,
+      "seed": 1227052903,
+      "version": 3,
+      "versionNonce": 336711401,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764808812079,
+      "link": null,
+      "locked": false,
+      "text": "Store Telemetry",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "ThingsBoard_Postgres",
+      "originalText": "Store Telemetry",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "61XLSekO1zOsTxi2vKjqZ",
+      "type": "text",
+      "x": 1608.653038757324,
+      "y": 585.781,
+      "width": 106.77992248535156,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "as",
+      "roundness": null,
+      "seed": 138812615,
+      "version": 3,
+      "versionNonce": 1239789607,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764808812079,
+      "link": null,
+      "locked": false,
+      "text": "Read Data",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "Trendz_Postgres",
+      "originalText": "Read Data",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "vT4GqYBX8RhAr9We9g_X2",
+      "type": "text",
+      "x": 1420.393055847168,
+      "y": 484.781,
+      "width": 158.11988830566406,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [
+        "subgraph_group_IoT_Infra"
+      ],
+      "frameId": null,
+      "index": "at",
+      "roundness": null,
+      "seed": 838491687,
+      "version": 3,
+      "versionNonce": 1957300681,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764808812079,
+      "link": null,
+      "locked": false,
+      "text": "API Integration",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "Trendz_ThingsBoard",
+      "originalText": "API Integration",
+      "autoResize": true,
+      "lineHeight": 1.25
+    },
+    {
+      "id": "v9WSKFyCADfrLupkSAZYC",
+      "type": "text",
+      "x": 717.7136516961401,
+      "y": 303.2231766065406,
+      "width": 8,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "av",
+      "roundness": null,
+      "seed": 1015204937,
+      "version": 16,
+      "versionNonce": 914577319,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1764809008345,
+      "link": null,
+      "locked": false,
+      "text": "",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "",
+      "autoResize": true,
+      "lineHeight": 1.25
+    }
+  ],
+  "appState": {
+    "gridSize": 20,
+    "gridStep": 5,
+    "gridModeEnabled": false,
+    "viewBackgroundColor": "#ffffff"
+  },
+  "files": {}
+}
