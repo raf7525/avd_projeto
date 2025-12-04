@@ -184,6 +184,12 @@ Use este script para verificar se os dados estão sendo enviados corretamente pa
 docker-compose exec app python scripts/check_dashboard.py
 ```
 
+### Importar Dashboards do ThingsBoard
+Este script carrega o dashboard pré-configurado (`data/thingsboard.json`) para o ThingsBoard.
+```bash
+docker-compose exec app python scripts/import_dashboards.py
+```
+
 ### Configurar Dashboards do Trendz Analytics
 Este script automatiza a configuração inicial do Trendz, incluindo a criação de dashboards de exemplo.
 ```bash
