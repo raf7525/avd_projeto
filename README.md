@@ -106,6 +106,13 @@ Além da predição numérica, o sistema classifica o resultado em 6 zonas:
     5.  Clique em **"Add new widget"** para adicionar gráficos (Charts) ou mostradores (Gauges).
     6.  Selecione o dispositivo "Sensor Térmico AVD" como fonte de dados.
 
+*   **⚠️ IMPORTANTE - Configuração de Alias:**
+    *   **Antes de criar widgets**, você deve configurar um **alias** no dashboard para referenciar o dispositivo "Sensor Térmico 01".
+    *   No modo de edição do dashboard (lápis laranja), clique em **"Entity aliases"** (ícone de engrenagem no canto superior direito).
+    *   Crie um novo alias (ex: "SensorINMET") do tipo **"Single entity"** e selecione o dispositivo "Sensor Térmico 01".
+    *   **Sem esta configuração, os widgets não conseguirão mostrar os dados!**
+    *   Ao adicionar widgets, use este alias como fonte de dados ao invés de selecionar o dispositivo diretamente.
+
 ### 2. MLflow (Tracking de ML)
 *   **URL:** [http://localhost:5000](http://localhost:5000)
 *   **O que ver:**
