@@ -1,0 +1,132 @@
+{
+  "project_name": "Sistema de Predi\u00e7\u00e3o de Sensa\u00e7\u00e3o T\u00e9rmica",
+  "dashboards": {
+    "thermal_heatmap": {
+      "name": "Mapa de Calor - Sensa\u00e7\u00e3o T\u00e9rmica",
+      "type": "heatmap",
+      "data_source": "thermal_data",
+      "configuration": {
+        "x_field": "hour",
+        "y_field": "day_of_week",
+        "value_field": "thermal_sensation",
+        "color_field": "comfort_zone_calculated",
+        "aggregation": "mean",
+        "color_scheme": "RdYlBu_r"
+      },
+      "filters": {
+        "time_range": "last_30_days",
+        "comfort_zone": "all",
+        "min_thermal_sensation": -10,
+        "max_thermal_sensation": 50
+      }
+    },
+    "comfort_zones": {
+      "name": "An\u00e1lise de Zonas de Conforto T\u00e9rmico",
+      "widgets": [
+        {
+          "type": "scatter",
+          "title": "Temperatura vs Umidade por Zona",
+          "x_axis": "temperature",
+          "y_axis": "humidity",
+          "color": "comfort_zone_calculated",
+          "aggregation": "mean"
+        },
+        {
+          "type": "line_chart",
+          "title": "Tend\u00eancia Di\u00e1ria",
+          "x_axis": "hour",
+          "y_axis": "thermal_velocity",
+          "group_by": "cluster",
+          "aggregation": "mean"
+        },
+        {
+          "type": "bar_chart",
+          "title": "Distribui\u00e7\u00e3o por Cluster",
+          "x_axis": "cluster",
+          "y_axis": "count",
+          "color_by": "cluster"
+        },
+        {
+          "type": "scatter_plot",
+          "title": "Velocidade vs Dire\u00e7\u00e3o",
+          "x_axis": "thermal_direction",
+          "y_axis": "thermal_velocity",
+          "color_by": "cluster",
+          "size_by": "hour"
+        }
+      ]
+    },
+    "statistics": {
+      "name": "Estat\u00edsticas de Vento",
+      "layout": "grid",
+      "widgets": [
+        {
+          "type": "kpi",
+          "title": "Velocidade M\u00e9dia",
+          "metric": "thermal_velocity",
+          "aggregation": "mean",
+          "unit": "m/s",
+          "size": "medium"
+        },
+        {
+          "type": "kpi",
+          "title": "Velocidade M\u00e1xima",
+          "metric": "thermal_velocity",
+          "aggregation": "max",
+          "unit": "m/s",
+          "size": "medium"
+        },
+        {
+          "type": "gauge",
+          "title": "Dire\u00e7\u00e3o Predominante",
+          "metric": "thermal_direction",
+          "aggregation": "mode",
+          "min": 0,
+          "max": 360,
+          "unit": "graus"
+        },
+        {
+          "type": "histogram",
+          "title": "Distribui\u00e7\u00e3o de Velocidades",
+          "metric": "thermal_velocity",
+          "bins": 20,
+          "color_by": "cluster"
+        }
+      ]
+    }
+  },
+  "data_sources": {
+    "primary": {
+      "type": "csv",
+      "path": "/app/data/sample_thermal_data.csv",
+      "fields": {
+        "timestamp": "datetime",
+        "temperature": "float",
+        "humidity": "float",
+        "wind_velocity": "float",
+        "pressure": "float",
+        "solar_radiation": "float",
+        "thermal_sensation": "float",
+        "comfort_zone": "string",
+        "comfort_zone_calculated": "string"
+      }
+    }
+  },
+  "filters": {
+    "global": {
+      "time_range": [
+        "last_30_days",
+        "last_7_days",
+        "last_24_hours"
+      ],
+      "velocity_range": [
+        0,
+        30
+      ],
+      "direction_range": [
+        0,
+        360
+      ]
+    }
+  }
+}
