@@ -3,6 +3,7 @@ import requests
 import os
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from tqdm import tqdm
 
 # Add project root to path to import other modules if needed
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -14,8 +15,6 @@ USERNAME = os.getenv("TB_USER", "tenant@thingsboard.org")
 PASSWORD = os.getenv("TB_PASSWORD", "tenant")
 DEVICE_NAME = "Sensor Térmico 01"
 DEVICE_TYPE = "Thermal Sensor"
-
-# Number of parallel workers
 MAX_WORKERS = 10
 
 def get_token():
@@ -34,13 +33,12 @@ def get_or_create_device(token):
     headers = {"Authorization": f"Bearer {token}"}
     
     # Check if device exists
-    url = f"{THINGSBOARD_HOST}/api/tenant/devices?textSearch={DEVICE_NAME}&pageSize=10&page=0"
+    url = f"{THINGSBOARD_HOST}/api/tenant/devices?deviceName={DEVICE_NAME}"
     try:
         response = requests.get(url, headers=headers)
         response.raise_for_status()
-        data = response.json()
-        if data['data']:
-            device = data['data'][0]
+        device = response.json()
+        if device:
             print(f"Found existing device: {device['name']} (ID: {device['id']['id']})")
             return device['id']['id']
     except Exception as e:
@@ -79,11 +77,11 @@ def send_telemetry(device_token, data):
     """Send telemetry data to ThingsBoard"""
     url = f"{THINGSBOARD_HOST}/api/v1/{device_token}/telemetry"
     try:
-        response = requests.post(url, json=data)
-        response.raise_for_status()
-        # print(f"Data sent: {data}")
+        requests.post(url, json=data)
     except Exception as e:
-        print(f"Error sending telemetry: {e}")
+        # This will be printed in the main thread from the future.exception()
+        pass
+
 
 def send_to_api(row):
     """Send data to FastAPI for storage"""
@@ -99,57 +97,45 @@ def send_to_api(row):
         }
         requests.post(url, json=payload)
     except Exception:
-        # print(f"Error sending to API: {e}")
+        # This will be printed in the main thread from the future.exception()
         pass
 
-def process_row(row, device_access_token):
-    """Process a single row: send to ThingsBoard and API"""
-    try:
-        # Convert timestamp to milliseconds
-        ts = int(pd.to_datetime(row['timestamp']).timestamp() * 1000)
-        
-        telemetry = {
-            "ts": ts,
-            "values": {
-                "temperature": row['temperature'],
-                "humidity": row['humidity'],
-                "wind_velocity": row['wind_velocity'],
-                "pressure": row['pressure'],
-                "solar_radiation": row['solar_radiation'],
-                "thermal_sensation": row['thermal_sensation'],
-                "comfort_zone": row['comfort_zone']
-            }
+def process_row(row_data):
+    device_access_token, row = row_data
+    ts = int(pd.to_datetime(row['timestamp']).timestamp() * 1000)
+    
+    telemetry = {
+        "ts": ts,
+        "values": {
+            "temperature": row['temperature'],
+            "humidity": row['humidity'],
+            "wind_velocity": row['wind_velocity'],
+            "pressure": row['pressure'],
+            "solar_radiation": row['solar_radiation'],
+            "thermal_sensation": row['thermal_sensation'],
+            "comfort_zone": row['comfort_zone']
         }
-        
-        # Send to ThingsBoard
-        send_telemetry(device_access_token, telemetry)
-        
-        # Send to FastAPI
-        send_to_api(row)
-        return True
-    except Exception as e:
-        print(f"Error processing row: {e}")
-        return False
+    }
+    send_telemetry(device_access_token, telemetry)
+    send_to_api(row)
+    return True
+
 
 def main():
     print("Starting data ingestion to ThingsBoard...")
     
-    # 1. Login
     token = get_token()
     if not token:
         return
 
-    # 2. Get/Create Device
     device_id = get_or_create_device(token)
     if not device_id:
         return
 
-    # 3. Get Device Access Token
     device_access_token = get_device_token(token, device_id)
     if not device_access_token:
         return
 
-    # 4. Read Data
     data_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'sample_thermal_data.csv')
     if not os.path.exists(data_path):
         print(f"Data file not found at {data_path}. Please run convert_inmet_data.py to process data first.")
@@ -158,21 +144,19 @@ def main():
     print(f"Reading data from {data_path}...")
     df = pd.read_csv(data_path)
     
-    total_records = len(df)
-    print(f"Sending {total_records} records to ThingsBoard with {MAX_WORKERS} workers...")
+    print(f"Sending {len(df)} records to ThingsBoard using {MAX_WORKERS} workers...")
     
-    # 5. Send Data in Parallel
-    completed = 0
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-        futures = []
-        for index, row in df.iterrows():
-            futures.append(executor.submit(process_row, row, device_access_token))
-            
-        for future in as_completed(futures):
-            completed += 1
-            if completed % 100 == 0:
-                print(f"Processed {completed}/{total_records} records...")
-            
+        # Create a list of tasks
+        tasks = [executor.submit(process_row, (device_access_token, row)) for index, row in df.iterrows()]
+
+        # Process tasks and show progress bar
+        for future in tqdm(as_completed(tasks), total=len(tasks), desc="Ingesting data"):
+            try:
+                future.result()
+            except Exception as exc:
+                print(f'A row generated an exception: {exc}')
+
     print("Ingestion complete!")
 
 if __name__ == "__main__":
