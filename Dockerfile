@@ -15,8 +15,11 @@ RUN apt-get update && apt-get install -y \
 # Copiar arquivo de requirements
 COPY requirements.txt .
 
-# Instalar dependências Python
-RUN pip install --no-cache-dir -r requirements.txt
+# Instalar uv
+RUN pip install uv
+
+# Instalar dependências Python com uv (mais rápido)
+RUN uv pip install --system --no-cache -r requirements.txt
 
 # Copiar código da aplicação
 COPY . .
